@@ -1,0 +1,13 @@
+/* Hide all content by default */
+.tab-content {
+    display: none;
+}
+
+/* Show the content only when the ID matches the URL hash */
+.tab-content:target {
+    display: block;
+}
+ 
+#About {
+    display: block;
+}
