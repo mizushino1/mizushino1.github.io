@@ -49,7 +49,6 @@ body{
         url('/assets/gif.gif') no-repeat center 30%;
     
     background-size: cover;
-    background-repeat: no-repeat;
     
     /* Ensure the container has height to see the effect */
     height: 500px; 
