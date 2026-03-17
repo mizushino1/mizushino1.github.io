@@ -49,9 +49,6 @@ body{
     /* 'cover' scales the image to fit; change to 'auto' if you want a tiled look */
     background-size: auto; 
     
-    /* Container dimensions */
-    height: 500px; 
-    width: 100%;
 }
 
 .fill-rectangle {
