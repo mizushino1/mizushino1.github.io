@@ -43,12 +43,18 @@ body{
 }
 
 .gif-background {
-    /* Removed the gradient layer and set to repeat */
-    background: url('/assets/gif.gif') repeat center;
+    /* Set to repeat both horizontally and vertically */
+    background: url('/assets/gif.gif') repeat;
     
-    /* 'cover' scales the image to fit; change to 'auto' if you want a tiled look */
-    background-size: auto; 
+    /* 'auto' ensures the GIF stays at its original/true pixel size */
+    background-size: auto;
     
+    /* Standard full-screen container properties */
+    min-height: 100vh;
+    width: 100%;
+    
+    /* Optional: ensures the background stays put when scrolling */
+    background-attachment: fixed;
 }
 
 .fill-rectangle {
