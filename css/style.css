@@ -44,7 +44,7 @@ body{
 
 .gif-background {
     /* Set to repeat both horizontally and vertically */
-    background: url('/assets/gif.gif') repeat;
+    background: url('/assets/boomerangbg.gif') repeat;
     
     /* 'auto' ensures the GIF stays at its original/true pixel size */
     background-size: auto;
@@ -55,6 +55,12 @@ body{
     
     /* Optional: ensures the background stays put when scrolling */
     background-attachment: fixed;
+}
+.fill-rectangle {
+    height: fit-content;
+    margin:0;
+    width: 100%;
+
 }
 
 .fill-rectangle {
