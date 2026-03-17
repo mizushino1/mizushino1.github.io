@@ -43,14 +43,13 @@ body{
 }
 
 .gif-background {
-    /* The first background is the top layer, the second is the bottom layer */
-    background: 
-        linear-gradient(to bottom, rgba(255, 255, 255, 0) 70%,  rgb(0, 0, 0)), 
-        url('/assets/gif.gif') no-repeat center 30%;
+    /* Removed the gradient layer and set to repeat */
+    background: url('/assets/gif.gif') repeat center;
     
-    background-size: cover;
+    /* 'cover' scales the image to fit; change to 'auto' if you want a tiled look */
+    background-size: auto; 
     
-    /* Ensure the container has height to see the effect */
+    /* Container dimensions */
     height: 500px; 
     width: 100%;
 }
