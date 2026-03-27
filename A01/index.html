@@ -24,11 +24,18 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
+
+                    <li class="nav-item">
+                        <a class="nav-link active text-light" aria-current="page" href="#Gal">Gallery</a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link active text-light" aria-current="page" href="#Specs">Specifications</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="#">Pricing</a>
+                        <button type="button" class="btn text-light" data-bs-toggle="modal" data-bs-target="#Pricing">
+                            Pricing
+                        </button>
                     </li>
                     </li>
                 </ul>
@@ -36,7 +43,7 @@
         </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid" id="Gal">
         <div class="row">
             <div class="col-12 col-xl-6">
                 <img class="img-fluid"
@@ -65,10 +72,8 @@
         <div class="mx-auto bg-black" style="width: 50%; ">
 
             <div class="text-center my-4">
-                <button class="btn btn-danger fw-bold p-2 px-4" type="button" 
-                        data-bs-toggle="collapse" 
-                        data-bs-target=".multi-collapse" 
-                        aria-expanded="false">
+                <button class="btn btn-danger fw-bold p-2 px-4" type="button" data-bs-toggle="collapse"
+                    data-bs-target=".multi-collapse" aria-expanded="false">
                     TOGGLE ALL SPECIFICATIONS
                 </button>
             </div>
@@ -168,7 +173,8 @@
                     <ul class="list-group">
                         <li class="list-group-item bg-black text-light">1x M.2 SSD slot (NVMe PCIe Gen4)</li>
                         <li class="list-group-item bg-black text-light">1x 2.5" SATA HDD</li>
-                        <li class="list-group-item bg-black text-light">”Please consult service center for upgrading SSD.”</li>
+                        <li class="list-group-item bg-black text-light">”Please consult service center for upgrading
+                            SSD.”</li>
                     </ul>
                 </div>
             </div>
@@ -338,9 +344,59 @@
         </div>
     </div>
 
+    <div class="modal fade" id="Pricing" tabindex="-1" aria-labelledby="pricing" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header bg-black text-light">
+                    <h5 class="modal-title" id="pricing">PRICING</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <ul class="list-group">
+                                <li class="list-group-item">Thin 15 B12UCX</li>
+                                <li class="list-group-item">RAM: 16GB</li>
+                                <li class="list-group-item">STORAGE: 512GB M.2 SSD</li>
+                                <li class="list-group-item">GPU: RTX 2050 DDR6 4GB</li>
+                                <li class="list-group-item">₱36,999</li>
+                                <li class="list-group-item">
+                                    <button type="button"class="list-group-item list-group-item-action bg-danger text-light">
+                                        Order NOW
+                                    </button>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <div class="col col-md-6">
+                            <ul class="list-group">
+                                <li class="list-group-item">Thin 15 B12UC</li>
+                                <li class="list-group-item">RAM: 16GB</li>
+                                <li class="list-group-item">STORAGE: 512GB M.2 SSD</li>
+                                <li class="list-group-item">GPU: RTX 3050 DDR6 4GB</li>
+                                <li class="list-group-item">₱47,995</li>
+                                <li class="list-group-item">
+                                    <button type="button"class="list-group-item list-group-item-action bg-danger text-light ">
+                                        Order NOW
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <div class="footer text-secondary p-5 flex-row bg-light">
-      <p>Copyright © 2026 Micro-Star INT'L CO., LTD. All rights reserved.</p>
+        <p>Copyright © 2026 Micro-Star INT'L CO., LTD. All rights reserved.</p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
