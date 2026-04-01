@@ -4,7 +4,7 @@
 }
 /* This class will be toggled by your JS */
 .navbtn.active {
-    color: red !important;
+    color: black !important;
     font-weight: bold;
-    border-bottom: 2px solid red; /* Optional: adds an underline */
+    border-bottom: 2px solid black; /* Optional: adds an underline */
 }
