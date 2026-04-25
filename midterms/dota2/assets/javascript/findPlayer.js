@@ -23,6 +23,13 @@ const rankIconMapping = {
     0: { rankImg: "./assets/image/uncalibrated.webp" }
   };
 
+const attributeColors = {
+    str: {attributeColor:"background-color:#B9500B"},
+    agi: {attributeColor:"background-color:#167C13"},
+    int: {attributeColor:"background-color:#257DAE"},
+    all: {attributeColor:"background: linear-gradient(to right,#B9500B, #167C13, #257DAE);"}
+}
+
 
 const getPlayerData = async () => {
 
@@ -62,14 +69,17 @@ const getPlayerData = async () => {
     const playerRank = rankTierMapping[medalIndex] ? rankTierMapping[medalIndex].name : "Uncalibrated";
     const playerRankIcon = rankIconMapping[medalIndex] ? rankIconMapping[medalIndex].rankImg : "./assets/image/uncalibrated.webp";
 
-    function getPlayerHeroID(a) {
-        const heroData = playerHeroData[a]
-        return this.heroID = heroData.hero_id;
+    function getPlayerHeroData(a) {
+            this.heroData = playerHeroData[a];
     }
 
-    const playerTop1HeroID = new getPlayerHeroID(0).heroID;
-    const playerTop2HeroID = new getPlayerHeroID(1).heroID;
-    const playerTop3HeroID = new getPlayerHeroID(2).heroID;
+    const playerTop1Hero = new getPlayerHeroData(0).heroData;
+    const playerTop2Hero = new getPlayerHeroData(1).heroData;
+    const playerTop3Hero = new getPlayerHeroData(2).heroData;
+
+    const playerTop1HeroID = playerTop1Hero.hero_id;
+    const playerTop2HeroID = playerTop2Hero.hero_id;
+    const playerTop3HeroID = playerTop3Hero.hero_id;
 
     function getHeroData(a) {
        return heroesData.find(h => h.id === a);
@@ -79,16 +89,23 @@ const getPlayerData = async () => {
         return heroStats.find(h => h.id === a);
     };
 
-    function getPlayerHeroStats(a) {
-        return playerHeroData.find(h => h.hero_id === a);
+    function winrate(totalGames, wins) {
+        
+        if (!totalGames || totalGames === 0) return "0%";
+    
+        const percent = (wins / totalGames) * 100;
+        
+        
+        return percent.toFixed(2);
     }
 
-    console.log(getPlayerHeroStats(playerTop1HeroID));
+
 
     const playerTop1HeroStats = getHeroStats(playerTop1HeroID);
     const playerTop2HeroStats = getHeroStats(playerTop2HeroID);
     const playerTop3HeroStats = getHeroStats(playerTop3HeroID);
-    const playerStatsOnHero = getPlayerHeroStats(playerTop1HeroID);
+
+    
 
 
 
@@ -117,24 +134,28 @@ const getPlayerData = async () => {
     const elPlayerHeroStats1 = document.getElementById("playerHeroStats1");
     elPlayerHeroStats1.innerHTML = `<div class="mb-3 text-center">
                                     <span class="h3 p-1 px-4 text-center mb-3 rounded-3 border border-secondary"
-                                        style="background: linear-gradient(to right,#ff4d4d, #4dff4d, #4d4dff);">
-                                        <b>INVOKER</b></span>
+                                        style="${attributeColors[playerTop1HeroStats.primary_attr].attributeColor}">
+                                        <b>${getHeroData(playerTop1HeroID).localized_name.toUpperCase()}</b></span>
                                 </div>
                                 <div class="">
                                     <div class=" text-light">
-                                        <p> <b> Matches Played As:</b> </p>
+                                        <p> <b> Matches Played As: </b> ${playerTop1Hero.games} </p>
                                     </div>
                                     <div class="text-light d-flex flex-row">
-                                        <p> <b>Win Rate:</b> 64%
-                                        <div class="progress w-50 ms-3 align-self-center mb-3 bg-danger border border-secondary"
-                                            role="progressbar" aria-label="Success example" aria-valuenow="64"
-                                            aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar bg-success" style="width: 64%">
-                                                </p>
+                                        <p> <b>Win Rate:</b> </p>
+                                        <div class="progress ms-3 align-self-center mb-3 bg-danger border border-secondary" 
+                                        style="width: 65%; height:25px"
+                                        role="progressbar" 
+                                        aria-label="Success example" 
+                                        aria-valuenow="${winrate(playerTop1Hero.games, playerTop1Hero.win)}"
+                                        aria-valuemin="0" 
+                                        aria-valuemax="100">
+                                            <div class="progress-bar bg-success fs-6" style="width: ${winrate(playerTop1Hero.games, playerTop1Hero.win)+"%"}">
+                                                ${winrate(playerTop1Hero.games, playerTop1Hero.win)+"%"}
                                             </div>
                                         </div>
                                     </div>
-                                    <hr class="border-secondary border-3 opacity-75">
+                                    <hr class="border-secondary border-1 opacity-75">
                                     <div class="mt-2 text-center">
                                         <button class="btn glass-card text-light fw-bold shadow glass-card-hover"
                                             type="button" data-bs-toggle="collapse"
@@ -145,34 +166,44 @@ const getPlayerData = async () => {
                                     </div>
                                 </div>
                                 <div class="collapse mt-3" id="collapseAdditionalStats">
-                                    <hr class="border-secondary border-3 opacity-75">
+                                    <hr class="border-secondary border-1 opacity-75">
 
                                     <div class="">
-                                        <p class="fw-bold text-light">Matches Played With:</p>
+                                        <p class="fw-bold text-light">Matches Played With: ${playerTop1Hero.with_games}</p>
                                     </div>
 
                                     <div class="d-flex flex-row">
                                         <p class="fw-bold text-light">Win Rate:</p>
-                                        <div class="progress w-50 ms-3 align-self-center mb-3 bg-danger border border-secondary"
-                                            role="progressbar" aria-label="Success example" aria-valuenow="64"
-                                            aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar bg-success" style="width: 64%">
-                                                </p>
+                                        <div class="progress ms-3 align-self-center mb-3 bg-danger border border-secondary" 
+                                        style="width: 65%; height:25px"
+                                        role="progressbar" 
+                                        aria-label="Success example" 
+                                        aria-valuenow="${winrate(playerTop1Hero.with_games, playerTop1Hero.with_win)}"
+                                        aria-valuemin="0" 
+                                        aria-valuemax="100">
+                                            <div class="progress-bar bg-success fs-6" style="width: ${winrate(playerTop1Hero.with_games, playerTop1Hero.with_win)+"%"}">
+                                                ${winrate(playerTop1Hero.with_games, playerTop1Hero.with_win)+"%"}
                                             </div>
                                         </div>
                                     </div>
 
+                                    <hr class="border-secondary border-1 opacity-75">
+
                                     <div class="">
-                                        <p class="fw-bold text-light">Matches Played Against:</p>
+                                        <p class="fw-bold text-light">Matches Played Against:${playerTop1Hero.against_games}</p>
                                     </div>
 
                                     <div class="d-flex flex-row">
                                         <p class="fw-bold text-light">Win Rate:</p>
-                                        <div class="progress w-50 ms-3 align-self-center mb-3 bg-danger border border-secondary"
-                                            role="progressbar" aria-label="Success example" aria-valuenow="64"
-                                            aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar bg-success" style="width: 64%">
-                                                </p>
+                                        <div class="progress ms-3 align-self-center mb-3 bg-danger border border-secondary" 
+                                        style="width: 65%; height:25px"
+                                        role="progressbar" 
+                                        aria-label="Success example" 
+                                        aria-valuenow="${winrate(playerTop1Hero.against_games, playerTop1Hero.against_win)}"
+                                        aria-valuemin="0" 
+                                        aria-valuemax="100">
+                                            <div class="progress-bar bg-success fs-6" style="width: ${winrate(playerTop1Hero.against_games, playerTop1Hero.against_win)+"%"}">
+                                                ${winrate(playerTop1Hero.against_games, playerTop1Hero.against_win)+"%"}
                                             </div>
                                         </div>
                                     </div>
