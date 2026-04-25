@@ -133,7 +133,7 @@ const getPlayerData = async () => {
 
     const elPlayerHeroStats1 = document.getElementById("playerHeroStats1");
     elPlayerHeroStats1.innerHTML = `<div class="mb-3 text-center">
-                                    <span class="h3 p-1 px-4 text-center mb-3 rounded-3 border border-secondary"
+                                    <span class="h5 p-1 px-4 text-center mb-3 rounded-3 border border-secondary"
                                         style="${attributeColors[playerTop1HeroStats.primary_attr].attributeColor}">
                                         <b>${getHeroData(playerTop1HeroID).localized_name.toUpperCase()}</b></span>
                                 </div>
