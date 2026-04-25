@@ -1,0 +1,26 @@
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.05) !important; 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 15px;
+    overflow: hidden; 
+}
+
+
+.glass-card .card-body, 
+.glass-card .list-group-item {
+    background-color: transparent !important;
+    border-color: rgba(255, 255, 255, 0.1); 
+}
+
+
+
+.glass-card-red {
+    background: rgba(167, 39, 20, 0.60) !important; 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    overflow: hidden; 
+}

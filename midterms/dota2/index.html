@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DOTA 2 Tracker</title>
+    <link rel="icon" type="image/png" href="./assets/image/Menu Icon.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="./assets/css/glass.css" rel="stylesheet">
+</head>
+
+<body class="" style="background-color: #212121;">
+    <nav class="navbar navbar-expand-lg bg-dark glass-card-red border-bottom border-body sticky-top"
+        data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand mx-5" href="#">
+                <img src="./assets/image/Menu Icon.svg" alt="Bootstrap" width="50" height="50">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Heroes</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Player Friend Code"
+                        aria-label="friendCode" id="searchPlayerCode">
+                    <button class="btn btn-outline-danger" onclick="getPlayerData()">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-4 mt-5 d-flex justify-content-center">
+                <div class="ms-lg-5">
+                    <div class="card glass-card mx-auto" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="Player Avatar" id="playerAvatar">
+
+                        <div class="card-body" style=" background-color: rgba(167, 39, 20, 0.80) !important">
+                            <h5 class="card-title text-center text-light" id="playerName"></h5>
+                        </div>
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item p-1 text-light" id="playerFriendCode"></li>
+                            <li class="list-group-item p-3 text-light" id="playerRank"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-12 col-lg-7 glass-card mt-5 p-3" style="height: 1000px;">
+                <div class="row">
+                    <div class="col-xs-12 col-lg-4">
+                        <p class="glass-card-red rounded-4 mx-3 text-center p-3 text-light fw-bold">Favorite Heroes</p>
+                    </div>
+                </div>
+
+                <div class="row justify-content-between justify-content-center">
+                    <div class="col-xs-12 col-md-6 col-xl-4 my-2">
+                        <div class="card glass-card mx-auto" style="width: 18rem;">
+                            <img src="..." class="card-img-top" alt="..." id="playerTop1HeroImg">
+                            <div class="card-body">
+                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
+                                    saepe harum recusandae voluptatum, sequi, nihil laboriosam amet adipisci itaque
+                                    alias cumque ipsum at explicabo officia! Labore inventore velit temporibus possimus?
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 col-xl-4 my-2">
+                        <div class="card glass-card mx-auto" style="width: 18rem;">
+                            <img src="..." class="card-img-top" alt="..." id="playerTop2HeroImg">
+                            <div class="card-body">
+                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
+                                    saepe harum recusandae voluptatum, sequi, nihil laboriosam amet adipisci itaque
+                                    alias cumque ipsum at explicabo officia! Labore inventore velit temporibus possimus?
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 col-xl-4 my-2 mx-auto">
+                        <div class="card glass-card mx-auto" style="width: 18rem;">
+                            <img src="..." class="card-img-top" alt="..." id="playerTop3HeroImg">
+                            <div class="card-body">
+                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
+                                    saepe harum recusandae voluptatum, sequi, nihil laboriosam amet adipisci itaque
+                                    alias cumque ipsum at explicabo officia! Labore inventore velit temporibus possimus?
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"></script>
+
+        <script src="./assets/javascript/findPlayer.js"></script>
+
+</body>
+
+</html>
