@@ -6,6 +6,7 @@
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius: 15px;
     overflow: hidden; 
+    transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
 }
 
 
@@ -13,6 +14,13 @@
 .glass-card .list-group-item {
     background-color: transparent !important;
     border-color: rgba(255, 255, 255, 0.1); 
+}
+
+.glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.15) !important; /* Increased from 0.05 to 0.15 */
+    border: 1px solid rgba(255, 255, 255, 0.3) !important; /* Brightens the border */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Adds depth on hover */
+    cursor: pointer;
 }
 
 

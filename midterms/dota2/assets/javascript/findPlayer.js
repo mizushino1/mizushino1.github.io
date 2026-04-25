@@ -79,9 +79,16 @@ const getPlayerData = async () => {
         return heroStats.find(h => h.id === a);
     };
 
+    function getPlayerHeroStats(a) {
+        return playerHeroData.find(h => h.hero_id === a);
+    }
+
+    console.log(getPlayerHeroStats(playerTop1HeroID));
+
     const playerTop1HeroStats = getHeroStats(playerTop1HeroID);
     const playerTop2HeroStats = getHeroStats(playerTop2HeroID);
     const playerTop3HeroStats = getHeroStats(playerTop3HeroID);
+    const playerStatsOnHero = getPlayerHeroStats(playerTop1HeroID);
 
 
 
@@ -106,6 +113,70 @@ const getPlayerData = async () => {
 
     const elPlayerTop3HeroImg = document.getElementById("playerTop3HeroImg");
     elPlayerTop3HeroImg.src = baseHeroImgUrl + playerTop3HeroStats.img;
+
+    const elPlayerHeroStats1 = document.getElementById("playerHeroStats1");
+    elPlayerHeroStats1.innerHTML = `<div class="mb-3 text-center">
+                                    <span class="h3 p-1 px-4 text-center mb-3 rounded-3 border border-secondary"
+                                        style="background: linear-gradient(to right,#ff4d4d, #4dff4d, #4d4dff);">
+                                        <b>INVOKER</b></span>
+                                </div>
+                                <div class="">
+                                    <div class=" text-light">
+                                        <p> <b> Matches Played As:</b> </p>
+                                    </div>
+                                    <div class="text-light d-flex flex-row">
+                                        <p> <b>Win Rate:</b> 64%
+                                        <div class="progress w-50 ms-3 align-self-center mb-3 bg-danger border border-secondary"
+                                            role="progressbar" aria-label="Success example" aria-valuenow="64"
+                                            aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar bg-success" style="width: 64%">
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="border-secondary border-3 opacity-75">
+                                    <div class="mt-2 text-center">
+                                        <button class="btn glass-card text-light fw-bold shadow glass-card-hover"
+                                            type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseAdditionalStats" aria-expanded="false"
+                                            aria-controls="collapseAdditionalStats">
+                                            DISPLAY MORE
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="collapse mt-3" id="collapseAdditionalStats">
+                                    <hr class="border-secondary border-3 opacity-75">
+
+                                    <div class="">
+                                        <p class="fw-bold text-light">Matches Played With:</p>
+                                    </div>
+
+                                    <div class="d-flex flex-row">
+                                        <p class="fw-bold text-light">Win Rate:</p>
+                                        <div class="progress w-50 ms-3 align-self-center mb-3 bg-danger border border-secondary"
+                                            role="progressbar" aria-label="Success example" aria-valuenow="64"
+                                            aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar bg-success" style="width: 64%">
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="">
+                                        <p class="fw-bold text-light">Matches Played Against:</p>
+                                    </div>
+
+                                    <div class="d-flex flex-row">
+                                        <p class="fw-bold text-light">Win Rate:</p>
+                                        <div class="progress w-50 ms-3 align-self-center mb-3 bg-danger border border-secondary"
+                                            role="progressbar" aria-label="Success example" aria-valuenow="64"
+                                            aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar bg-success" style="width: 64%">
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`
 
 
 
