@@ -19,23 +19,23 @@ const rankIconMapping = {
     7: { rankImg: "./assets/image/divine.webp" },
     8: { rankImg: "./assets/image/immortal.webp" },
     0: { rankImg: "./assets/image/uncalibrated.webp" }
-  };
+};
 
 const attributeColors = {
-    str: {attributeColor:"background-color:#B9500B"},
-    agi: {attributeColor:"background-color:#167C13"},
-    int: {attributeColor:"background-color:#257DAE"},
-    all: {attributeColor:"background: linear-gradient(to right,#B9500B, #167C13, #257DAE);"}
+    str: { attributeColor: "background-color:#B9500B" },
+    agi: { attributeColor: "background-color:#167C13" },
+    int: { attributeColor: "background-color:#257DAE" },
+    all: { attributeColor: "background: linear-gradient(to right,#B9500B, #167C13, #257DAE);" }
 }
 
 
 const getPlayerData = async () => {
 
-    if (event) event.preventDefault(); 
+    if (event) event.preventDefault();
 
     const friendCodeInput = document.getElementById("searchPlayerCode");
     const friendCode = friendCodeInput.value;
-    
+
     console.log("Searching for:", friendCode);
 
     localStorage.setItem("savedFriendCode", friendCode);
@@ -56,7 +56,7 @@ const getPlayerData = async () => {
 
     const playerData = await profileRes.json();
     const playerHeroData = await heroesRes.json();
-    const heroesData = await  heroesDataRes.json();
+    const heroesData = await heroesDataRes.json();
     const heroStats = await heroStatsRes.json();
 
 
@@ -68,19 +68,19 @@ const getPlayerData = async () => {
     const playerRankIcon = rankIconMapping[medalIndex] ? rankIconMapping[medalIndex].rankImg : "./assets/image/uncalibrated.webp";
 
     function getPlayerHeroData(a) {
-            this.heroData = playerHeroData[a];
+        this.heroData = playerHeroData[a];
     }
 
-    const playerTop1Hero = new getPlayerHeroData(0).heroData;
-    const playerTop2Hero = new getPlayerHeroData(1).heroData;
-    const playerTop3Hero = new getPlayerHeroData(2).heroData;
 
-    const playerTop1HeroID = playerTop1Hero.hero_id;
-    const playerTop2HeroID = playerTop2Hero.hero_id;
-    const playerTop3HeroID = playerTop3Hero.hero_id;
+    function renderHeroList(dataArray, limit = 3) {
+
+        dataArray.slice(0, limit).forEach((hero, i) => {
+            fillPlayerHeroStats(hero.hero_id, i + 1);
+        });
+    }
 
     function getHeroData(a) {
-       return heroesData.find(h => h.id === a);
+        return heroesData.find(h => h.id === a);
     };
 
     function getHeroStats(a) {
@@ -88,133 +88,125 @@ const getPlayerData = async () => {
     };
 
     function winrate(totalGames, wins) {
-        
+
         if (!totalGames || totalGames === 0) return "0%";
-    
+
         const percent = (wins / totalGames) * 100;
-        
-        
+
+
         return percent.toFixed(2);
     }
 
-    function fillPlayerHeroStats(heroID, index) {
+    function fillPlayerHeroStats(heroID, index, containerId = "heroContainer") {
         const playerHeroStats = getHeroStats(heroID);
         const playerHeroData = new getPlayerHeroData(parseInt(index - 1)).heroData;
         const playerHeroID = playerHeroData.hero_id;
         const heroImg = baseHeroImgUrl + playerHeroStats.img;
-        const mainWinRate = winrate(playerHeroData.games, playerHeroData.win);
-        const withWinRate = winrate(playerHeroData.with_games, playerHeroData.with_win);
-        const againstWinRate = winrate(playerHeroData.against_games, playerHeroData.against_win);
-        
-        const elPlayerHeroStats = document.getElementById(`playerHeroStats${index}`);
+        let mainWinRate,withWinRate,againstWinRate;
+
+        // Winrate calculations
+        if (playerHeroData.games === 0) { 
+            mainWinRate = 0;
+        } else {
+         mainWinRate = winrate(playerHeroData.games, playerHeroData.win);
+        }
+
+        if (playerHeroData.with_games === 0) { 
+            withWinRate = 0;
+        } else {   
+         withWinRate = winrate(playerHeroData.with_games, playerHeroData.with_win);
+        }
+
+        if (playerHeroData.against_games === 0) { 
+            againstWinRate = 0;
+        } else {
+
+         againstWinRate = winrate(playerHeroData.against_games, playerHeroData.against_win);
+        }
+
+        // 1. Try to find your original <div> by ID
+        let elPlayerHeroStats = document.getElementById(`playerHeroStats${index}`);
+
+        // 2. If it doesn't exist (e.g., for the 4th, 5th hero), create it dynamically
+        if (!elPlayerHeroStats) {
+            const parent = document.getElementById(containerId);
+            elPlayerHeroStats = document.createElement('div');
+            elPlayerHeroStats.id = `playerHeroStats${index}`;
+            // Use the EXACT classes from your original HTML
+            elPlayerHeroStats.className = "col-xs-12 col-md-6 col-xl-4 my-2";
+            parent.appendChild(elPlayerHeroStats);
+        }
+
+        // 3. Inject the Card Content
         elPlayerHeroStats.innerHTML = `
-   
-                        <div class="card glass-card mx-auto" style="width: 18rem;" >
-                        <img src="${heroImg}" class="card-img-top" alt="..." id="">
-                            <div class="card-body" id="">
-                            <div class="mb-3 text-center">
-                                    <span class="h5 p-1 px-4 text-center mb-3 rounded-3 border border-secondary"
-                                        style="${attributeColors[playerHeroStats.primary_attr].attributeColor}">
-                                        <b>${getHeroData(playerHeroID).localized_name.toUpperCase()}</b></span>
-                                </div>
-                                <div class="">
-                                    <div class=" text-light">
-                                        <p> <b> Matches Played As: </b> ${playerHeroData.games} </p>
-                                    </div>
-                                    <div class="text-light d-flex flex-row">
-                                        <p> <b>Win Rate:</b> </p>
-                                        <div class="progress ms-3 align-self-center mb-3 bg-danger border border-secondary" 
-                                        style="width: 65%; height:25px"
-                                        role="progressbar" 
-                                        aria-label="Success example" 
-                                        aria-valuenow="${mainWinRate}"
-                                        aria-valuemin="0" 
-                                        aria-valuemax="100">
-                                            <div class="progress-bar bg-success fs-6" style="width: ${mainWinRate +"%"}">
-                                                ${mainWinRate +"%"}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr class="border-secondary border-1 opacity-75">
-                                    <div class="mt-2 text-center">
-                                        <button class="btn glass-card text-light fw-bold shadow glass-card-hover"
-                                            type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseAdditionalStats${index}" aria-expanded="false"
-                                            aria-controls="collapseAdditionalStats${index}">
-                                            DISPLAY MORE
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="collapse mt-3" id="collapseAdditionalStats${index}">
-                                    <hr class="border-secondary border-1 opacity-75">
-
-                                    <div class="">
-                                        <p class="fw-bold text-light">Matches Played With: ${playerHeroData.with_games}</p>
-                                    </div>
-
-                                    <div class="d-flex flex-row">
-                                        <p class="fw-bold text-light">Win Rate:</p>
-                                        <div class="progress ms-3 align-self-center mb-3 bg-danger border border-secondary" 
-                                        style="width: 65%; height:25px"
-                                        role="progressbar" 
-                                        aria-label="Success example" 
-                                        aria-valuenow="${withWinRate}"
-                                        aria-valuemin="0" 
-                                        aria-valuemax="100">
-                                            <div class="progress-bar bg-success fs-6" style="width: ${withWinRate +"%"}">
-                                                ${withWinRate +"%"}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr class="border-secondary border-1 opacity-75">
-
-                                    <div class="">
-                                        <p class="fw-bold text-light">Matches Played Against:${playerHeroData.against_games}</p>
-                                    </div>
-
-                                    <div class="d-flex flex-row">
-                                        <p class="fw-bold text-light">Win Rate:</p>
-                                        <div class="progress ms-3 align-self-center mb-3 bg-danger border border-secondary" 
-                                        style="width: 65%; height:25px"
-                                        role="progressbar" 
-                                        aria-label="Success example" 
-                                        aria-valuenow="${againstWinRate}"
-                                        aria-valuemin="0" 
-                                        aria-valuemax="100">
-                                            <div class="progress-bar bg-success fs-6" style="width: ${againstWinRate +"%"}">
-                                                ${againstWinRate +"%"}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="card glass-card mx-auto" style="width: 18rem;">
+                <img src="${heroImg}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="mb-3 text-center">
+                        <span class="fs-6 p-1 px-4 text-center mb-3 rounded-3 border border-secondary"
+                            style="${attributeColors[playerHeroStats.primary_attr].attributeColor}">
+                            <b>${getHeroData(playerHeroID).localized_name.toUpperCase()}</b>
+                        </span>
+                    </div>
+                    
+                    <div class="text-light">
+                        <p><b>Matches Played As:</b> ${playerHeroData.games}</p>
+                    </div>
+                    
+                    <div class="text-light d-flex flex-row">
+                        <p><b>Win Rate:</b></p>
+                        <div class="progress ms-3 align-self-center mb-3 bg-danger border border-secondary" 
+                             style="width: 65%; height:25px" role="progressbar" 
+                             aria-valuenow="${mainWinRate}" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-success fs-6" style="width: ${mainWinRate}%">
+                                ${mainWinRate}%
                             </div>
                         </div>
                     </div>
-`
-
+    
+                    <hr class="border-secondary border-1 opacity-75">
+                    
+                    <div class="mt-2 text-center">
+                        <button class="btn glass-card text-light fw-bold shadow glass-card-hover"
+                            type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseAdditionalStats${index}">
+                            DISPLAY MORE
+                        </button>
+                    </div>
+    
+                    <div class="collapse mt-3" id="collapseAdditionalStats${index}">
+                        <hr class="border-secondary border-1 opacity-75">
+                        <p class="fw-bold text-light">With: ${playerHeroData.with_games} matches (${withWinRate}%)</p>
+                        <p class="fw-bold text-light">Against: ${playerHeroData.against_games} matches (${againstWinRate}%)</p>
+                    </div>
+                </div>
+            </div>`;
     }
 
 
     const elPlayerName = document.getElementById("playerName");
-    elPlayerName.innerHTML =`<h5 class="bg-dark py-2 rounded border border-secondary"> ${playerName} </h5>`;
+    elPlayerName.innerHTML = `<h5 class="bg-dark py-2 rounded border border-secondary"> ${playerName} </h5>`;
 
 
     const elPlayerRank = document.getElementById("playerRank");
-    elPlayerRank.innerHTML =`<div class="h5 mb-3 text-center">Current Rank: </div> <div class="d-flex flex-row"> <p class="mt-5 me-3"> ${playerRank} </p> <img class="img-fluid w-50" src="${playerRankIcon}"> </div>`
+    elPlayerRank.innerHTML = `<div class="h5 mb-3 text-center">Current Rank: </div> <div class="d-flex flex-row"> <p class="mt-5 me-3"> ${playerRank} </p> <img class="img-fluid w-50" src="${playerRankIcon}"> </div>`
 
     const elPlayerAvatar = document.getElementById("playerAvatar");
     elPlayerAvatar.src = playerAvatar;
 
     const elPlayerFriendCode = document.getElementById("playerFriendCode");
-    elPlayerFriendCode.innerHTML ="<b>Friend Code</b>: " + friendCode;
+    elPlayerFriendCode.innerHTML = "<b>Friend Code</b>: " + friendCode;
 
 
-    fillPlayerHeroStats(playerTop1HeroID,1);
-    fillPlayerHeroStats(playerTop2HeroID,2);
-    fillPlayerHeroStats(playerTop3HeroID,3);
+    const currentPage = window.location.pathname;
 
- 
+    if (currentPage.includes("index.html") || currentPage === "/") {
+        renderHeroList(playerHeroData, 3);
+    } else if (currentPage.includes("player_heroes.html")) {
+        renderHeroList(playerHeroData, playerHeroData.length);
+    }
+
+
 
 
 
