@@ -22,12 +22,12 @@ const rankIconMapping = {
 };
 
 const attributeColors = {
-    str: { attributeColor: "background-color:#B9500B" },
-    agi: { attributeColor: "background-color:#167C13" },
-    int: { attributeColor: "background-color:#257DAE" },
-    all: { attributeColor: "background: linear-gradient(to right,#B9500B, #167C13, #257DAE);" }
-}
-
+    str: { attributeColor: "rgba(185, 80, 11, 0.4)" },     // Red with 0.4 opacity
+    agi: { attributeColor: "rgba(22, 124, 19, 0.4)" },    // Green with 0.4 opacity
+    int: { attributeColor: "rgba(37, 125, 174, 0.4)" },   // Blue with 0.4 opacity
+    // For Universal, we use a transparent gradient
+    all: { attributeColor: "linear-gradient(to right, rgba(185, 80, 11, 0.4), rgba(22, 124, 19, 0.4), rgba(37, 125, 174, 0.4))" }
+};
 
 const getPlayerData = async () => {
 
@@ -102,26 +102,28 @@ const getPlayerData = async () => {
         const playerHeroData = new getPlayerHeroData(parseInt(index - 1)).heroData;
         const playerHeroID = playerHeroData.hero_id;
         const heroImg = baseHeroImgUrl + playerHeroStats.img;
-        let mainWinRate,withWinRate,againstWinRate;
+        const matches = playerHeroData.games;
+        const withMatches = playerHeroData.with_games;
+        const againstMatches = playerHeroData.against_games;
+        let mainWinRate, withWinRate, againstWinRate;
 
         // Winrate calculations
-        if (playerHeroData.games === 0) { 
+        if (matches === 0) {
             mainWinRate = 0;
         } else {
-         mainWinRate = winrate(playerHeroData.games, playerHeroData.win);
+            mainWinRate = winrate(matches, playerHeroData.win);
         }
 
-        if (playerHeroData.with_games === 0) { 
+        if (withMatches === 0) {
             withWinRate = 0;
-        } else {   
-         withWinRate = winrate(playerHeroData.with_games, playerHeroData.with_win);
+        } else {
+            withWinRate = winrate(withMatches, playerHeroData.with_win);
         }
 
-        if (playerHeroData.against_games === 0) { 
+        if (againstMatches === 0) {
             againstWinRate = 0;
         } else {
-
-         againstWinRate = winrate(playerHeroData.against_games, playerHeroData.against_win);
+            againstWinRate = winrate(againstMatches, playerHeroData.against_win);
         }
 
         // 1. Try to find your original <div> by ID
@@ -140,25 +142,32 @@ const getPlayerData = async () => {
         // 3. Inject the Card Content
         elPlayerHeroStats.innerHTML = `
             <div class="card glass-card mx-auto" style="width: 18rem;">
-                <img src="${heroImg}" class="card-img-top" alt="...">
+                <img src="${heroImg}" class="card-img-top border-bottom border-danger border-5" alt="...">
                 <div class="card-body">
                     <div class="mb-3 text-center">
-                        <span class="fs-6 p-1 px-4 text-center mb-3 rounded-3 border border-secondary"
-                            style="${attributeColors[playerHeroStats.primary_attr].attributeColor}">
+                        <span class="hero-name-font text-light mt-3 fs-6 p-1 px-4 text-center mb-3 rounded-3 border border-secondary"
+                            style="backdrop-filter: blur(10px); 
+                            background: ${attributeColors[playerHeroStats.primary_attr].attributeColor}; 
+                            border: 1px solid rgba(255, 255, 255, 0.1); 
+                            -webkit-backdrop-filter: blur(10px); 
+                            border-radius: 8px; 
+                            padding: 4px 16px;
+                            display: inline-block;">
                             <b>${getHeroData(playerHeroID).localized_name.toUpperCase()}</b>
                         </span>
                     </div>
+                    <hr class="border-secondary border-1 opacity-75">
                     
-                    <div class="text-light">
-                        <p><b>Matches Played As:</b> ${playerHeroData.games}</p>
+                    <div class="text-light stat-text">
+                        <p><b>Matches Played As:</b> ${matches}</p>
                     </div>
                     
-                    <div class="text-light d-flex flex-row">
+                    <div class="text-light stat-text d-flex flex-row">
                         <p><b>Win Rate:</b></p>
-                        <div class="progress ms-3 align-self-center mb-3 bg-danger border border-secondary" 
-                             style="width: 65%; height:25px" role="progressbar" 
+                        <div class="progress ms-3 align-self-center rounded-0 mb-3 bg-danger border border-secondary" 
+                             style="width: 65%; height:13px" role="progressbar" 
                              aria-valuenow="${mainWinRate}" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar bg-success fs-6" style="width: ${mainWinRate}%">
+                            <div class="progress-bar bg-success stat-text" style="width: ${mainWinRate}%">
                                 ${mainWinRate}%
                             </div>
                         </div>
@@ -176,8 +185,38 @@ const getPlayerData = async () => {
     
                     <div class="collapse mt-3" id="collapseAdditionalStats${index}">
                         <hr class="border-secondary border-1 opacity-75">
-                        <p class="fw-bold text-light">With: ${playerHeroData.with_games} matches (${withWinRate}%)</p>
-                        <p class="fw-bold text-light">Against: ${playerHeroData.against_games} matches (${againstWinRate}%)</p>
+
+                        
+                    <div class="text-light stat-text">
+                        <p><b>Matches Played With:</b> ${withMatches}</p>
+                    </div>
+                        <div class="text-light stat-text d-flex flex-row">
+                        
+                        <p><b>Win Rate:</b></p>
+                        <div class="progress ms-3 align-self-center rounded-0 mb-3 bg-danger border border-secondary" 
+                             style="width: 65%; height:13px" role="progressbar" 
+                             aria-valuenow="${withMatches}" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-success stat-text" style="width: ${withWinRate}%">
+                                ${withWinRate}%
+                            </div>
+                        </div>
+                    </div>
+
+                        <hr class="border-secondary border-1 opacity-75">
+                        
+                    <div class="text-light stat-text">
+                        <p><b>Matches Played Against:</b> ${againstMatches}</p>
+                    </div>
+                        <div class="text-light stat-text d-flex flex-row">
+                        <p><b>Win Rate:</b></p>
+                        <div class="progress ms-3 align-self-center mb-3 rounded-0 bg-danger border border-secondary" 
+                             style="width: 65%; height:13px" role="progressbar" 
+                             aria-valuenow="${againstMatches}" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-success stat-text" style="width: ${againstWinRate}%">
+                                ${againstWinRate}%
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>`;
