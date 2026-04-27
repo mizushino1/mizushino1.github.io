@@ -34,8 +34,7 @@ const getDota2Data = async () => {
     ]);
 
     
-
-    const currentHeroID = 4;
+    let currentHeroID = 1;
 
     const heroesData = await heroesDataRes.json();
     const heroStats = await heroStatsRes.json();
@@ -210,6 +209,92 @@ const getDota2Data = async () => {
     heroStyle.border = "2px solid rgba(255, 255, 255, 0.1)";
     heroStyle.borderRadius = "8px";
     heroStyle.padding = "4px 16px";
+
+
+
+    // 1. Populate the Datalist so users see suggestions
+function setupSearchAutocomplete(heroes) {
+    const dataList = document.getElementById('heroList');
+    dataList.innerHTML = ''; // Clear existing
+
+    heroes.forEach(hero => {
+        const option = document.createElement('option');
+        option.value = hero.localized_name; 
+        dataList.appendChild(option);
+    });
+}
+
+document.getElementById('searchBtn').addEventListener('click', () => {
+    const input = document.getElementById('heroSearchInput');
+    const searchTerm = input.value.trim();
+    
+    const foundHero = heroStats.find(h => 
+        h.localized_name.toLowerCase() === searchTerm.toLowerCase()
+    );
+
+    if (foundHero) {
+        currentHeroID = foundHero.id;
+
+        // 1. Get the full profile data for the new hero
+        const profile = getFullHeroProfile(currentHeroID);
+        
+        // 2. Update Image and Name
+        const elCurrentHeroImage = document.getElementById("currentHeroImage");
+        elCurrentHeroImage.src = `${baseHeroAssetsUrl}${foundHero.img}`; 
+
+        const elCurrentHeroName = document.getElementById("currentHeroName");
+        elCurrentHeroName.innerHTML = profile.localized_name;
+
+        // 3. APPLY STYLES (Background, Blur, and Attribute Color)
+        // Ensure you have your attributeColors mapping available
+        const currentHeroAttr = profile.primary_attr;
+        const attrColor = attributeColors[currentHeroAttr].attributeColor;
+        
+        const heroStyle = elCurrentHeroName.style;
+        heroStyle.backdropFilter = "blur(10px)";
+        heroStyle.webkitBackdropFilter = "blur(10px)"; 
+        heroStyle.background = attrColor;
+        heroStyle.border = "2px solid rgba(255, 255, 255, 0.1)";
+        heroStyle.borderRadius = "8px";
+        heroStyle.padding = "4px 16px";
+
+        // 4. Update Primary Attribute HTML
+        const elAttributePrimary = document.getElementById("attributePrimary");
+        elAttributePrimary.innerHTML = `
+            <span class="d-block">
+                <p class="d-inline-block radiance me-2 grey mb-0" style="font-size: 15px;">
+                Primary Attribute </p>
+                <img class="mb-2 mt-2" style="width:25px" src="${profile.icons.primaryAttr}"> 
+            </span>
+        `;
+
+        // 5. Update Roles HTML (Generating the icons list)
+        const roleHtml = profile.roleDetails.map(role => `
+            <div class="role-item d-inline-block mt-2">
+                <img src="${role.icon}" width="25" style="filter: invert(100%);">
+            </div>
+        `).join('');
+
+        const elHeroRoles = document.getElementById("heroRoles");
+        elHeroRoles.innerHTML = `
+            <span class="d-block">
+                <p class="d-inline-block mt-2 me-2" style="font-size:15px">Roles: </p> 
+                ${roleHtml}
+            </span>
+        `;
+
+        // 6. Final Render for the stats table/area
+        const container = document.getElementById('heroStatsContainer') || document.getElementById('heroStats');
+        container.innerHTML = renderHeroStats(foundHero);
+        
+        input.value = ""; 
+    } else {
+        alert("Hero not found. Please check the spelling.");
+    }
+});
+
+// Initialization (Call this after you fetch your heroStats)
+setupSearchAutocomplete(heroStats);
 
 
 }
