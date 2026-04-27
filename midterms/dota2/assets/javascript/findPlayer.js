@@ -143,7 +143,7 @@ const getPlayerData = async () => {
         elPlayerHeroStats.innerHTML = `
             <div class="card glass-card mx-auto" style="width: 18rem;">
                 <img src="${heroImg}" class="card-img-top border-bottom border-danger border-5" alt="...">
-                <div class="card-body">
+                <div class="card-body card-body-glass">
                     <div class="mb-3 text-center">
                         <span class="hero-name-font text-light mt-3 fs-6 p-1 px-4 text-center mb-3 rounded-3 border border-secondary"
                             style="backdrop-filter: blur(10px); 

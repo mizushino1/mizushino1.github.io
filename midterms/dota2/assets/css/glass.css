@@ -13,7 +13,7 @@
 
 
 
-.glass-card .card-body, 
+.glass-card .card-body-glass, 
 .glass-card .list-group-item {
     background-color: transparent !important;
     border-color: rgba(255, 255, 255, 0.1); 
