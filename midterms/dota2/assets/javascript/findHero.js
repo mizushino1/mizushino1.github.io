@@ -6,6 +6,10 @@ const attributeIcons = {
     all: { attributeIcon: `./assets/image/uniicon.webp` }
 };
 
+const bkbPierceLookup = {
+    yes: "text-success",
+    no: "text-danger"
+};
 
 const roleIcons = {
     Carry: `./assets/image/roles/carryIcon.webp`,
@@ -61,18 +65,30 @@ const getDota2Data = async () => {
 
         // Map skills to details and CDN icons
         const skills = skillNames
-        .filter(name => name !== "generic_hidden") // Strictly removes the hidden slots
-        .map(name => {
-            const detail = abilitiesDetails[name] || {};
-            return {
-                id: name,
-                dname: detail.dname || "Ability",
-                icon: `${baseHeroAssetsUrl}/apps/dota2/images/dota_react/abilities/${name}.png`,
-                desc: detail.desc,
-                mc: detail.mc,
-                cd: detail.cd
-            };
-        });
+            .filter(name => name !== "generic_hidden") // Strictly removes the hidden slots
+            .map(name => {
+                const detail = abilitiesDetails[name] || {};
+                return {
+                    id: name,
+                    dname: detail.dname || "Ability",
+                    icon: `${baseHeroAssetsUrl}/apps/dota2/images/dota_react/abilities/${name}.png`,
+                    desc: detail.desc,
+                    mc: detail.mc || "0",
+                    hc: detail.hp_cost || "0",
+                    cd: detail.cd,
+
+                    // Ability Mechanics
+                    bkb_pierce: (detail.bkbpierce || "No").toLowerCase(),
+                    dispellable: (detail.dispellable || "No").toLowerCase(),
+                    target_team: Array.isArray(detail.target_team) ? detail.target_team.join(" / ") : detail.target_team,
+                    behavior: Array.isArray(detail.behavior) ? detail.behavior.join(", ") : detail.behavior,
+
+                    // Extracted from Attrib array
+                    damage: detail.attrib?.find(a => a.key === "damage")?.value?.join("/") || "0",
+                    cast_range: detail.attrib?.find(a => a.key === "abilitycastrange")?.value || "0",
+                    cast_point: detail.attrib?.find(a => a.key === "abilitycastpoint")?.value || "0"
+                };
+            });
 
         // Return the combined object with pre-mapped stat icons
         return {
@@ -92,6 +108,11 @@ const getDota2Data = async () => {
             }
         };
     }
+
+    function toSentenceCase(str) {
+        if (!str) return "";
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+      }
 
     function renderHeroSkills(targetID) {
         const profile = getFullHeroProfile(targetID);
@@ -116,8 +137,24 @@ const getDota2Data = async () => {
                         <h4 class="row ms-4 cinzel text-light">${skill.dname}</h4>
                         <p class=" row ms-4 gentium shadow glass-card p-4 me-md-4 me-0" style="background: rgba(0, 0, 0, 0.5) !important;">${skill.desc}</p>
                     </div>
+                    
+                </div>
+
+            
+            </div>
+          <div class="row">
+            <div class="ms-5 mb-4 gentium fs-6 col-12 col-lg-4 col-xl-3 justify-content-center border-end">
+                <div>
+                    <p class="d-inline-block grey">Pierces Spell Immunity:</p>
+                    <p class="d-inline-block ${bkbPierceLookup[skill.bkb_pierce]}"> ${toSentenceCase(skill.bkb_pierce)} </p>
+                </div>
+                <div>
+                    <p class="d-inline-block grey">Dispellable:</p>
+                    <p class="d-inline-block ${bkbPierceLookup[skill.dispellable]}"> ${toSentenceCase(skill.dispellable)} </p>
                 </div>
             </div>
+          </div>
+
         </div>
         `).join('');
 
@@ -136,7 +173,7 @@ const getDota2Data = async () => {
             attackRate: hero.attack_rate,
             range: hero.attack_range,
             moveSpeed: hero.move_speed,
-            baseAttackTime: hero.base_attack_time // Often 1.7 or 1.4
+            baseAttackTime: hero.base_attack_time
         };
 
         return `
