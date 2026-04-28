@@ -61,18 +61,18 @@ const getDota2Data = async () => {
 
         // Map skills to details and CDN icons
         const skills = skillNames
-            .filter(name => name !== "generic_hidden")
-            .map(name => {
-                const detail = abilitiesDetails[name] || {};
-                return {
-                    id: name,
-                    dname: detail.dname || "Ability",
-                    icon: `${baseHeroAssetsUrl}/apps/dota2/images/dota_react/abilities/${name}.png`,
-                    desc: detail.desc,
-                    mc: detail.mc,
-                    cd: detail.cd
-                };
-            });
+        .filter(name => name !== "generic_hidden") // Strictly removes the hidden slots
+        .map(name => {
+            const detail = abilitiesDetails[name] || {};
+            return {
+                id: name,
+                dname: detail.dname || "Ability",
+                icon: `${baseHeroAssetsUrl}/apps/dota2/images/dota_react/abilities/${name}.png`,
+                desc: detail.desc,
+                mc: detail.mc,
+                cd: detail.cd
+            };
+        });
 
         // Return the combined object with pre-mapped stat icons
         return {
@@ -86,12 +86,45 @@ const getDota2Data = async () => {
             // Helper icons for your UI
             icons: {
                 primaryAttr: `${baseHeroAssetsUrl}/apps/dota2/images/dota_react/icons/hero_${hero.primary_attr === 'str' ? 'strength' :
-                        hero.primary_attr === 'agi' ? 'agility' :
-                            hero.primary_attr === 'int' ? 'intelligence' : 'universal'
+                    hero.primary_attr === 'agi' ? 'agility' :
+                        hero.primary_attr === 'int' ? 'intelligence' : 'universal'
                     }.png`
             }
         };
     }
+
+    function renderHeroSkills(targetID) {
+        const profile = getFullHeroProfile(targetID);
+        const container = document.getElementById('skillContainer');
+
+        if (!profile) return;
+
+        // Generate the HTML for all skills
+        const skillsHTML = profile.skills.map(skill => `
+        <div class="row g-0 overflow-hidden glass-card me-3 mb-3">
+            <div class="col">
+                <div class="row">
+            
+                    <div class="skill-wrapper mt-4 col-3 col-md-2" data-bs-toggle="tooltip" title="${skill.dname}">
+                        <img src="${skill.icon}" 
+                            alt="${skill.dname}" 
+                            class="img-fluid rounded-4 rounded-1 ms-3 border border-secondary shadow w-100"
+                            style="object-fit: cover;"
+                            onerror="this.src='./assets/image/defaultSkillIcon.webp'">.
+                    </div>
+                    <div class="col-8 col-md-9 text-light ms-4 mt-4 mb-5 glass-card" style="">
+                        <h4 class="row ms-4 cinzel text-light">${skill.dname}</h4>
+                        <p class=" row ms-4 gentium shadow glass-card p-4 me-md-4 me-0" style="background: rgba(0, 0, 0, 0.5) !important;">${skill.desc}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `).join('');
+
+        container.innerHTML = skillsHTML;
+    }
+
+    renderHeroSkills(currentHeroID);
 
     function renderHeroStats(hero) {
         const stats = {
@@ -108,7 +141,7 @@ const getDota2Data = async () => {
 
         return `
 
-            <div class="col-5 border-end border-secondary" id="attributeStats">
+            <div class="col-5 col-lg-4 border-end border-secondary" id="attributeStats">
                 <div class="mb-0">
                     <p class="d-block radiance grey mb-0" style="font-size: 10px;">Strength</p>
                     <img src="assets/image/stricon.webp" class="d-inline-block">
@@ -126,7 +159,7 @@ const getDota2Data = async () => {
                 </div>
             </div>
     
-            <div class="col-3">
+            <div class="col-4 col-lg-4 col-xl-4">
                 <div class="mb-0">
                     <p class="d-block radiance grey mb-0" style="font-size: 10px;">Attack Damage</p>
                     <p class="d-inline-block ms-2 fw-bold radiance text-light" style="font-size: 13px;">${stats.damage}</p>
@@ -141,7 +174,7 @@ const getDota2Data = async () => {
                 </div>
             </div>
     
-            <div class="col-3">
+            <div class="col-3 col-lg-4 col-xl-3">
                 <div class="mb-0">
                     <p class="d-block radiance grey mb-0" style="font-size: 10px;">Attack Range</p>
                     <p class="d-inline-block ms-2 fw-bold radiance text-light" style="font-size: 13px;">${stats.range}</p>
@@ -290,6 +323,8 @@ const getDota2Data = async () => {
         } else {
             alert("Hero not found. Please check the spelling.");
         }
+
+        renderHeroSkills(currentHeroID);
     });
 
     // Initialization (Call this after you fetch your heroStats)

@@ -1,0 +1,62 @@
+.w-75 {
+    width: 75% !important;
+}
+
+
+@media (min-width: 992px) {
+    .w-lg-100 {
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .w-xl-75 {
+        width: 75% !important;
+    }
+}
+.form-floating {
+    overflow: visible !important;
+}
+
+.form-floating, 
+.form-floating > .form-control {
+    height: 40px !important;
+    min-height: 40px !important;
+    line-height: 1;
+}
+
+/* 2. Fix the label's default position (when empty) */
+.form-floating > label {
+    padding: 10px 12px !important; /* Center the label vertically */
+    font-size: 12px;
+    overflow: visible !important;
+    white-space: nowrap !important;
+    text-overflow: clip !important;
+    width: auto !important;
+    max-width: none !important;
+    color: rgb(156, 156, 156);
+}
+
+/* 3. Fix the label when it 'floats' to the top */
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem) !important;
+    font-size: 10px;
+    opacity: 0.7;
+    background-color: transparent; 
+    padding: 0 5px !important;   
+    height: auto !important;
+    color: white;
+}
+
+/* 4. Adjust the input text position so it doesn't clip with the label */
+.form-floating > .form-control {
+    padding-top: 1.2rem !important;
+    padding-bottom: 0.2rem !important;
+}
+
+#heroSearchInput:focus {
+    border-color: #ff4444;
+    border-right: none;
+    box-shadow: 0 0 8px 2px rgba(255, 68, 68, 0.5) !important; 
+}
