@@ -11,6 +11,12 @@ const bkbPierceLookup = {
     no: "text-danger"
 };
 
+const dispellableLookup = {
+    yes: "text-success",
+    strongdispelsonly: "text-warning",
+    no: "text-danger"
+};
+
 const roleIcons = {
     Carry: `./assets/image/roles/carryIcon.webp`,
     Escape: `./assets/image/roles/escapeIcon.webp`,
@@ -80,6 +86,7 @@ const getDota2Data = async () => {
                     // Ability Mechanics
                     bkb_pierce: (detail.bkbpierce || "No").toLowerCase(),
                     dispellable: (detail.dispellable || "No").toLowerCase(),
+                    dispellableColor: (detail.dispellable || "No").toLowerCase().replaceAll(' ', ''),
                     target_team: Array.isArray(detail.target_team) ? detail.target_team.join(" / ") : detail.target_team,
                     behavior: Array.isArray(detail.behavior) ? detail.behavior.join(", ") : detail.behavior,
 
@@ -150,13 +157,14 @@ const getDota2Data = async () => {
                 </div>
                 <div>
                     <p class="d-inline-block grey">Dispellable:</p>
-                    <p class="d-inline-block ${bkbPierceLookup[skill.dispellable]}"> ${toSentenceCase(skill.dispellable)} </p>
+                    <p class="d-inline-block ${dispellableLookup[skill.dispellableColor]}"> ${toSentenceCase(skill.dispellable)} </p>
                 </div>
             </div>
           </div>
 
         </div>
         `).join('');
+
 
         container.innerHTML = skillsHTML;
     }
