@@ -237,11 +237,12 @@ const getPlayerData = async () => {
     elPlayerFriendCode.innerHTML = "<b>Friend Code</b>: " + friendCode;
 
 
-    const currentPage = window.location.pathname;
+    const path = window.location.pathname;
 
-    if (currentPage.includes("index.html") || currentPage === "/") {
+    // This checks if the string ends with index.html or is exactly the root
+    if (path.endsWith("index.html") || path === "/" || path.endsWith("/")) {
         renderHeroList(playerHeroData, 3);
-    } else if (currentPage.includes("player_heroes.html")) {
+    } else if (path.includes("player_heroes.html")) {
         renderHeroList(playerHeroData, playerHeroData.length);
     }
 
