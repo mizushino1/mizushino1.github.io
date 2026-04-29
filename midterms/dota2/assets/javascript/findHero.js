@@ -101,6 +101,8 @@ const getDota2Data = async () => {
                     dname: detail.dname || "Ability",
                     icon: `${baseHeroAssetsUrl}/apps/dota2/images/dota_react/abilities/${name}.png`,
                     desc: detail.desc,
+                    mc: Array.isArray(detail.mc) ? detail.mc.join("/") : detail.mc ,
+                    cd: Array.isArray(detail.cd) ? detail.cd.join("/"): detail.cd,
                     attributes: (detail.attrib || []).map(a => ({
                         header: a.header,
                         value: Array.isArray(a.value) ? a.value.join("/") : a.value,
@@ -192,6 +194,20 @@ const getDota2Data = async () => {
                     <p class="d-inline-block grey">Damage Type:</p>
                     <p class="d-inline-block ${damageTypeLookup[skill.dmg_type]}">${toSentenceCase(skill.dmg_type)}</p>
                 </div>
+                ` : ''}
+                ${skill.mc ? `
+                    <div class="attr-row d-flex align-items-center mb-1">
+                        <img src="./assets/image/ability-manacost-icon.webp" style="width:20px;" class="me-2">
+                        <p class="text-info mb-0">${skill.mc}</p>
+                    </div>
+                ` : ''}
+            
+                <!-- 2. Cooldown Row -->
+                ${skill.cd ? `
+                    <div class="attr-row d-flex align-items-center mb-1 mt-2">
+                        <img src="./assets/image/ability-cooldown-icon.webp" style="width: 20px;" class="me-2">
+                        <p class="text-white mb-0">${skill.cd}</p>
+                    </div>
                 ` : ''}
             </div>
 
