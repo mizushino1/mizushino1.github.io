@@ -17,6 +17,12 @@ const dispellableLookup = {
     no: "text-danger"
 };
 
+const damageTypeLookup = {
+    magical: "text-primary",
+    pure: "text-warning",
+    physical: "text-danger"
+};
+
 const roleIcons = {
     Carry: `./assets/image/roles/carryIcon.webp`,
     Escape: `./assets/image/roles/escapeIcon.webp`,
@@ -71,29 +77,42 @@ const getDota2Data = async () => {
 
         // Map skills to details and CDN icons
         const skills = skillNames
-            .filter(name => name !== "generic_hidden") // Strictly removes the hidden slots
+            .filter(name => name !== "generic_hidden")
             .map(name => {
                 const detail = abilitiesDetails[name] || {};
+
+                // Helper for attributes (damage, range, etc.)
+                const formatAttrib = (key) => {
+                    const val = detail.attrib?.find(a => a.key === key)?.value;
+                    if (val === undefined || val === null) return "0";
+                    return Array.isArray(val) ? val.join("/") : val;
+                };
+
+                // Helper for simple strings that might accidentally be arrays (like Lich's BKB pierce)
+                const formatString = (val) => {
+                    if (!val) return "no";
+                    // If it's an array, take the first element; otherwise use the value
+                    const str = Array.isArray(val) ? val[0] : val;
+                    return String(str).toLowerCase();
+                };
+
                 return {
                     id: name,
                     dname: detail.dname || "Ability",
                     icon: `${baseHeroAssetsUrl}/apps/dota2/images/dota_react/abilities/${name}.png`,
                     desc: detail.desc,
-                    mc: detail.mc || "0",
-                    hc: detail.hp_cost || "0",
-                    cd: detail.cd,
+                    attributes: (detail.attrib || []).map(a => ({
+                        header: a.header,
+                        value: Array.isArray(a.value) ? a.value.join("/") : a.value,
+                        key: a.key,
+                        generated: a.generated // useful if you want to hide internal values
+                    })),
 
-                    // Ability Mechanics
-                    bkb_pierce: (detail.bkbpierce || "No").toLowerCase(),
-                    dispellable: (detail.dispellable || "No").toLowerCase(),
-                    dispellableColor: (detail.dispellable || "No").toLowerCase().replaceAll(' ', ''),
-                    target_team: Array.isArray(detail.target_team) ? detail.target_team.join(" / ") : detail.target_team,
-                    behavior: Array.isArray(detail.behavior) ? detail.behavior.join(", ") : detail.behavior,
-
-                    // Extracted from Attrib array
-                    damage: detail.attrib?.find(a => a.key === "damage")?.value?.join("/") || "0",
-                    cast_range: detail.attrib?.find(a => a.key === "abilitycastrange")?.value || "0",
-                    cast_point: detail.attrib?.find(a => a.key === "abilitycastpoint")?.value || "0"
+                    // Updated with formatString helper to prevent the Lich error
+                    bkb_pierce: formatString(detail.bkbpierce),
+                    dispellable: formatString(detail.dispellable),
+                    dispellableColor: formatString(detail.dispellable).replaceAll(' ', ''),
+                    dmg_type: formatString(detail.dmg_type),
                 };
             });
 
@@ -119,7 +138,7 @@ const getDota2Data = async () => {
     function toSentenceCase(str) {
         if (!str) return "";
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-      }
+    }
 
     function renderHeroSkills(targetID) {
         const profile = getFullHeroProfile(targetID);
@@ -129,41 +148,75 @@ const getDota2Data = async () => {
 
         // Generate the HTML for all skills
         const skillsHTML = profile.skills.map(skill => `
-        <div class="row g-0 overflow-hidden glass-card me-3 mb-3">
-            <div class="col">
-                <div class="row">
+       <div class="row g-0 overflow-hidden glass-card me-3 mb-3">
+    <div class="col-12">
+        <div class="row g-0"> 
             
-                    <div class="skill-wrapper mt-4 col-3 col-md-2" data-bs-toggle="tooltip" title="${skill.dname}">
-                        <img src="${skill.icon}" 
-                            alt="${skill.dname}" 
-                            class="img-fluid rounded-4 rounded-1 ms-3 border border-secondary shadow w-100"
-                            style="object-fit: cover;"
-                            onerror="this.src='./assets/image/defaultSkillIcon.webp'">.
-                    </div>
-                    <div class="col-8 col-md-9 text-light ms-4 mt-4 mb-5 glass-card" style="">
-                        <h4 class="row ms-4 cinzel text-light">${skill.dname}</h4>
-                        <p class=" row ms-4 gentium shadow glass-card p-4 me-md-4 me-0" style="background: rgba(0, 0, 0, 0.5) !important;">${skill.desc}</p>
-                    </div>
-                    
-                </div>
-
             
+            <div class="skill-wrapper mt-4 col-5 mx-auto mb-4 col-md-2" data-bs-toggle="tooltip" title="${skill.dname}">
+                <img src="${skill.icon}" 
+                    alt="${skill.dname}" 
+                    class="img-fluid rounded-4 border border-secondary shadow w-100"
+                    style="object-fit: cover;"
+                    onerror="this.src='./assets/image/defaultSkillIcon.webp'">
             </div>
-          <div class="row">
+
+            <!-- Content Column: Remove 'ms-4'. Use 'px-3' for mobile and 'ps-md-4' for desktop -->
+            <div class="col-12 col-md-9 text-light mt-4 mb-5 px-3 ps-md-4">
+                
+                <h4 class="cinzel text-light text-uppercase mb-2 text-center text-md-start">${skill.dname}</h4>
+                
+                
+                <div class="gentium shadow glass-card p-4 mx-2 mx-md-0" 
+                     style="background: rgba(0, 0, 0, 0.5) !important;">
+                    <p class="mb-0">${skill.desc}</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+            <div class="row g-0">
+            
             <div class="ms-5 mb-4 gentium fs-6 col-12 col-lg-4 col-xl-3 justify-content-center border-end">
                 <div>
                     <p class="d-inline-block grey">Pierces Spell Immunity:</p>
-                    <p class="d-inline-block ${bkbPierceLookup[skill.bkb_pierce]}"> ${toSentenceCase(skill.bkb_pierce)} </p>
+                    <p class="d-inline-block ${bkbPierceLookup[skill.bkb_pierce]}">${toSentenceCase(skill.bkb_pierce)}</p>
                 </div>
                 <div>
                     <p class="d-inline-block grey">Dispellable:</p>
-                    <p class="d-inline-block ${dispellableLookup[skill.dispellableColor]}"> ${toSentenceCase(skill.dispellable)} </p>
+                    <p class="d-inline-block ${dispellableLookup[skill.dispellableColor]}">${toSentenceCase(skill.dispellable)}</p>
                 </div>
+                ${skill.dmg_type !== "no" ? `
+                <div>
+                    <p class="d-inline-block grey">Damage Type:</p>
+                    <p class="d-inline-block ${damageTypeLookup[skill.dmg_type]}">${toSentenceCase(skill.dmg_type)}</p>
+                </div>
+                ` : ''}
             </div>
-          </div>
 
+            <hr class="border-secondary border-1 opacity-75 d-lg-none g-0 me-5">
+
+            
+            <div class="ms-5 mb-4 gentium fs-6 col-12 col-lg-6 col-xl-7 justify-content-center">
+    ${skill.attributes.map(attr => {
+            // Only render if value exists, isn't 0, and has a header
+            if (!attr.value || attr.value === "0" || attr.value === "0%" || !attr.header) return '';
+
+            return `
+            <div class="attr-row">
+                <p class="d-inline-block grey mb-1" style="font-size:12px">${attr.header.trim()}</p>
+                <p class="d-inline-block mb-1 ${attr.key.includes('damage') ? damageTypeLookup[skill.dmg_type] : 'text-white'}"style="font-size:12px">
+                    ${attr.value}
+                </p>
+            </div>
+        `;
+        }).join('')}
+</div>
         </div>
-        `).join('');
+    </div>
+    <hr class="border-secondary border-3 border-danger opacity-100 g-0 me-3">
+`).join('');
 
 
         container.innerHTML = skillsHTML;
@@ -287,57 +340,57 @@ const getDota2Data = async () => {
     heroStyle.borderRadius = "8px";
     heroStyle.padding = "4px 16px";
 
-
-
-    // 1. Populate the Datalist so users see suggestions
     function setupSearchAutocomplete(heroes) {
+
         const dataList = document.getElementById('heroList');
+
         dataList.innerHTML = ''; // Clear existing
 
+
+
         heroes.forEach(hero => {
+
             const option = document.createElement('option');
+
             option.value = hero.localized_name;
+
             dataList.appendChild(option);
+
         });
+
     }
 
-    document.getElementById('searchBtn').addEventListener('click', () => {
-        const input = document.getElementById('heroSearchInput');
-        const searchTerm = input.value.trim();
+    // 1. Populate the Datalist so users see suggestions
+    function updateHeroDisplay(hero) {
+        if (!hero) return;
 
-        const foundHero = heroStats.find(h =>
-            h.localized_name.toLowerCase() === searchTerm.toLowerCase()
-        );
+        // Update global ID and Persistence
+        currentHeroID = hero.id;
+        localStorage.setItem('lastViewedHeroID', currentHeroID);
 
-        if (foundHero) {
-            currentHeroID = foundHero.id;
+        const profile = getFullHeroProfile(currentHeroID);
 
-            // 1. Get the full profile data for the new hero
-            const profile = getFullHeroProfile(currentHeroID);
+        // Update Image and Name
+        const elCurrentHeroImage = document.getElementById("currentHeroImage");
+        elCurrentHeroImage.src = `${baseHeroAssetsUrl}${hero.img}`;
 
-            // 2. Update Image and Name
-            const elCurrentHeroImage = document.getElementById("currentHeroImage");
-            elCurrentHeroImage.src = `${baseHeroAssetsUrl}${foundHero.img}`;
+        const elCurrentHeroName = document.getElementById("currentHeroName");
+        elCurrentHeroName.innerHTML = profile.localized_name;
 
-            const elCurrentHeroName = document.getElementById("currentHeroName");
-            elCurrentHeroName.innerHTML = profile.localized_name;
+        // Apply Styles
+        const currentHeroAttr = profile.primary_attr;
+        const attrColor = attributeColors[currentHeroAttr].attributeColor;
+        const heroStyle = elCurrentHeroName.style;
+        heroStyle.backdropFilter = "blur(10px)";
+        heroStyle.webkitBackdropFilter = "blur(10px)";
+        heroStyle.background = attrColor;
+        heroStyle.border = "2px solid rgba(255, 255, 255, 0.1)";
+        heroStyle.borderRadius = "8px";
+        heroStyle.padding = "4px 16px";
 
-            // 3. APPLY STYLES (Background, Blur, and Attribute Color)
-            // Ensure you have your attributeColors mapping available
-            const currentHeroAttr = profile.primary_attr;
-            const attrColor = attributeColors[currentHeroAttr].attributeColor;
-
-            const heroStyle = elCurrentHeroName.style;
-            heroStyle.backdropFilter = "blur(10px)";
-            heroStyle.webkitBackdropFilter = "blur(10px)";
-            heroStyle.background = attrColor;
-            heroStyle.border = "2px solid rgba(255, 255, 255, 0.1)";
-            heroStyle.borderRadius = "8px";
-            heroStyle.padding = "4px 16px";
-
-            // 4. Update Primary Attribute HTML
-            const elAttributePrimary = document.getElementById("attributePrimary");
-            elAttributePrimary.innerHTML = `
+        // 4. Update Primary Attribute HTML
+        const elAttributePrimary = document.getElementById("attributePrimary");
+        elAttributePrimary.innerHTML = `
             <span class="d-block">
                 <p class="d-inline-block radiance me-2 grey mb-0" style="font-size: 15px;">
                 Primary Attribute </p>
@@ -345,35 +398,60 @@ const getDota2Data = async () => {
             </span>
         `;
 
-            // 5. Update Roles HTML (Generating the icons list)
-            const roleHtml = profile.roleDetails.map(role => `
+        // 5. Update Roles HTML (Generating the icons list)
+        const roleHtml = profile.roleDetails.map(role => `
             <div class="role-item d-inline-block mt-2">
                 <img src="${role.icon}" width="25" style="filter: invert(100%);">
             </div>
         `).join('');
 
-            const elHeroRoles = document.getElementById("heroRoles");
-            elHeroRoles.innerHTML = `
+        const elHeroRoles = document.getElementById("heroRoles");
+        elHeroRoles.innerHTML = `
             <span class="d-block">
                 <p class="d-inline-block mt-2 me-2" style="font-size:15px">Roles: </p> 
                 ${roleHtml}
             </span>
         `;
 
-            // 6. Final Render for the stats table/area
-            const container = document.getElementById('heroStatsContainer') || document.getElementById('heroStats');
-            container.innerHTML = renderHeroStats(foundHero);
+        // 6. Final Render for the stats table/area
+        const container = document.getElementById('heroStatsContainer') || document.getElementById('heroStats');
+        container.innerHTML = renderHeroStats(hero);
+        renderHeroSkills(currentHeroID);
+    }
 
+    document.getElementById('searchBtn').addEventListener('click', () => {
+        const input = document.getElementById('heroSearchInput');
+        const searchTerm = input.value.trim().toLowerCase();
+
+        const foundHero = heroStats.find(h => h.localized_name.toLowerCase() === searchTerm);
+
+        if (foundHero) {
+            updateHeroDisplay(foundHero);
             input.value = "";
         } else {
             alert("Hero not found. Please check the spelling.");
         }
-
-        renderHeroSkills(currentHeroID);
     });
 
-    // Initialization (Call this after you fetch your heroStats)
-    setupSearchAutocomplete(heroStats);
+    function initializeApp(heroStats) {
+        setupSearchAutocomplete(heroStats);
+
+        // Check localStorage for the last viewed hero
+        const savedHeroID = localStorage.getItem('lastViewedHeroID');
+
+        if (savedHeroID) {
+            const lastHero = heroStats.find(h => h.id == savedHeroID);
+            if (lastHero) {
+                updateHeroDisplay(lastHero);
+            }
+        } else {
+            // Optional: Load a default hero (e.g., Anti-Mage) if no history exists
+            updateHeroDisplay(heroStats[0]);
+        }
+    }
+
+    initializeApp(heroStats);
+
 
 
 }
