@@ -10,7 +10,9 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="./assets/css/glass.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Gentium+Book+Basic:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Gentium+Book+Basic:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
     <link href="./assets/css/font.css" rel="stylesheet">
     <link href="./assets/css/style.css" rel="stylesheet">
 </head>
@@ -61,74 +63,17 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 col-lg-5 col-xl-4 mt-5">
-                <div class="card glass-card mx-auto w-75 w-lg-100 w-xl-75" style="width: 75%;">
-                    <img src="" class="card-img-top" alt="Hero Image" id="currentHeroImage">
-
-                    <div class="card-body">
-                        <h5 class="card-title text-center hero-name-font text-light" id="currentHeroName"></h5>
-                    </div>
-
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item grey fw-bold radiance text-center " id="attributePrimary">
-
-                        </li>
-                        <li class="list-group-item grey fw-bold radiance text-center " id="heroRoles">
-
-                        </li>
-                        <li class="list-group-item">
-                            <div class="container-fluid">
-                                <div class="row" id="heroStats">
-
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="container-fluid mt-2">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="input-group mb-3">
-                                            <div class="form-floating">
-                                                <input type="text" id="heroSearchInput"
-                                                    class="form-control glass-card radiance fw-bold text-light"
-                                                    placeholder="Type hero name" list="heroList"
-                                                    style="font-size: 12px; text-align: left; display: flex; align-items: center; padding-top: 0 !important;padding-bottom: 0 !important;line-height: 40px; height: 40px;">
-                                                <label for="heroSearchInput" class="radiance"
-                                                    style="font-size: 13px;">Type hero name</label>
-                                            </div>
-                                            <datalist id="heroList">
-                                            </datalist>
-                                            <button class="btn btn-outline-danger radiance fw-bold" type="button"
-                                                id="searchBtn">Search</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                    </ul>
-                </div>
+            <div class="col-3">
 
 
             </div>
-
-            <div class="col-12 col-lg-7 col-xl-7 mt-5 glass-card p-0">
-                <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <div class="h3 text-light cinzel fw-bold glass-card-red p-3 text-center" style="border-radius: 0 0 20px 0">
-                            HERO SKILL LIST
-                        </div>
-                    </div>
-                </div>
-                <div class="row ms-4 mt-3">
-                    <div class="col-12 " id="skillContainer">
-
-                    </div>
+            <div class="col-7 mt-5 me-2 glass-card" >
+                <div class="row justify-content-center" id="heroListContainer">
 
                 </div>
-
 
             </div>
+
         </div>
     </div>
 
@@ -138,7 +83,7 @@
         crossorigin="anonymous"></script>
 
     <script src="./assets/javascript/findPlayer.js"></script>
-    <script src="./assets/javascript/findHero.js"></script>
+    <script src="./assets/javascript/generateHeroList.js"></script>
 
 </body>
 

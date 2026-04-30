@@ -137,6 +137,8 @@ const getDota2Data = async () => {
         };
     }
 
+    
+
     function toSentenceCase(str) {
         if (!str) return "";
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -471,7 +473,11 @@ const getDota2Data = async () => {
 
 
 }
+const path = window.location.pathname;
 
-getDota2Data();
+    if (path.endsWith("hero_showcase.html") || path === "/" || path.endsWith("/")) {
+        getDota2Data();
+    }
+
 
 
