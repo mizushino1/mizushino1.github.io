@@ -29,7 +29,32 @@ const attributeColors = {
     all: { attributeColor: "linear-gradient(to right, rgba(185, 80, 11, 0.4), rgba(22, 124, 19, 0.4), rgba(37, 125, 174, 0.4))" }
 };
 
-const getPlayerData = async () => {
+async function fetchHeroesData(heroesUrl) {
+    const cached = localStorage.getItem("heroesData");
+    if (cached) return JSON.parse(cached);
+
+    const res = await fetch(heroesUrl);
+    const data = await res.json();
+    localStorage.setItem("heroesData", JSON.stringify(data));
+    return data;
+}
+
+
+const getPlayerData = async (event) => {
+    document.getElementById("heroContainer").innerHTML =
+        `<div class="text-center text-light py-5">
+        <div class="spinner-border" role="status"></div>
+        <p class="mt-2">Loading player data...</p>
+    </div>`;
+
+    const profileContainer = document.getElementById("playerProfileContainer");
+    const originalProfileHTML = profileContainer.innerHTML;
+
+    profileContainer.innerHTML = `
+    <div class="text-center text-light py-5">
+        <div class="spinner-border" role="status"></div>
+        <p class="mt-2">Loading player data...</p>
+    </div>`;
 
     if (event) event.preventDefault();
 
@@ -40,27 +65,41 @@ const getPlayerData = async () => {
 
     localStorage.setItem("savedFriendCode", friendCode);
 
-    const baseUrl = `https://api.opendota.com/api`
+    const isLocal = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
+    const baseUrl = isLocal
+        ? `https://corsproxy.io/?https://api.opendota.com/api`
+        : `https://api.opendota.com/api`;
     const profileUrl = `${baseUrl}/players/${friendCode}`;
     const playerHeroesUrl = `${profileUrl}/heroes`;
     const heroesUrl = `${baseUrl}/heroes`;
-    const heroStatsUrl = `${baseUrl}/heroStats`;
     const baseHeroImgUrl = `https://cdn.cloudflare.steamstatic.com`;
     const playerWinLoseUrl = `${profileUrl}/wl`;
 
-    const [profileRes, heroesRes, heroesDataRes, heroStatsRes, playerWinLoseRes] = await Promise.all([
+    const [profileRes, playerWinLoseRes, heroesData] = await Promise.all([
         fetch(profileUrl),
-        fetch(playerHeroesUrl),
-        fetch(heroesUrl),
-        fetch(heroStatsUrl),
-        fetch(playerWinLoseUrl)
+        fetch(playerWinLoseUrl),
+        fetchHeroesData(heroesUrl)
     ]);
-
-    const playerData = await profileRes.json();
+    
+    const heroesRes = await fetch(playerHeroesUrl);
     const playerHeroData = await heroesRes.json();
-    const heroesData = await heroesDataRes.json();
-    const heroStats = await heroStatsRes.json();
-    const playerWinLoseData = await playerWinLoseRes.json();
+    
+    const [playerData, playerWinLoseData] = await Promise.all([
+        profileRes.json(),
+        playerWinLoseRes.json()
+    ]);
+    
+    if (!Array.isArray(playerHeroData) || playerHeroData.length === 0) {
+        document.getElementById("heroContainer").innerHTML =
+            `<div class="text-center text-light py-5">
+                <p class="text-warning">Hero data unavailable for this player. The OpenDota API may have timed out.</p>
+            </div>`;
+        profileContainer.innerHTML = originalProfileHTML;
+        document.getElementById("playerName").textContent = playerData.profile.personaname;
+        document.getElementById("playerAvatar").src = playerData.profile.avatarfull;
+        document.getElementById("playerFriendCode").innerHTML = "<b>Friend Code</b>: " + friendCode;
+        return;
+    }
 
 
     const playerName = playerData.profile.personaname;
@@ -78,19 +117,23 @@ const getPlayerData = async () => {
 
 
     function renderHeroList(dataArray, limit = 3) {
+        document.getElementById("heroContainer").innerHTML = ""; // ← clears the spinner
 
         dataArray.slice(0, limit).forEach((hero, i) => {
             fillPlayerHeroStats(hero.hero_id, i + 1);
         });
     }
 
+    function getHeroImg(heroName) {
+        const shortName = heroName.replace("npc_dota_hero_", "");
+        return `${baseHeroImgUrl}/apps/dota2/images/dota_react/heroes/${shortName}.png?`;
+    }
+
     function getHeroData(a) {
         return heroesData.find(h => h.id === a);
     };
 
-    function getHeroStats(a) {
-        return heroStats.find(h => h.id === a);
-    };
+
 
     function winrate(totalGames, wins) {
 
@@ -105,10 +148,11 @@ const getPlayerData = async () => {
 
 
     function fillPlayerHeroStats(heroID, index, containerId = "heroContainer") {
-        const playerHeroStats = getHeroStats(heroID);
         const playerHeroData = new getPlayerHeroData(parseInt(index - 1)).heroData;
         const playerHeroID = playerHeroData.hero_id;
-        const heroImg = baseHeroImgUrl + playerHeroStats.img;
+        const heroInfo = getHeroData(heroID); // already fetched from heroesData
+        const heroImg = getHeroImg(heroInfo.name);
+        const attrColor = attributeColors[heroInfo.primary_attr].attributeColor;
         const matches = playerHeroData.games;
         const withMatches = playerHeroData.with_games;
         const againstMatches = playerHeroData.against_games;
@@ -154,7 +198,7 @@ const getPlayerData = async () => {
                     <div class="mb-3 text-center">
                         <span class="hero-name-font text-light mt-3 fs-6 p-1 px-4 text-center mb-3 rounded-3 border border-secondary"
                             style="backdrop-filter: blur(10px); 
-                            background: ${attributeColors[playerHeroStats.primary_attr].attributeColor}; 
+                            background: ${attrColor}; 
                             border: 1px solid rgba(255, 255, 255, 0.1); 
                             -webkit-backdrop-filter: blur(10px); 
                             border-radius: 8px; 
@@ -229,9 +273,11 @@ const getPlayerData = async () => {
             </div>`;
     }
 
+    profileContainer.innerHTML = originalProfileHTML;
+
 
     const elPlayerName = document.getElementById("playerName");
-    elPlayerName.innerHTML = `<h5 class="bg-dark py-2 rounded border border-secondary"> ${playerName} </h5>`;
+    elPlayerName.innerHTML = playerName;
 
 
     const elPlayerRank = document.getElementById("playerRank");
@@ -273,7 +319,7 @@ const getPlayerData = async () => {
 
 };
 
-window.selectHero = function(heroID) {
+window.selectHero = function (heroID) {
     localStorage.setItem('lastViewedHeroID', heroID);
     window.location.href = 'hero_showcase.html';
 };
