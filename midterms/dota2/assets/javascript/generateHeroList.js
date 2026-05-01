@@ -43,12 +43,12 @@ const generateHero = async () => {
             const heroHTML = sortedHeroes.map(hero => {
                 let header = '';
 
-                // Check if we've moved to a new attribute group
+                
                 if (hero.primary_attr !== currentAttr) {
                     currentAttr = hero.primary_attr;
                     const styleData = attributeColors[currentAttr].attributeColor;
                     
-                    // Check if it's the gradient (Universal) or a solid color
+                    
                     const isGradient = styleData.includes("linear-gradient");
                     const headerStyle = isGradient 
                         ? `background: ${styleData}; -webkit-background-clip: text; -webkit-text-fill-color: transparent;` 
@@ -56,12 +56,14 @@ const generateHero = async () => {
         
                     header = `
                         <div class="col-12 mt-5 mb-3">
-                        <div class="border-bottom border-secondary pb-2 ">
-                        <img src="${attributeIcons[currentAttr].attributeIcon}" class="d-inline-block" style="width: 4rem">
-                            <h2 class="fw-lighter radiance d-inline-block pb-2" 
-                                style="letter-spacing: 2px; ${headerStyle}">
-                                ${attrNames[currentAttr]}
-                            </h2>
+                            <div class="border-bottom border-secondary pb-2 justify-content-center d-flex ">
+                                <span class="">
+                                    <img src="${attributeIcons[currentAttr].attributeIcon}" class="d-inline-block mb-3" style="width: 2rem">
+                                    <h2 class="fw-lighter radiance d-inline-block pb-2" 
+                                        style="letter-spacing: 2px; ${headerStyle}">
+                                        ${attrNames[currentAttr]}
+                                    </h2>
+                                </span> 
                            </div> 
                         </div>
                     `;
@@ -71,7 +73,7 @@ const generateHero = async () => {
 
                 return `
                 ${header}
-                <div class="card glass-card col-2 m-2" style="width: 12rem;">
+                <div class="card glass-card col-2 m-2" style="width: 12rem; cursor: pointer;" onclick="selectHero(${hero.id})">
                     <div class="card-body">
                         <p class="card-text hero-name-font text-center text-light">${hero.localized_name}</p>
                     </div>
@@ -88,5 +90,10 @@ const generateHero = async () => {
         console.error("Error fetching hero data:", error);
     }
 }
+
+window.selectHero = function(heroID) {
+    localStorage.setItem('lastViewedHeroID', heroID);
+    window.location.href = 'hero_showcase.html';
+};
 
 generateHero();

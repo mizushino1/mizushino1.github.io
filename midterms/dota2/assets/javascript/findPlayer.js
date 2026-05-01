@@ -46,18 +46,21 @@ const getPlayerData = async () => {
     const heroesUrl = `${baseUrl}/heroes`;
     const heroStatsUrl = `${baseUrl}/heroStats`;
     const baseHeroImgUrl = `https://cdn.cloudflare.steamstatic.com`;
+    const playerWinLoseUrl = `${profileUrl}/wl`;
 
-    const [profileRes, heroesRes, heroesDataRes, heroStatsRes] = await Promise.all([
+    const [profileRes, heroesRes, heroesDataRes, heroStatsRes, playerWinLoseRes] = await Promise.all([
         fetch(profileUrl),
         fetch(playerHeroesUrl),
         fetch(heroesUrl),
-        fetch(heroStatsUrl)
+        fetch(heroStatsUrl),
+        fetch(playerWinLoseUrl)
     ]);
 
     const playerData = await profileRes.json();
     const playerHeroData = await heroesRes.json();
     const heroesData = await heroesDataRes.json();
     const heroStats = await heroStatsRes.json();
+    const playerWinLoseData = await playerWinLoseRes.json();
 
 
     const playerName = playerData.profile.personaname;
@@ -66,6 +69,8 @@ const getPlayerData = async () => {
     const medalIndex = Math.floor(tierValue / 10);
     const playerRank = rankTierMapping[medalIndex] ? rankTierMapping[medalIndex].name : "Uncalibrated";
     const playerRankIcon = rankIconMapping[medalIndex] ? rankIconMapping[medalIndex].rankImg : "./assets/image/uncalibrated.webp";
+    const playerTotalWins = playerWinLoseData.win;
+    const playerTotalLose = playerWinLoseData.lose;
 
     function getPlayerHeroData(a) {
         this.heroData = playerHeroData[a];
@@ -96,6 +101,8 @@ const getPlayerData = async () => {
 
         return percent.toFixed(2);
     }
+
+
 
     function fillPlayerHeroStats(heroID, index, containerId = "heroContainer") {
         const playerHeroStats = getHeroStats(heroID);
@@ -135,14 +142,14 @@ const getPlayerData = async () => {
             elPlayerHeroStats = document.createElement('div');
             elPlayerHeroStats.id = `playerHeroStats${index}`;
             // Use the EXACT classes from your original HTML
-            elPlayerHeroStats.className = "col-xs-12 col-md-6 col-xl-4 my-2";
+            elPlayerHeroStats.className = "col-xs-12 col-md-6 col-xxl-4 my-2";
             parent.appendChild(elPlayerHeroStats);
         }
 
         // 3. Inject the Card Content
         elPlayerHeroStats.innerHTML = `
-            <div class="card glass-card mx-auto" style="width: 18rem;">
-                <img src="${heroImg}" class="card-img-top border-bottom border-danger border-5" alt="...">
+            <div class="card glass-card mx-auto h-100" >
+                <img src="${heroImg}" onclick="selectHero(${playerHeroID})" style="cursor: pointer" class="card-img-top border-bottom border-danger border-5" alt="..." >
                 <div class="card-body card-body-glass">
                     <div class="mb-3 text-center">
                         <span class="hero-name-font text-light mt-3 fs-6 p-1 px-4 text-center mb-3 rounded-3 border border-secondary"
@@ -236,6 +243,20 @@ const getPlayerData = async () => {
     const elPlayerFriendCode = document.getElementById("playerFriendCode");
     elPlayerFriendCode.innerHTML = "<b>Friend Code</b>: " + friendCode;
 
+    const elPlayerRecord = document.getElementById("playerWinLoseRatio");
+    elPlayerRecord.innerHTML = `
+                    <div class="mb-0 ms-2">
+                        <p class="d-inline-block stat-text text-success mb-0">${playerTotalWins}</p> 
+                        <p class="d-inline-block stat-text text-light mb-0"> - </p> 
+                        <p class="d-inline-block stat-text text-danger mb-0"> ${playerTotalLose}</p>
+                    </div>
+                    <div class="mt-0">
+                        <p class="grey gentium mt-0">WIN/LOSE RATIO </p>
+                    </div>
+                            
+                        
+    `
+
 
     const path = window.location.pathname;
 
@@ -250,6 +271,11 @@ const getPlayerData = async () => {
 
 
 
+};
+
+window.selectHero = function(heroID) {
+    localStorage.setItem('lastViewedHeroID', heroID);
+    window.location.href = 'hero_showcase.html';
 };
 
 
