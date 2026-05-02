@@ -63,11 +63,49 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3">
+            <div class="col-12 col-lg-3 justify-content-center d-flex">
+                <div class="card glass-card-red mt-5 glass-card ms-4 w-75 align-self-start">
+                    <div class="card-header cinzel text-center text-light">
+                        <p class="p-2 bg-dark rounded-4 border border-black shadow">DOTA 2 HERO LIST </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item ">
+                            <div class="text-light text-center gentium fs-5">SEARCH HERO</div>
+                            <div class="input-group mb-3 mt-4">
+                                <div class="form-floating">
+                                    <input type="text" id="heroSearchInput"
+                                        class="form-control bg-dark radiance fw-bold text-light"
+                                        placeholder="Type hero name" list="heroList"
+                                        style="font-size: 12px; text-align: left; display: flex; align-items: center; padding-top: 0 !important;padding-bottom: 0 !important;line-height: 40px; height: 40px;">
+                                    <label for="heroSearchInput" class="radiance" style="font-size: 13px;">Type hero
+                                        name</label>
+                                </div>
+                                <datalist id="heroList">
+                                </datalist>
+                                <button class="btn btn-outline-danger radiance fw-bold d-none" type="button"
+                                    id="searchBtn">Search</button>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="text-light text-center gentium fs-5 mb-4">FILTER BY ATTRIBUTE</div>
+                            <div class="text-center">
+                                <select class="form-select bg-dark text-light text-center radiance" id="attrFilter">
+                                    <option value="">ALL</option>
+                                    <option value="str" style="color: rgb(185, 80, 11)">STRENGTH</option>
+                                    <option value="agi" style="color: rgb(22, 124, 19)">AGILITY</option>
+                                    <option value="int" style="color: rgb(37, 125, 174)">INTELLIGENCE</option>
+                                    <option value="all" style="color: rgb(140, 0, 255)">UNIVERSAL</option>
+                                </select>
+                            </div>
+                        </li>
+                        <li class="list-group-item text-center"> <button class="btn btn-dark cinzel fw-bold"
+                                type="button" id="searchBtn">Search</button></li>
+                    </ul>
+                </div>
 
 
             </div>
-            <div class="col-7 mt-5 me-2 glass-card" >
+            <div class="col-12 col-lg-8 mt-5 me-2 glass-card">
                 <div class="row justify-content-center" id="heroListContainer">
 
                 </div>
