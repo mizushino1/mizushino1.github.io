@@ -80,15 +80,15 @@ const getPlayerData = async (event) => {
         fetch(playerWinLoseUrl),
         fetchHeroesData(heroesUrl)
     ]);
-    
+
     const heroesRes = await fetch(playerHeroesUrl);
     const playerHeroData = await heroesRes.json();
-    
+
     const [playerData, playerWinLoseData] = await Promise.all([
         profileRes.json(),
         playerWinLoseRes.json()
     ]);
-    
+
     if (!Array.isArray(playerHeroData) || playerHeroData.length === 0) {
         document.getElementById("heroContainer").innerHTML =
             `<div class="text-center text-light py-5">
@@ -110,6 +110,7 @@ const getPlayerData = async (event) => {
     const playerRankIcon = rankIconMapping[medalIndex] ? rankIconMapping[medalIndex].rankImg : "./assets/image/uncalibrated.webp";
     const playerTotalWins = playerWinLoseData.win;
     const playerTotalLose = playerWinLoseData.lose;
+    const path = window.location.pathname;
 
     function getPlayerHeroData(a) {
         this.heroData = playerHeroData[a];
@@ -289,8 +290,10 @@ const getPlayerData = async (event) => {
     const elPlayerFriendCode = document.getElementById("playerFriendCode");
     elPlayerFriendCode.innerHTML = "<b>Friend Code</b>: " + friendCode;
 
-    const elPlayerRecord = document.getElementById("playerWinLoseRatio");
-    elPlayerRecord.innerHTML = `
+
+    if (path.endsWith("index.html") || path === "/" || path.endsWith("/")) {
+        const elPlayerRecord = document.getElementById("playerWinLoseRatio");
+        elPlayerRecord.innerHTML = `
                     <div class="mb-0 ms-2">
                         <p class="d-inline-block stat-text text-success mb-0">${playerTotalWins}</p> 
                         <p class="d-inline-block stat-text text-light mb-0"> - </p> 
@@ -302,9 +305,9 @@ const getPlayerData = async (event) => {
                             
                         
     `
+    }
 
 
-    const path = window.location.pathname;
 
     // This checks if the string ends with index.html or is exactly the root
     if (path.endsWith("index.html") || path === "/" || path.endsWith("/")) {
