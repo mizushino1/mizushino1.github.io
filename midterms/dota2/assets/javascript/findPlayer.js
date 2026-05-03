@@ -41,29 +41,44 @@ async function fetchHeroesData(heroesUrl) {
 
 
 const getPlayerData = async (event) => {
-    document.getElementById("heroContainer").innerHTML =
-        `<div class="text-center text-light py-5">
-        <div class="spinner-border" role="status"></div>
-        <p class="mt-2">Loading player data...</p>
-    </div>`;
-
-    const profileContainer = document.getElementById("playerProfileContainer");
-    const originalProfileHTML = profileContainer.innerHTML;
-
-    profileContainer.innerHTML = `
-    <div class="text-center text-light py-5">
-        <div class="spinner-border" role="status"></div>
-        <p class="mt-2">Loading player data...</p>
-    </div>`;
 
     if (event) event.preventDefault();
 
-    const friendCodeInput = document.getElementById("searchPlayerCode");
-    const friendCode = friendCodeInput.value;
+    const friendCodeInput = document.querySelector(".searchPlayerCode");
+    const friendCode = (friendCodeInput?.value.trim()) || localStorage.getItem("savedFriendCode");
+
+
+    if (!friendCode) return;
 
     console.log("Searching for:", friendCode);
 
     localStorage.setItem("savedFriendCode", friendCode);
+    const currentPath = window.location.pathname;
+    const isOnIndex = currentPath.endsWith("overview.html") || currentPath === "/" || currentPath.endsWith("/");
+
+    if (!isOnIndex) {
+        window.location.href = "overview.html";
+        return;
+    }
+
+    const heroContainer = document.getElementById("heroContainer");
+    const profileContainer = document.getElementById("playerProfileContainer");
+
+    if (!heroContainer || !profileContainer) return;
+
+    heroContainer.innerHTML = `
+        <div class="text-center text-light py-5">
+            <div class="spinner-border" role="status"></div>
+            <p class="mt-2">Loading player data...</p>
+        </div>`;
+
+    const originalProfileHTML = profileContainer.innerHTML;
+
+    profileContainer.innerHTML = `
+        <div class="text-center text-light py-5">
+            <div class="spinner-border" role="status"></div>
+            <p class="mt-2">Loading player data...</p>
+        </div>`;
 
     const isLocal = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
     const baseUrl = isLocal
@@ -291,7 +306,7 @@ const getPlayerData = async (event) => {
     elPlayerFriendCode.innerHTML = "<b>Friend Code</b>: " + friendCode;
 
 
-    if (path.endsWith("index.html") || path === "/" || path.endsWith("/")) {
+    if (path.endsWith("overview.html") || path === "/" || path.endsWith("/")) {
         const elPlayerRecord = document.getElementById("playerWinLoseRatio");
         elPlayerRecord.innerHTML = `
                     <div class="mb-0 ms-2">
@@ -309,8 +324,8 @@ const getPlayerData = async (event) => {
 
 
 
-    // This checks if the string ends with index.html or is exactly the root
-    if (path.endsWith("index.html") || path === "/" || path.endsWith("/")) {
+
+    if (path.endsWith("overview.html") || path === "/" || path.endsWith("/")) {
         renderHeroList(playerHeroData, 3);
     } else if (path.includes("player_heroes.html")) {
         renderHeroList(playerHeroData, playerHeroData.length);
@@ -330,10 +345,14 @@ window.selectHero = function (heroID) {
 
 window.onload = () => {
     const lastCode = localStorage.getItem("savedFriendCode");
-    if (lastCode) {
-        // Put the code back in the input box
-        document.getElementById("searchPlayerCode").value = lastCode;
-        // Run the search automatically
-        getPlayerData();
-    }
+    if (!lastCode) return;
+
+    const heroContainer = document.getElementById("heroContainer");
+    const profileContainer = document.getElementById("playerProfileContainer");
+    if (!heroContainer || !profileContainer) return;
+
+    const input = document.querySelector(".searchPlayerCode");
+    if (input) input.value = lastCode;
+
+    getPlayerData();
 };

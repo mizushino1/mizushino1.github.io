@@ -32,10 +32,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="home.html">Home</a>
+                        <a class="nav-link" href="home.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " aria-current="page" href="index.html">Overview</a>
+                        <a class="nav-link active" aria-current="page" href="#">Overview</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="hero_list.html">Heroes</a>
@@ -65,10 +65,71 @@
     </nav>
 
     <div class="container-fluid">
-        <div class="row p-3 px-5">
-            <div class="col glass-card h-25" id="topPlayersContainer">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-4 mt-5 d-flex justify-content-center">
+                <div class="ms-lg-5">
+                    <div class="card glass-card mx-auto" style="width: 18rem;" id="playerProfileContainer">
+                        <img src="..." class="card-img-top" alt="Player Avatar" id="playerAvatar">
 
+                        <div class="card-body glass-card-red" style=" background-color: rgba(167, 39, 20, 0.80)">
+                            <h5 class="card-title text-center text-light bg-dark py-2 rounded border border-secondary"
+                                id="playerName"></h5>
+                        </div>
 
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item p-1 text-light" id="playerFriendCode"></li>
+                            <li class="list-group-item p-3 text-light" id="playerRank"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-12 col-lg-7 mt-5 p-3">
+                <div class="row mb-5">
+                    <div class="col-12 glass-card">
+                        <div class="row w-50 mx-auto">
+                            <div class="col">
+                                <p
+                                    class="glass-card-red gentium rounded-bottom-4 mx-auto fs-5 text-center p-3 text-light radiance fw-bold">
+                                    RECORD </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" style="font-size: large;" id="playerWinLoseRatio">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row glass-card">
+                    <div class="col">
+
+                        <div class="row">
+                            <div class="col mx-auto">
+                                <p
+                                    class="glass-card-red gentium w-50 fs-5 rounded-bottom-4 mx-auto text-center p-3 text-light radiance fw-bold">
+                                    TOP 3 MOST PICKED HEROES </p>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center" id="heroContainer">
+
+                        </div>
+
+                        <hr class="border-danger border-1 opacity-75">
+
+                        <div class="row mt-4">
+                            <div class="col-12 text-center">
+                                <div
+                                    class="d-inline glass-card-red rounded-4 mx-3 text-center py-2 px-4 text-light fw-bold">
+                                    <a class="link-underline link-underline-opacity-0 text-light"
+                                        href="player_heroes.html">View All</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -78,7 +139,6 @@
         crossorigin="anonymous"></script>
 
     <script src="./assets/javascript/findPlayer.js"></script>
-    <script src="./assets/javascript/topPlayer.js"></script>
 
 </body>
 

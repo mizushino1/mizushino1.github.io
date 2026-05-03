@@ -57,3 +57,9 @@ body {
     font-size: 14px;
     line-height: 1.2;
 }
+
+.fs-fluid-sm  { font-size: clamp(0.75rem,  1.5vw, 1rem);   }
+.fs-fluid-md  { font-size: clamp(1rem,     2vw,   1.5rem);  }
+.fs-fluid-lg  { font-size: clamp(1.25rem,  3vw,   2rem);    }
+.fs-fluid-xl  { font-size: clamp(1.5rem,   4vw,   3rem);    }
+.fs-fluid-2xl { font-size: clamp(2rem,     5vw,   4rem);    }
