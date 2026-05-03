@@ -28,6 +28,10 @@ body {
     font-family: 'Marcellus', serif;
     letter-spacing: 1px;
     text-transform: uppercase;
+    font-size: clamp(0.8rem, 2vw, 1.2rem); 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #playerName {

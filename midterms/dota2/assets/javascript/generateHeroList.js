@@ -20,6 +20,15 @@ const generateHero = async () => {
     const baseUrl = `https://api.opendota.com/api`;
     const heroStatsUrl = `${baseUrl}/heroStats`;
 
+    document.getElementById('heroListContainer').innerHTML = `
+        <div id="heroLoadingSpinner" class="col-12 d-flex flex-column align-items-center justify-content-center py-5" style="min-height: 300px;">
+            <div class="spinner-border text-danger mb-3" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="text-secondary radiance" style="letter-spacing: 2px;">LOADING HEROES...</p>
+        </div>
+    `;
+
     try {
         const response = await fetch(heroStatsUrl);
         const heroStats = await response.json();
@@ -157,32 +166,40 @@ const generateHero = async () => {
             }
         }
 
-        document.getElementById('searchBtn').addEventListener('click', () => {
-            const input = document.getElementById('heroSearchInput');
-            const searchTerm = input.value.trim().toLowerCase();
+        document.querySelectorAll('.searchBtnHero').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const input = document.getElementById('heroSearchInput');
+                const searchTerm = input.value.trim().toLowerCase();
 
-            if (!searchTerm) {
+                if (!searchTerm) {
+                    applyFilters();
+                    return;
+                }
+
+                const exactMatch = heroStats.find(h => h.localized_name.toLowerCase() === searchTerm);
+                if (exactMatch) {
+                    window.selectHero(exactMatch.id);
+                    return;
+                }
+
                 applyFilters();
-                return;
-            }
-
-            const exactMatch = heroStats.find(h => h.localized_name.toLowerCase() === searchTerm);
-            if (exactMatch) {
-                window.selectHero(exactMatch.id);
-                return;
-            }
-
-            applyFilters();
+            });
         });
 
         document.getElementById('heroSearchInput').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') document.getElementById('searchBtn').click();
+            if (e.key === 'Enter') document.querySelector('.searchBtnHero').click();
         });
 
         document.getElementById('heroSearchInput').addEventListener('input', () => applyFilters());
         document.getElementById('attrFilter').addEventListener('change', () => applyFilters());
 
     } catch (error) {
+        document.getElementById('heroListContainer').innerHTML = `
+            <div class="col-12 text-center py-5">
+                <p class="text-danger radiance fs-5" style="letter-spacing: 2px;">FAILED TO LOAD HEROES</p>
+                <p class="text-secondary gentium">Could not connect to the API. Please try again later.</p>
+            </div>
+        `;
         console.error("Error fetching hero data:", error);
     }
 

@@ -82,8 +82,8 @@
                                 </div>
                                 <datalist id="heroList">
                                 </datalist>
-                                <button class="btn btn-outline-danger radiance fw-bold d-none" type="button"
-                                    id="searchBtn">Search</button>
+                                <button class="btn btn-outline-danger radiance searchBtnHero fw-bold d-none" type="button"
+                                    id="">Search</button>
                             </div>
                         </li>
                         <li class="list-group-item">
@@ -98,8 +98,8 @@
                                 </select>
                             </div>
                         </li>
-                        <li class="list-group-item text-center"> <button class="btn btn-dark cinzel fw-bold"
-                                type="button" id="searchBtn">Search</button></li>
+                        <li class="list-group-item text-center"> <button class="btn btn-dark cinzel searchBtnHero fw-bold"
+                                type="button" id="">Search</button></li>
                     </ul>
                 </div>
 
@@ -107,6 +107,13 @@
             </div>
             <div class="col-12 col-lg-8 mt-5 me-2 glass-card">
                 <div class="row justify-content-center" id="heroListContainer">
+                    <div class="col-4 col-md-3 col-xl-2 mb-2">
+                        <div class="card glass-card h-100" data-attr="" style="cursor: pointer;">
+                            <div class="card-body">
+                                <p class="card-text hero-name-font text-center text-light">${hero.localized_name}</p>
+                            </div>
+                        </div>
+                        </div>
 
                 </div>
 

@@ -10,7 +10,9 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="./assets/css/glass.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Gentium+Book+Basic:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Gentium+Book+Basic:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
     <link href="./assets/css/font.css" rel="stylesheet">
     <link href="./assets/css/style.css" rel="stylesheet">
 </head>
@@ -62,7 +64,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-lg-5 col-xl-4 mt-5">
-                <div class="card glass-card mx-auto w-75 w-lg-100 w-xl-75" style="width: 75%;">
+                <div id="heroDataSpinner" class="d-flex flex-column align-items-center justify-content-center py-5" style="min-height: 400px;">
+                    <div class="spinner-border text-danger mb-3" role="status" style="width: 3rem; height: 3rem;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="text-secondary radiance" style="letter-spacing: 2px;">LOADING HERO DATA...</p>
+                </div>
+                <div class="card glass-card mx-auto w-75 w-lg-100 w-xl-75" style="width: 75%; display: none;" id="heroProfile">
                     <img src="" class="card-img-top" alt="Hero Image" id="currentHeroImage">
 
                     <div class="card-body">
@@ -115,7 +123,8 @@
             <div class="col-12 col-lg-7 col-xl-7 mt-5 glass-card p-0">
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <div class="h3 text-light cinzel fw-bold glass-card-red p-3 text-center" style="border-radius: 0 0 20px 0">
+                        <div class="h3 text-light cinzel fw-bold glass-card-red p-3 text-center"
+                            style="border-radius: 0 0 20px 0">
                             HERO SKILL LIST
                         </div>
                     </div>
