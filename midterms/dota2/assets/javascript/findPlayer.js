@@ -208,8 +208,8 @@ const getPlayerData = async (event) => {
 
         // 3. Inject the Card Content
         elPlayerHeroStats.innerHTML = `
-            <div class="card glass-card mx-auto h-100" >
-                <img src="${heroImg}" onclick="selectHero(${playerHeroID})" style="cursor: pointer" class="card-img-top border-bottom border-danger border-5" alt="..." >
+            <div class="card glass-card mx-auto overflow-visible h-100" >
+                <img src="${heroImg}" onclick="selectHero(${playerHeroID})" style="cursor: pointer" class="card-img-top scale border-bottom border-danger border-5" alt="..." >
                 <div class="card-body card-body-glass">
                     <div class="mb-3 text-center">
                         <span class="hero-name-font text-light mt-3 fs-6 p-1 px-4 text-center mb-3 rounded-3 border border-secondary"

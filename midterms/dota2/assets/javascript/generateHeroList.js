@@ -86,7 +86,7 @@ const generateHero = async () => {
                 return `
                 ${header}
                 <div class="col-4 col-md-3 col-xl-2 mb-2">
-                <div class="card glass-card h-100" data-attr="${hero.primary_attr}" style="cursor: pointer;" onclick="selectHero(${hero.id})">
+                <div class="card scale glass-card h-100" data-attr="${hero.primary_attr}" style="cursor: pointer;" onclick="selectHero(${hero.id})">
                     <div class="card-body">
                         <p class="card-text hero-name-font text-center text-light">${hero.localized_name}</p>
                     </div>
@@ -170,19 +170,24 @@ const generateHero = async () => {
             btn.addEventListener('click', () => {
                 const input = document.getElementById('heroSearchInput');
                 const searchTerm = input.value.trim().toLowerCase();
-
+        
                 if (!searchTerm) {
-                    applyFilters();
+                    showHeroNotFoundModal("Please enter a hero name to search.");
                     return;
                 }
-
+        
                 const exactMatch = heroStats.find(h => h.localized_name.toLowerCase() === searchTerm);
                 if (exactMatch) {
                     window.selectHero(exactMatch.id);
                     return;
                 }
-
+        
                 applyFilters();
+        
+                const visibleHeroes = document.querySelectorAll('#heroListContainer > *:not(.col-12):not([style*="none"])').length;
+                if (visibleHeroes === 0) {
+                    showHeroNotFoundModal("Please check the spelling and try again.");
+                }
             });
         });
 

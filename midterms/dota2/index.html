@@ -66,7 +66,7 @@
 
     <div class="container-fluid">
         <div class="row px-5">
-            <div class="col-12 col-md-4 mx-auto col-lg-3 col-xl-2 glass-card glass-card-red mt-5">
+            <div class="col-12 col-md-4 mx-auto col-lg-3 col-xl-2 glass-card glass-card-red align-self-start mt-5">
                 <div class="row">
                     <div class="col text-light cinzel fs-5 mb-3">
                         HIGH MMR PLAYERS
@@ -85,26 +85,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-10 col-lg-8 col-xl-9 h-100 mt-5 ms-0 ms-md-3 flex-row">
+            <div class="col-12 col-md-7 col-lg-8 col-xl-9 h-100 mt-5 ms-0 ms-md-3 flex-row">
                 <div class="row">
-                    <div class="col-12 col-md-10 col-lg-8 col-xl-7 glass-card mb-3">
-                        <h3 class="cinzel text-light p-2 text-center">SEARCH FOR PLAYER</h3>
-                        <div class="bg-black mb-5 mx-auto p-3 rounded border-danger border" style="width: fit-content;">
-                            <form class="d-flex" role="search">
-                                <div class="form-floating">
-                                    <input
-                                        class="form-control me-2 searchPlayerCode bg-dark fs-fluid-md text-center gentium"
-                                        type="search" placeholder="Player Friend Code" aria-label="friendCode"
-                                        id="homeSearch"> <label for="homeSearch" class="radiance fs-fluid-xs">Player
-                                        friend code</label>
-                                </div>
-                                <button class="ms-2 btn btn-outline-danger raidance fw-bold"
-                                    onclick="getPlayerData(event)">SEARCH</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-10 col-lg-8 col-xl-7 glass-card">
-                        <div class="p-3">
+                    <div class="col-12 col-md-10 col-lg-8 col-xl-5 align-self-start  mb-3">
+                        <div class="p-3 glass-card mb-3">
                             <P class="gentium text-danger fs-fluid-lg">
                                 About
                             </P>
@@ -113,10 +97,104 @@
                                 This project uses the <a class="fw-bold text-light fst-italic link-underline-light "
                                     href="https://www.opendota.com/">open dota API</a> to showcase Dota 2's hero pool
                                 and to track players.
-
                             </p>
+
+
+                        </div>
+                        <div class="glass-card mb-3">
+
+                            <h3 class="cinzel text-light p-2 text-center">SEARCH FOR PLAYER</h3>
+                            <div class="bg-black mb-3 mx-auto p-3 rounded border-danger border"
+                                style="width: fit-content;">
+                                <form class="d-flex" role="search">
+                                    <div class="form-floating">
+                                        <input
+                                            class="form-control me-2 searchPlayerCode bg-dark text-light fs-fluid-sm gentium"
+                                            type="search" placeholder="Player Friend Code" aria-label="friendCode"
+                                            id="homeSearch"> <label for="homeSearch" class="radiance fs-fluid-xs">Player
+                                            friend code</label>
+                                    </div>
+                                    <button class="ms-2 btn btn-outline-danger raidance fw-bold"
+                                        onclick="getPlayerData(event)">SEARCH</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="glass-card mb-3 p-3">
+                            <P class="gentium text-light fs-fluid-lg">
+                                What is <b class="text-danger">DOTA 2?</b>
+                            </P>
+                            <p class="text-light fs-fluid-sm">
+                                Dota 2 is a highly competitive, free-to-play Multiplayer Online Battle Arena (MOBA)
+                                game developed and published by Valve. It is the standalone sequel to the
+                                community-created mod Defense of the Ancients for Warcraft III.
+                            </p>
+
+                            <hr class="border-secondary border-1 opacity-75 g-0 me-5">
+                            <P class="gentium text-light fs-fluid-md">
+                                <b class="text-secondary">Core Gameplay</b>
+                            </P>
+
+                            <p class="text-light fs-fluid-sm">
+                                At its heart, the game is a 5v5 strategic battle. Each player controls a single "Hero"
+                                with unique abilities and playstyles. The primary goal is to destroy the Ancient, a
+                                massive structure located within the enemy team's base.
+                            <ul class="text-light fs-fluid-sm">
+                                <li> The Map: The battlefield is divided into two sides: The Radiant (bottom left) and
+                                    The
+                                    Dire (top right), separated by a river.
+                                </li>
+                                <li> The Lanes: There are three main paths (Top, Middle, and Bottom) protected by
+                                    defensive
+                                    towers.
+                                </li>
+                                <li> Economy & Growth: Players earn gold and experience by killing "creeps"
+                                    (computer-controlled units), destroying structures, and defeating enemy heroes. This
+                                    allows them to level up and purchase items to increase their power.
+                                </li>
+                            </ul>
+                            </p>
+
                         </div>
                     </div>
+                    <div class="col-12 col-md-10 col-lg-3 col-xl-6 ms-0 ms-lg-2 align-self-start mb-3">
+                        <div class="row">
+                            <div class="col-12 rounded align-self-start p-0 scale pointer border border-danger mb-3"
+                                id="heroList">
+                                <p class="gentium text-light text-center fs-4 glass-card-red d-block mb-0">HERO LIST</p>
+                                <img src="assets/image/heroes.jpg" class="img-fluid shadow"
+                                    style="border-bottom-left-radius: 4px ; border-bottom-right-radius: 4px ;">
+                            </div>
+                            <div class="col-12 glass-card glass-card-red overflow-visible p-0">
+                                <p class="gentium text-light text-center fs-fluid-sm bg-black d-block mb-3">DOTA
+                                    ACCOUNT OF THE DEVELOPER</p>
+                                <div class="card scale mb-2 player-card col-12 col-xl-6 ms-0 ms-xl-2"
+                                    data-account-id="373418954" style="cursor: pointer;" id="developerContainer">
+                                    <div class="row g-0 align-items-center">
+                                        <div class="col-3">
+                                            <img src="https://avatars.steamstatic.com/6672552e5316e1e538b41c26c9bcb5d5138cc409_full.jpg"
+                                                class="img-fluid rounded-start player-avatar" alt="Mizushino.">
+                                        </div>
+                                        <div class="col-9">
+                                            <div class="card-body py-1 px-2">
+                                                <p class="card-title fw-bold mb-0 text-truncate small"> Mizushino.
+                                                </p>
+                                                <p class="mb-0 text-secondary" style="font-size: 0.7rem;">MMR:
+                                                    4081.62</p>
+                                                <div class="d-flex align-items-center gap-1">
+                                                    <img src="./assets/image/crusader.webp"
+                                                        style="width: 24px; height: 24px; object-fit: contain;">
+                                                    <span style="font-size: 0.7rem;">Crusader</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
 
@@ -129,6 +207,7 @@
 
     <script src="./assets/javascript/findPlayer.js"></script>
     <script src="./assets/javascript/topPlayer.js"></script>
+    <script src="./assets/javascript/index.js"></script>
 
 </body>
 

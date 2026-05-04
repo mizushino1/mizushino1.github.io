@@ -49,7 +49,7 @@ const topPlayerData = async () => {
         const topPlayerRankIcon = rankIconMapping[medalIndex]?.rankImg ?? "./assets/image/uncalibrated.webp";
 
         const playerCard = `
-            <div class="card mb-2 player-card" data-account-id="${topPlayerAccountId}" style="cursor: pointer;">
+            <div class="card mb-2 player-card scale" data-account-id="${topPlayerAccountId}" style="cursor: pointer;">
                 <div class="row g-0 align-items-center">
                     <div class="col-3">
                         <img src="${topPlayerAvatar}" class="img-fluid rounded-start player-avatar" alt="${topPlayerName}">
@@ -74,8 +74,10 @@ const topPlayerData = async () => {
             const accountId = card.dataset.accountId;
             localStorage.setItem("savedFriendCode", accountId);
             window.location.href = "overview.html";
+
         });
     });
+    
 };
 
 

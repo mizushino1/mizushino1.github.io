@@ -404,14 +404,14 @@ const getDota2Data = async () => {
         document.getElementById('searchBtn').addEventListener('click', () => {
             const input = document.getElementById('heroSearchInput');
             const searchTerm = input.value.trim().toLowerCase();
-
+        
             const foundHero = heroStats.find(h => h.localized_name.toLowerCase() === searchTerm);
-
+        
             if (foundHero) {
                 updateHeroDisplay(foundHero);
                 input.value = "";
             } else {
-                alert("Hero not found. Please check the spelling.");
+                showHeroNotFoundModal();
             }
         });
 
