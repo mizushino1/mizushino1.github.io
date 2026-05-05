@@ -80,7 +80,13 @@ window.getPlayerData = async function(event) {
         }
 
         localStorage.setItem("savedFriendCode", friendCode);
-        window.location.href = "overview.html";
+
+        const onOverview = window.location.pathname.endsWith("overview.html");
+        if (onOverview && typeof loadPlayerData === "function") {
+            loadPlayerData(); // call findPlayer.js's version directly
+        } else {
+            window.location.href = "overview.html";
+        }
 
     } catch (error) {
         localStorage.removeItem("savedFriendCode");

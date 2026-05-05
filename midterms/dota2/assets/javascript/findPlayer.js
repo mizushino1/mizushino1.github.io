@@ -40,26 +40,18 @@ async function fetchHeroesData(heroesUrl) {
 }
 
 
-const getPlayerData = async (event) => {
+window.loadPlayerData = async (event) => {
 
     if (event) event.preventDefault();
 
-    const friendCodeInput = document.querySelector(".searchPlayerCode");
-    const friendCode = (friendCodeInput?.value.trim()) || localStorage.getItem("savedFriendCode");
+    const friendCodeInput = document.querySelector(".searchPlayerCode, #searchPlayerCode");
+    const typedCode = friendCodeInput?.value.trim();
+    const friendCode = typedCode || localStorage.getItem("savedFriendCode");
 
 
     if (!friendCode) return;
 
-    console.log("Searching for:", friendCode);
 
-    localStorage.setItem("savedFriendCode", friendCode);
-    const currentPath = window.location.pathname;
-    const isOnIndex = currentPath.endsWith("overview.html") || currentPath === "/" || currentPath.endsWith("/");
-
-    if (!isOnIndex) {
-        window.location.href = "overview.html";
-        return;
-    }
 
     const heroContainer = document.getElementById("heroContainer");
     const profileContainer = document.getElementById("playerProfileContainer");
@@ -89,20 +81,34 @@ const getPlayerData = async (event) => {
     const heroesUrl = `${baseUrl}/heroes`;
     const baseHeroImgUrl = `https://cdn.cloudflare.steamstatic.com`;
     const playerWinLoseUrl = `${profileUrl}/wl`;
+    const playerPeersUrl = `${profileUrl}/peers`
 
-    const [profileRes, playerWinLoseRes, heroesData] = await Promise.all([
+    const [profileRes, playerWinLoseRes, heroesData, playerPeersRes] = await Promise.all([
         fetch(profileUrl),
         fetch(playerWinLoseUrl),
-        fetchHeroesData(heroesUrl)
+        fetchHeroesData(heroesUrl),
+        fetch(playerPeersUrl)
     ]);
 
     const heroesRes = await fetch(playerHeroesUrl);
     const playerHeroData = await heroesRes.json();
 
-    const [playerData, playerWinLoseData] = await Promise.all([
+    const [playerData, playerWinLoseData, playerPeersData] = await Promise.all([
         profileRes.json(),
-        playerWinLoseRes.json()
+        playerWinLoseRes.json(),
+        playerPeersRes.json()
     ]);
+
+    if (!playerData || !playerData.profile) {
+        localStorage.removeItem("savedFriendCode");
+        // optionally call showApiErrorModal if it's available on this page
+        return;
+    }
+
+    // ✅ Only save AFTER confirmed valid
+    if (typedCode) {
+        localStorage.setItem("savedFriendCode", typedCode);
+    }
 
     if (!Array.isArray(playerHeroData) || playerHeroData.length === 0) {
         document.getElementById("heroContainer").innerHTML =
@@ -160,6 +166,49 @@ const getPlayerData = async (event) => {
 
         return percent.toFixed(2);
     }
+
+
+    const elPeersContainer = document.getElementById("peersContainer");
+    if (elPeersContainer) {
+    for (let index = 0; index < 3; index++) {
+        const player = playerPeersData[index];
+        if (!player) break;
+    
+        const peerAvatar = player.avatarfull;
+        const peerName = player.personaname;
+        const peerAccountId = player.account_id;
+        const peerGames = player.with_games;
+        const peerWins = player.with_win;
+        const peerWinRate = peerGames > 0 ? ((peerWins / peerGames) * 100).toFixed(1) : "0.0";
+    
+        const playerCard = `
+            <div class="card mb-2 player-card scale w-75 mx-auto m-2" data-account-id="${peerAccountId}" style="cursor: pointer;">
+                <div class="row g-0 align-items-center">
+                    <div class="col-3">
+                        <img src="${peerAvatar}" class="img-fluid rounded-start player-avatar" alt="${peerName}">
+                    </div>
+                    <div class="col-9">
+                        <div class="card-body py-1 px-2">
+                            <p class="card-title fw-bold mb-0 text-truncate small">${peerName}</p>
+                            <p class="mb-0 text-secondary" style="font-size: 0.7rem;">Games Together: ${peerGames}</p>
+                            <p class="mb-0 text-secondary" style="font-size: 0.7rem;">Win Rate: ${peerWinRate}%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+    
+        elPeersContainer.innerHTML += playerCard;
+    }
+}
+    
+    elPeersContainer.querySelectorAll(".player-card").forEach(card => {
+        card.addEventListener("click", () => {
+            const accountId = card.dataset.accountId;
+            localStorage.setItem("savedFriendCode", accountId);
+            window.location.href = "overview.html";
+
+        });
+    });
 
 
 
@@ -309,16 +358,28 @@ const getPlayerData = async (event) => {
     if (path.endsWith("overview.html") || path === "/" || path.endsWith("/")) {
         const elPlayerRecord = document.getElementById("playerWinLoseRatio");
         elPlayerRecord.innerHTML = `
-                    <div class="mb-0 ms-2">
+                <div>
+                    <div class="mb-0 ms-2 fs-fluid-md">
                         <p class="d-inline-block stat-text text-success mb-0">${playerTotalWins}</p> 
                         <p class="d-inline-block stat-text text-light mb-0"> - </p> 
                         <p class="d-inline-block stat-text text-danger mb-0"> ${playerTotalLose}</p>
                     </div>
-                    <div class="mt-0">
+                    <div class="mt-0 fs-fluid-md">
                         <p class="grey gentium mt-0">WIN/LOSE RATIO </p>
                     </div>
-                            
-                        
+                </div>
+                <div>
+                <div class="mb-0 ms-2 fs-fluid-md">
+                <p class="d-inline-block stat-text text-light mb-0">${(playerTotalWins + playerTotalLose)}</p>
+                </div>
+                <div class="mb-0 ms-2 fs-fluid-md">
+                 <p class="grey gentium mt-0">TOTAL MATCHES </p>
+                </div>
+
+
+                </div>
+
+                                       
     `
     }
 
@@ -354,5 +415,5 @@ window.onload = () => {
     const input = document.querySelector(".searchPlayerCode");
     if (input) input.value = lastCode;
 
-    getPlayerData();
+    loadPlayerData();
 };
