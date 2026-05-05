@@ -40,20 +40,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="hero_list.html">Heroes</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
+
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2 searchPlayerCode" type="search" placeholder="Player Friend Code"
@@ -64,7 +51,40 @@
         </div>
     </nav>
 
-    <div class="container-fluid">
+
+
+    <div class="modal fade " id="imgModal" tabindex="-1" aria-labelledby="imgModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content glass-card-dark border-0">
+
+                <div class="modal-header glass-card-dark rounded-0 border-0">
+                    <p class="text-light text-center cinzel">Latest DOTA 2 map in version 7.38</p>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body p-0 text-center">
+                    <img src="./assets/image/map.png" class="img-fluid rounded-bottom" alt="Bootstrap Modal Image">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="page-wrapper">
+
+
+        <video autoplay muted playsinline class="video-bg active" id="videoA">
+            <source src="./assets/video/bg.mp4" type="video/mp4">
+        </video>
+        <video muted playsinline class="video-bg" id="videoB">
+            <source src="./assets/video/bg.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+
+    <div class="container-fluid main-content">
         <div class="row px-5">
             <div class="col-12 col-md-4 mx-auto col-lg-3 col-xl-2 glass-card glass-card-red align-self-start mt-5">
                 <div class="row">
@@ -95,7 +115,8 @@
                             <p class="text-light fs-fluid-sm">
                                 A small project for the course <b class="text-danger">Web Development.</b>
                                 This project uses the <a class="fw-bold text-light fst-italic link-underline-light "
-                                    href="https://www.opendota.com/">open dota API</a> to showcase Dota 2's hero pool
+                                    href="https://www.opendota.com/">open dota API</a> to showcase Dota 2's hero
+                                pool
                                 and to track players.
                             </p>
 
@@ -125,15 +146,19 @@
                                 What is <b class="text-danger">DOTA 2?</b>
                             </P>
                             <p class="text-light fs-fluid-sm">
-                                <a href="https://www.dota2.com/home" class="text-danger fw-bold">Dota 2</a> is a highly competitive, free-to-play
+                                <a href="https://www.dota2.com/home" class="text-danger fw-bold">DOTA 2</a> is a
+                                highly
+                                competitive, free-to-play
                                 Multiplayer Online Battle Arena (MOBA)
                                 game developed and published by <a href="https://www.valvesoftware.com/en/"
                                     class="link-underline-light text-light fw-bold"> <i>
                                         Valve.</i></a>
                                 It is the standalone sequel to the
                                 community-created mod <a href="https://en.wikipedia.org/wiki/Defense_of_the_Ancients"
-                                class="link-underline-danger text-danger fw-bold"> Defense of the Ancients for</a>  <a href="https://en.wikipedia.org/wiki/Warcraft_III:_The_Frozen_Throne"
-                                class="link-underline-light text-light fw-bold"> <i> Warcraft III.
+                                    class="link-underline-danger text-danger fw-bold"> Defense of the Ancients
+                                    for</a>
+                                <a href="https://en.wikipedia.org/wiki/Warcraft_III:_The_Frozen_Throne"
+                                    class="link-underline-light text-light fw-bold"> <i> Warcraft III.
                                     </i></a>
                             </p>
 
@@ -143,11 +168,16 @@
                             </P>
 
                             <p class="text-light fs-fluid-sm">
-                                At its heart, the game is a 5v5 strategic battle. Each player controls a single "Hero"
+                                At its heart, the game is a 5v5 strategic battle. Each player controls a single
+                                "Hero"
                                 with unique abilities and playstyles. The primary goal is to destroy the Ancient, a
                                 massive structure located within the enemy team's base.
                             <ul class="text-light fs-fluid-sm">
-                                <li> The Map: The battlefield is divided into two sides: The Radiant (bottom left) and
+                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#imgModal"
+                                        class="text-light fw-bold link-underline-light">The Map</a> : The
+                                    battlefield is
+                                    divided into two
+                                    sides: The Radiant (bottom left) and
                                     The
                                     Dire (top right), separated by a river.
                                 </li>
@@ -156,7 +186,8 @@
                                     towers.
                                 </li>
                                 <li> Economy & Growth: Players earn gold and experience by killing "creeps"
-                                    (computer-controlled units), destroying structures, and defeating enemy heroes. This
+                                    (computer-controlled units), destroying structures, and defeating enemy heroes.
+                                    This
                                     allows them to level up and purchase items to increase their power.
                                 </li>
                             </ul>
@@ -189,7 +220,8 @@
                                             </div>
                                             <div class="col-9">
                                                 <div class="card-body py-1 px-2">
-                                                    <p class="card-title fw-bold mb-0 text-truncate small"> Mizushino.
+                                                    <p class="card-title fw-bold mb-0 text-truncate small">
+                                                        Mizushino.
                                                     </p>
                                                     <p class="mb-0 text-secondary" style="font-size: 0.7rem;">MMR:
                                                         4081.62</p>
@@ -213,6 +245,7 @@
 
         </div>
     </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"

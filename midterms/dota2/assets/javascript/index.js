@@ -200,3 +200,39 @@ function showNoFriendCodeModal() {
     document.getElementById("closeNoFriendCodeModal").addEventListener("click", () => modal.remove());
     modal.addEventListener("click", (e) => { if (e.target === modal) modal.remove(); });
 }
+
+const videoA = document.getElementById('videoA');
+const videoB = document.getElementById('videoB');
+const FADE = 1.5; // match your CSS transition duration
+
+let current = videoA;
+let next = videoB;
+
+function onTimeUpdate() {
+  const timeLeft = current.duration - current.currentTime;
+
+  if (timeLeft <= FADE && !next.dataset.started) {
+    next.dataset.started = 'true';
+    next.currentTime = 0;
+    next.play();
+
+    next.classList.add('active');
+    current.classList.remove('active');
+
+    setTimeout(() => {
+      current.pause();
+      current.currentTime = 0;
+      delete current.dataset.started;
+
+      // Swap references
+      [current, next] = [next, current];
+
+      // Re-attach the listener to the new current
+      current.addEventListener('timeupdate', onTimeUpdate);
+      next.removeEventListener('timeupdate', onTimeUpdate);
+
+    }, FADE * 1000);
+  }
+}
+
+videoA.addEventListener('timeupdate', onTimeUpdate);

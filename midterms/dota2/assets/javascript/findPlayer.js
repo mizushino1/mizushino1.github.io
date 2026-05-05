@@ -139,8 +139,17 @@ window.loadPlayerData = async (event) => {
 
 
     function renderHeroList(dataArray, limit = 3) {
-        document.getElementById("heroContainer").innerHTML = ""; // ← clears the spinner
+        const allZero = dataArray.every(h => h.games === 0);
 
+        if (!dataArray || dataArray.length === 0 || allZero) {
+            document.getElementById("heroContainer").innerHTML = `
+            <div class="text-center text-secondary py-4 w-100">
+                <p class="gentium fs-fluid-md mb-0">⚠ Match data is private</p>
+            </div>`;
+            return;
+        }
+
+        document.getElementById("heroContainer").innerHTML = "";
         dataArray.slice(0, limit).forEach((hero, i) => {
             fillPlayerHeroStats(hero.hero_id, i + 1);
         });
@@ -170,18 +179,24 @@ window.loadPlayerData = async (event) => {
 
     const elPeersContainer = document.getElementById("peersContainer");
     if (elPeersContainer) {
-    for (let index = 0; index < 3; index++) {
-        const player = playerPeersData[index];
-        if (!player) break;
-    
-        const peerAvatar = player.avatarfull;
-        const peerName = player.personaname;
-        const peerAccountId = player.account_id;
-        const peerGames = player.with_games;
-        const peerWins = player.with_win;
-        const peerWinRate = peerGames > 0 ? ((peerWins / peerGames) * 100).toFixed(1) : "0.0";
-    
-        const playerCard = `
+        if (!playerPeersData || playerPeersData.length === 0) {
+            elPeersContainer.innerHTML = `
+            <div class="text-center py-3 px-2">
+                <p class="text-secondary gentium small mb-0">⚠ Match data is private</p>
+            </div>`;
+        } else {
+            for (let index = 0; index < 3; index++) {
+                const player = playerPeersData[index];
+                if (!player) break;
+
+                const peerAvatar = player.avatarfull;
+                const peerName = player.personaname;
+                const peerAccountId = player.account_id;
+                const peerGames = player.with_games;
+                const peerWins = player.with_win;
+                const peerWinRate = peerGames > 0 ? ((peerWins / peerGames) * 100).toFixed(1) : "0.0";
+
+                const playerCard = `
             <div class="card mb-2 player-card scale w-75 mx-auto m-2" data-account-id="${peerAccountId}" style="cursor: pointer;">
                 <div class="row g-0 align-items-center">
                     <div class="col-3">
@@ -196,19 +211,22 @@ window.loadPlayerData = async (event) => {
                     </div>
                 </div>
             </div>`;
-    
-        elPeersContainer.innerHTML += playerCard;
-    }
-}
-    
-    elPeersContainer.querySelectorAll(".player-card").forEach(card => {
-        card.addEventListener("click", () => {
-            const accountId = card.dataset.accountId;
-            localStorage.setItem("savedFriendCode", accountId);
-            window.location.href = "overview.html";
 
-        });
-    });
+                elPeersContainer.innerHTML += playerCard;
+            }
+
+            // ← INSIDE the else block, after the loop
+            elPeersContainer.querySelectorAll(".player-card").forEach(card => {
+                card.addEventListener("click", () => {
+                    const accountId = card.dataset.accountId;
+                    localStorage.setItem("savedFriendCode", accountId);
+                    window.location.href = "overview.html";
+                });
+            });
+        }
+    }
+
+
 
 
 
@@ -357,31 +375,41 @@ window.loadPlayerData = async (event) => {
 
     if (path.endsWith("overview.html") || path === "/" || path.endsWith("/")) {
         const elPlayerRecord = document.getElementById("playerWinLoseRatio");
-        elPlayerRecord.innerHTML = `
-                <div>
-                    <div class="mb-0 ms-2 fs-fluid-md">
-                        <p class="d-inline-block stat-text text-success mb-0">${playerTotalWins}</p> 
-                        <p class="d-inline-block stat-text text-light mb-0"> - </p> 
-                        <p class="d-inline-block stat-text text-danger mb-0"> ${playerTotalLose}</p>
-                    </div>
-                    <div class="mt-0 fs-fluid-md">
-                        <p class="grey gentium mt-0">WIN/LOSE RATIO </p>
-                    </div>
-                </div>
-                <div>
-                <div class="mb-0 ms-2 fs-fluid-md">
-                <p class="d-inline-block stat-text text-light mb-0">${(playerTotalWins + playerTotalLose)}</p>
-                </div>
-                <div class="mb-0 ms-2 fs-fluid-md">
-                 <p class="grey gentium mt-0">TOTAL MATCHES </p>
-                </div>
 
-
-                </div>
-
-                                       
-    `
+        if (!playerTotalWins && !playerTotalLose) {
+            elPlayerRecord.innerHTML = `
+                <p class="text-secondary gentium fs-fluid-md mb-0">⚠ Match data is private</p>`;
+        } else {
+            elPlayerRecord.innerHTML = `
+                <p class="stat-text fs-fluid-md text-success d-inline mb-0">${playerTotalWins}</p>
+                <p class="stat-text fs-fluid-md text-light d-inline mb-0"> - </p>
+                <p class="stat-text fs-fluid-md text-danger d-inline mb-0">${playerTotalLose}</p>
+                <p class="grey gentium fs-fluid-md mt-1 mb-3 small">WIN / LOSE</p>
+                <p class="stat-text fs-fluid-md text-light mb-0">${playerTotalWins + playerTotalLose}</p>
+                <p class="grey gentium fs-fluid-md mt-1 mb-0 small">TOTAL MATCHES</p>
+            `;
+        }
     }
+    if (path.endsWith("overview.html") || path === "/" || path.endsWith("/")) {
+        const elPlayerTotalWinRate = document.getElementById("playerTotalWinRate");
+        const totalMatches = (playerTotalWins + playerTotalLose);
+        const totalWinRate = (playerTotalWins / totalMatches * 100);
+        let displayWinRate = totalWinRate.toFixed(2);
+
+        if (!totalMatches || isNaN(totalWinRate)) {
+            elPlayerTotalWinRate.innerHTML = `
+                <p class="text-secondary gentium fs-fluid-md mb-0">⚠ Match data is private</p>`;
+        } else {
+            elPlayerTotalWinRate.innerHTML = `
+                <p class="stat-text fs-fluid-md fw-bold ${totalWinRate >= 50 ? 'text-success' : 'text-danger'} mb-0">
+                    ${displayWinRate}<span class="fs-fluid-md"> %</span>
+                </p>
+                <p class="grey gentium mt-1 mb-0 fs-fluid-md">WIN RATE</p>
+            `;
+        }
+    }
+
+
 
 
 
