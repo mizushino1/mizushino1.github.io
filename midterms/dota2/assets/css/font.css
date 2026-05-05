@@ -4,17 +4,15 @@ body {
     
 }  
 
-@font-face {
-    font-family: 'Radiance';
-    src: url('fonts/radiance.ttf') format('truetype');
-}
+
 
 .grey {
     color:rgb(165, 165, 165)
 }
 
 .radiance {
-    font-family: 'Radiance', sans-serif;
+ 
+    font-family: 'radiance', sans-serif; 
     text-transform: uppercase;
 }
 

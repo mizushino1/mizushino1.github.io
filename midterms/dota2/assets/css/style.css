@@ -121,7 +121,8 @@
   .main-content {
     position: relative;
     z-index: 2;
-    margin-top: -400px;
+    /* margin-top: clamp(minimum, preferred, maximum); */
+    margin-top: -50vh;
   }
   
   .video-bg {
