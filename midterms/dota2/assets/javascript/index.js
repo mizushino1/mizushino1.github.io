@@ -1,3 +1,4 @@
+const path = window.location.pathname;
 document.addEventListener("DOMContentLoaded", () => {
 
     // Restrict all searchPlayerCode inputs to numbers only
@@ -234,5 +235,6 @@ function onTimeUpdate() {
     }, FADE * 1000);
   }
 }
-
-videoA.addEventListener('timeupdate', onTimeUpdate);
+if (path.endsWith("index.html") || path === "/" || path.endsWith("/")) {
+    videoA.addEventListener('timeupdate', onTimeUpdate);
+}
