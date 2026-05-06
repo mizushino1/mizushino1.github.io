@@ -207,12 +207,12 @@ const getDota2Data = async () => {
             <!-- Content Column: Remove 'ms-4'. Use 'px-3' for mobile and 'ps-md-4' for desktop -->
             <div class="col-12 col-md-9 text-light mt-4 mb-5 px-3 ps-md-4">
                 
-                <h4 class="cinzel text-light text-uppercase mb-2 text-center text-md-start">${skill.dname}</h4>
+                <h4 class="cinzel text-light text-uppercase mb-2 text-center text-md-start" style="color: white !important">${skill.dname}</h4>
                 
                 
                 <div class="gentium shadow glass-card p-4 mx-2 mx-md-0" 
                      style="background: rgba(0, 0, 0, 0.5) !important;">
-                    <p class="mb-0">${skill.desc}</p>
+                    <p class="mb-0" style="color: white !important">${skill.desc}</p>
                 </div>
             </div>
             

@@ -19,7 +19,7 @@
 
 
 body.theme-light {
-    --glass-bg:              rgba(255, 255, 255, 0.30);
+    --glass-bg:              rgba(255, 255, 255, 0.05);
     --glass-border:          rgba(0, 0, 0, 0.12);
 
     --glass-bg-hover:        rgba(255, 255, 255, 0.15);

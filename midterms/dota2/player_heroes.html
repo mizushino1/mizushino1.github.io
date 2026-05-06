@@ -41,34 +41,23 @@
                     <li class="nav-item">
                         <a class="nav-link" href="hero_list.html">Heroes</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="themeToggle"> Toggle Theme</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Player Friend Code"
                         aria-label="friendCode" id="searchPlayerCode">
                     <button class="btn btn-outline-danger" onclick="getPlayerData(event)">Search</button>
                 </form>
+                <button class="btn btn-outline-danger ms-lg-5 mt-3 mt-lg-0 me-5" id="themeToggle"> </button>
             </div>
         </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="page-wrapper">
+        <img src="./assets/image/overviewbg.jpg" class="photo-bg" alt="">
+        <div class="video-overlay"></div>
+    </div>
+
+    <div class="container-fluid main-content">
         <div class="row">
             <div class="col-xs-12 col-md-12 col-lg-4 mt-5 d-flex justify-content-center">
                 <div class="ms-lg-5">
