@@ -1,36 +1,47 @@
+:root {
+    --text-primary:       #ffffff;
+    --text-grey:          rgb(165, 165, 165);
+    --cinzel-shadow:      0 0 8px rgba(255, 255, 255, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+body.theme-light {
+    --text-primary:       #1a1a1a;
+    --text-grey:          rgb(80, 80, 80);
+    --cinzel-shadow:      0 0 8px rgba(0, 0, 0, 0.15), 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #1b1e21;
-    
-}  
-
+    transition: color 0.3s ease;
+}
 
 
 .grey {
-    color:rgb(165, 165, 165)
+    color: var(--text-grey);
+    transition: color 0.3s ease;
 }
+
 
 @font-face {
     font-family: 'Reaver';
     src: url('https://cdn.steamstatic.com/apps/dota2/fonts/Reaver-Bold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
-  }
-  
-  .hero-name-font {
+}
+
+
+.hero-name-font {
     font-family: 'Reaver', serif;
     text-transform: uppercase;
     letter-spacing: 1px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-size: clamp(0.8rem, 2vw, 1.2rem); 
+    font-size: clamp(0.8rem, 2vw, 1.2rem);
     white-space: nowrap;
     text-overflow: ellipsis;
-  }
+}
 
 .radiance {
- 
-    font-family: 'radiance', sans-serif; 
+    font-family: 'radiance', sans-serif;
     text-transform: uppercase;
 }
 
@@ -40,14 +51,14 @@ body {
     font-size: smaller;
 }
 
-
 #playerName {
     font-family: 'Cinzel', serif;
     font-weight: 700;
     letter-spacing: 2px;
-    color: #ffffff;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.8);
+    color: var(--text-primary);
+    text-shadow: var(--cinzel-shadow);
     font-size: 1.5rem;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .hero-label {
@@ -63,9 +74,10 @@ body {
     font-family: 'Cinzel', serif;
     font-weight: 700;
     letter-spacing: 2px;
-    color: #ffffff;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.8);
+    color: var(--text-primary);
+    text-shadow: var(--cinzel-shadow);
     font-size: 1.5rem;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .gentium {
@@ -74,9 +86,10 @@ body {
     line-height: 1.2;
 }
 
-.fs-fluid-xs { font-size: clamp(0.40rem, 1vw, 0.875rem) !important;}
-.fs-fluid-sm  { font-size: clamp(0.75rem,  1.5vw, 1rem) !important;   }
-.fs-fluid-md  { font-size: clamp(1rem,     2vw,   1.5rem) !important;  }
-.fs-fluid-lg  { font-size: clamp(1.25rem,  3vw,   2rem) !important;    }
-.fs-fluid-xl  { font-size: clamp(1.5rem,   4vw,   3rem) !important;    }
-.fs-fluid-2xl { font-size: clamp(2rem,     5vw,   4rem) !important;    }
+
+.fs-fluid-xs  { font-size: clamp(0.40rem, 1vw,   0.875rem) !important; }
+.fs-fluid-sm  { font-size: clamp(0.75rem, 1.5vw, 1rem)     !important; }
+.fs-fluid-md  { font-size: clamp(1rem,    2vw,   1.5rem)   !important; }
+.fs-fluid-lg  { font-size: clamp(1.25rem, 3vw,   2rem)     !important; }
+.fs-fluid-xl  { font-size: clamp(1.5rem,  4vw,   3rem)     !important; }
+.fs-fluid-2xl { font-size: clamp(2rem,    5vw,   4rem)     !important; }

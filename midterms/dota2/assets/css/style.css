@@ -1,7 +1,68 @@
+
+   :root {
+    --body-bg:               #1b1e21;
+    --page-fade-color:       27, 30, 33;    
+
+    --player-card-bg:        rgba(0, 0, 0, 0.80);
+    --player-card-border:    rgba(255, 255, 255, 0.10);
+    --player-card-color:     #ffffff;
+
+    --form-label-color:      rgb(156, 156, 156);
+    --form-label-float-color:#ffffff;
+
+    --video-overlay-gradient: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.1) 40%,
+        rgba(27, 30, 33, 0.85) 75%,
+        rgba(27, 30, 33, 1) 100%
+    );
+
+    --hero-float-overlay: linear-gradient(
+        to bottom,
+        rgba(27, 30, 33, 0.60) 0%,
+        rgba(27, 30, 33, 0.75) 60%,
+        rgba(27, 30, 33, 1)   100%
+    );
+}
+
+body.theme-light {
+  --body-bg:               #b8b4ac;
+  --page-fade-color:       184, 180, 172;
+
+  --player-card-bg:        rgba(255, 255, 255, 0.85);
+  --player-card-border:    rgba(0, 0, 0, 0.12);
+  --player-card-color:     #1a1a1a;
+
+  --form-label-color:      rgb(90, 90, 90);
+  --form-label-float-color:#1a1a1a;
+
+  --video-overlay-gradient: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0.05) 40%,
+      rgba(184, 180, 172, 0.85) 75%,
+      rgba(184, 180, 172, 1)    100%
+  );
+
+  --hero-float-overlay: linear-gradient(
+      to bottom,
+      rgba(184, 180, 172, 0.60) 0%,
+      rgba(184, 180, 172, 0.75) 60%,
+      rgba(184, 180, 172, 1)    100%
+  );
+}
+
+
+body {
+    background-color: var(--body-bg);
+    transition: background-color 0.3s ease;
+}
+
+
 .w-75 {
     width: 75% !important;
 }
-
 
 @media (min-width: 992px) {
     .w-lg-100 {
@@ -14,52 +75,58 @@
         width: 75% !important;
     }
 }
+
+
 .form-floating {
     overflow: visible !important;
 }
 
-.form-floating, 
+.form-floating,
 .form-floating > .form-control {
     height: 40px !important;
     min-height: 40px !important;
     line-height: 1;
 }
 
-/* 2. Fix the label's default position (when empty) */
 .form-floating > label {
-    padding: 10px 12px !important; /* Center the label vertically */
+    padding: 10px 12px !important;
     font-size: 12px;
     overflow: visible !important;
     white-space: nowrap !important;
     text-overflow: clip !important;
     width: auto !important;
     max-width: none !important;
-    color: rgb(156, 156, 156);
+    color: var(--form-label-color);
+    transition: color 0.3s ease;
 }
 
-/* 3. Fix the label when it 'floats' to the top */
 .form-floating > .form-control:focus ~ label,
 .form-floating > .form-control:not(:placeholder-shown) ~ label {
     transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem) !important;
     font-size: 10px;
     opacity: 0.7;
-    background-color: transparent; 
-    padding: 0 5px !important;   
+    background-color: transparent;
+    padding: 0 5px !important;
     height: auto !important;
-    color: white;
+    color: var(--form-label-float-color);
 }
 
-/* 4. Adjust the input text position so it doesn't clip with the label */
 .form-floating > .form-control {
     padding-top: 1.2rem !important;
     padding-bottom: 0.2rem !important;
 }
 
+
 .player-card {
     font-size: 0.8rem;
-    background: rgba(0, 0, 0, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff;
+    background: var(--player-card-bg);
+    border: 1px solid var(--player-card-border);
+    color: var(--player-card-color);
+    transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
+}
+
+body.theme-light .player-card .text-secondary {
+    color: #555555 !important;
 }
 
 .player-avatar {
@@ -69,107 +136,81 @@
     border-radius: 4px 0 0 4px;
 }
 
+
 #heroSearchInput:focus {
     border-color: #ff4444;
     border-right: none;
-    box-shadow: 0 0 8px 2px rgba(255, 68, 68, 0.5) !important; 
-}
-
-#heroListContainer .card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-#heroListContainer .card-body {
-    flex-shrink: 0;
-    padding: 0.4rem 0.25rem;
-}
-
-#heroListContainer .card-img-bottom {
-    margin-top: auto;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    aspect-ratio: 16 / 9;  /* matches Dota 2 hero portrait ratio */
+    box-shadow: 0 0 8px 2px rgba(255, 68, 68, 0.5) !important;
 }
 
 #heroListContainer .hero-name-font {
     font-size: clamp(0.5rem, 1.2vw, 1rem);
 }
 
+
 .scale {
     transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  
-  .scale:hover {
-    transform: scale(1.08);
-    z-index: 1000;
-  }
+}
 
-  .scale-hero-list {
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  
-  .scale-hero-list:hover {
+.scale:hover {
+    transform: scale(1.08);
     z-index: 1000;
 }
 
-.overlay {
-  position: fixed; 
-  top: 0;
-  left: 0;
-  width: 100%;     
-  height: 100%;    
-  z-index: 0;   
+.scale-hero-list {
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scale-hero-list:hover {
+    z-index: 1000;
 }
 
 @media (max-width: 767px) {
-    .scale-hero-list:hover {
-        transform: scale(1.1);
-    }
+    .scale-hero-list:hover { transform: scale(1.1); }
 }
-
 
 @media (min-width: 768px) and (max-width: 991px) {
-    .scale-hero-list:hover {
-        transform: scale(1.1);
-    }
+    .scale-hero-list:hover { transform: scale(1.1); }
 }
-
 
 @media (min-width: 992px) and (max-width: 1199px) {
-    .scale-hero-list:hover {
-        transform: scale(1.4);
-    }
+    .scale-hero-list:hover { transform: scale(1.4); }
 }
-
 
 @media (min-width: 1200px) {
-    .scale-hero-list:hover {
-        transform: scale(1.5);
-    }
+    .scale-hero-list:hover { transform: scale(1.5); }
 }
 
-  .pointer {
+
+.pointer {
     cursor: pointer;
-  }
-  .page-wrapper {
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.page-wrapper {
     position: relative;
     width: 100%;
     height: 50vh;
     min-height: 300px;
     overflow: hidden;
-  }
-  
-  .main-content {
+}
+
+.main-content {
     position: relative;
     z-index: 2;
-    /* margin-top: clamp(minimum, preferred, maximum); */
     margin-top: -50vh;
-  }
-  
-  .video-bg {
+}
+
+
+.video-bg {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -181,30 +222,27 @@
     opacity: 0;
     transition: opacity 1.5s ease-in-out;
     margin-top: 250px;
-  }
-  
-  .video-bg.active {
+}
+
+.video-bg.active {
     opacity: 1;
-  }
-  
-  .video-overlay {
+}
+
+.video-overlay {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.3) 0%,
-      rgba(0, 0, 0, 0.1) 40%,
-      rgba(27, 30, 33, 0.85) 75%,
-      rgba(27, 30, 33, 1) 100%   
-    );
-  }
+    background: var(--video-overlay-gradient);
+    transition: background 0.3s ease;
+}
 
-  .navbar {
-    z-index: 1030 !important;  /* Bootstrap's default sticky z-index */
-  }
 
-  .video-content {
+.navbar {
+    z-index: 1030 !important;
+}
+
+
+.video-content {
     position: absolute;
     inset: 0;
     display: flex;
@@ -213,20 +251,21 @@
     justify-content: center;
     text-align: center;
     padding: 1rem;
-  }
-  
-  .video-content h1 {
+}
+
+.video-content h1 {
     font-size: clamp(1.5rem, 5vw, 3.5rem);
     text-shadow: 0 0 20px rgba(200, 0, 0, 0.8);
     letter-spacing: 0.15em;
-  }
-  
-  .video-content p {
+}
+
+.video-content p {
     font-size: clamp(0.9rem, 2.5vw, 1.3rem);
     color: rgba(255, 255, 255, 0.8);
-  }
+}
 
-  .photo-bg {
+
+.photo-bg {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -236,53 +275,238 @@
     object-fit: cover;
     object-position: center 20%;
     z-index: 0;
-  }
+}
 
-  .hero-float-bg {
+.hero-float-bg {
     position: fixed;
     inset: 0;
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
-  }
-  
-  .hero-float-bg::after {
+}
+
+.hero-float-bg::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(27, 30, 33, 0.6) 0%,
-      rgba(27, 30, 33, 0.75) 60%,
-      rgba(27, 30, 33, 1) 100%
-    );
+    background: var(--hero-float-overlay);
+    transition: background 0.3s ease;
     z-index: 1;
-  }
-  
-  .float-icon {
-  position: absolute;
-  bottom: -80px;
-  opacity: 0;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
-  animation: floatUp linear infinite;
-  /* remove the filter dimming */
+}
+
+
+.float-icon {
+    position: absolute;
+    bottom: -80px;
+    opacity: 0;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+    animation: floatUp linear infinite;
 }
 
 @keyframes floatUp {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;     
-  }
-  90% {
-    opacity: 1;     
-  }
-  100% {
-    transform: translateY(-110vh) rotate(15deg);
-    opacity: 0;
-  }
+    0%   { transform: translateY(0) rotate(0deg);     opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateY(-110vh) rotate(15deg); opacity: 0; }
+}
+
+
+   body.theme-light .glass-card .text-light,
+   body.theme-light .glass-card p.text-light,
+   body.theme-light .glass-card ul.text-light,
+   body.theme-light .glass-card li.text-light,
+   body.theme-light .glass-card span.text-light,
+   body.theme-light .glass-card a.text-light {
+       color: #1a1a1a !important;
+   }
+   
+
+   body.theme-light .glass-card a.text-light:hover {
+       color: #000000 !important;
+   }
+   
+
+   body.theme-light .glass-card .list-group-item {
+       background-color: transparent !important;
+       color: #1a1a1a !important;
+   }
+   
+
+   body.theme-light .player-card .card-title {
+       color: #1a1a1a !important;
+   }
+   
+
+   body.theme-light .player-card span {
+       color: #1a1a1a !important;
+   }
+   
+
+   body.theme-light #playerFriendCode,
+   body.theme-light #playerRank {
+       color: #1a1a1a !important;
+       background-color: transparent !important;
+   }
+   
+
+   body.theme-light .list-group-item .text-light {
+       color: #1a1a1a !important;
+   }
+   
+
+   body.theme-light #skillContainer .text-light {
+       color: #1a1a1a !important;
+   }
+
+   body.theme-light .glass-card-dark .text-light {
+       color: #f8f9fa !important;
+   }
+   
+
+   body.theme-light #attrFilter {
+       background-color: rgba(255, 255, 255, 0.8) !important;
+       color: #1a1a1a !important;
+       border-color: rgba(0, 0, 0, 0.2) !important;
+   }
+   
+
+   body.theme-light .form-control {
+       background-color: rgba(255, 255, 255, 0.85) !important;
+       color: #1a1a1a !important;
+       border-color: rgba(0, 0, 0, 0.2) !important;
+   }
+   
+   body.theme-light .form-control::placeholder {
+       color: #666666 !important;
+   }
+   
+
+   body.theme-light #heroSearchInput {
+       background-color: rgba(255, 255, 255, 0.85) !important;
+       color: #1a1a1a !important;
+   }
+   
+
+   body.theme-light #homeSearch {
+       background-color: rgba(255, 255, 255, 0.85) !important;
+       color: #1a1a1a !important;
+   }
+   
+
+   body.theme-light .bg-black {
+       background-color: rgba(200, 200, 200, 0.5) !important;
+   }
+   
+
+   body.theme-light .text-secondary {
+       color: #444444 !important;
+   }
+
+   body.theme-dark .navbar .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+body.theme-dark .navbar .nav-link:hover,
+body.theme-dark .navbar .nav-link.active {
+    color: #ffffff !important;
+}
+
+
+body.theme-light .navbar .nav-link {
+    color: rgba(255, 220, 200, 0.80) !important;
+}
+
+body.theme-light .navbar .nav-link:hover,
+body.theme-light .navbar .nav-link.active {
+    color: rgba(255, 220, 200, 1) !important;
+}
+
+
+body.theme-dark .navbar-brand img {
+    filter: brightness(1) sepia(0);
+    transition: filter 0.3s ease;
+}
+
+
+body.theme-light .navbar-brand img {
+    filter: brightness(1.15) sepia(0.2);
+    transition: filter 0.3s ease;
+}
+
+#themeToggle {
+  cursor: pointer;
+  user-select: none;
+}
+#themeToggle.active,
+#themeToggle[aria-current] {
+    font-weight: normal !important;
+    color: inherit !important;
+}
+
+body.theme-dark #themeToggle {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+body.theme-dark #themeToggle:hover {
+    color: #ffffff !important;
+}
+
+body.theme-light #themeToggle {
+    color: rgba(255, 220, 200, 0.80) !important;
+}
+
+body.theme-light #themeToggle:hover {
+    color: rgba(255, 220, 200, 1) !important;
+}
+
+body.theme-dark .navbar .btn-outline-danger {
+  color: #ff4444;
+  border-color: #ff4444;
+  background-color: transparent;
+}
+
+body.theme-dark .navbar .btn-outline-danger:hover {
+  background-color: #ff4444;
+  color: #ffffff;
+}
+
+body.theme-light .navbar .btn-outline-danger {
+  color: #ffffff;
+  border-color: #1a1a1a;
+  background-color: #1a1a1a;
+}
+
+body.theme-light .navbar .btn-outline-danger:hover {
+  background-color: #333333;
+  border-color: #333333;
+  color: #ffffff;
+}
+
+.attr-icon-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 1;
+  width: 60px; 
+  height: 60px;
+  filter: brightness(0.5) saturate(0);
+  transform: scale(1);
+  transition: transform 0.2s ease-out, filter 0.3s ease;
+}
+.attr-icon-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.attr-icon-btn:hover {
+  transform: scale(1.5);
+}
+
+.attr-icon-btn.active-attr {
+  filter: brightness(1) saturate(1);;
 }

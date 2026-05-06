@@ -1,59 +1,88 @@
 
+   :root {
+
+    --glass-bg:              rgba(255, 255, 255, 0.05);
+    --glass-border:          rgba(255, 255, 255, 0.10);
+
+    --glass-bg-hover:        rgba(255, 255, 255, 0.15);
+    --glass-border-hover:    rgba(255, 255, 255, 0.30);
+    --glass-shadow-hover:    rgba(0, 0, 0, 0.37);
+
+    --glass-bg-red:          rgba(167, 39, 20, 0.60);
+    --glass-border-red:      rgba(255, 255, 255, 0.10);
+
+    --glass-bg-dark:         rgba(0, 0, 0, 0.30);
+    --glass-border-dark:     rgba(0, 0, 0, 0.30);
+
+    --glass-list-border:     rgba(255, 255, 255, 0.10);
+}
+
+
+body.theme-light {
+    --glass-bg:              rgba(255, 255, 255, 0.30);
+    --glass-border:          rgba(0, 0, 0, 0.12);
+
+    --glass-bg-hover:        rgba(255, 255, 255, 0.15);
+    --glass-border-hover:    rgba(0, 0, 0, 0.25);
+    --glass-shadow-hover:    rgba(0, 0, 0, 0.15);
+
+    --glass-bg-red:          rgba(167, 39, 20, 0.75);
+    --glass-border-red:      rgba(167, 39, 20, 0.30);
+
+    --glass-bg-dark:         rgba(0, 0, 0, 0.30);
+    --glass-border-dark:     rgba(0, 0, 0, 0.30);
+
+    --glass-list-border:     rgba(0, 0, 0, 0.10);
+}
 
 
 .glass-card {
-    background: rgba(255, 255, 255, 0.05) !important; 
-    backdrop-filter: blur(15px);
+    background:              var(--glass-bg) !important;
+    backdrop-filter:         blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 15px;
-    overflow: hidden; 
-    transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+    border:                  1px solid var(--glass-border) !important;
+    border-radius:           15px;
+    overflow:                hidden;
+    transition:              background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
 }
 
 .glass-bg {
-    background: rgba(255, 255, 255, 0.05) !important; 
-    backdrop-filter: blur(5px);
+    background:              var(--glass-bg) !important;
+    backdrop-filter:         blur(5px);
     -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 15px;
-    overflow: hidden; 
-    transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+    border:                  1px solid var(--glass-border) !important;
+    border-radius:           15px;
+    overflow:                hidden;
+    transition:              background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
 }
 
-
-
-
-
-.glass-card .card-body-glass, 
+.glass-card .card-body-glass,
 .glass-card .list-group-item {
     background-color: transparent !important;
-    border-color: rgba(255, 255, 255, 0.1); 
+    border-color:     var(--glass-list-border);
 }
 
 .glass-card-hover:hover {
-    background: rgba(255, 255, 255, 0.15) !important; /* Increased from 0.05 to 0.15 */
-    border: 1px solid rgba(255, 255, 255, 0.3) !important; /* Brightens the border */
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Adds depth on hover */
-    cursor: pointer;
+    background:  var(--glass-bg-hover) !important;
+    border:      1px solid var(--glass-border-hover) !important;
+    box-shadow:  0 8px 32px 0 var(--glass-shadow-hover);
+    cursor:      pointer;
 }
 
-
-
 .glass-card-red {
-    background: rgba(167, 39, 20, 0.60) !important; 
-    backdrop-filter: blur(15px);
+    background:              var(--glass-bg-red) !important;
+    backdrop-filter:         blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    overflow: hidden; 
+    border:                  1px solid var(--glass-border-red) !important;
+    overflow:                hidden;
 }
 
 .glass-card-dark {
-    background: rgba(0, 0, 0, 0.3) !important; 
-    backdrop-filter: blur(15px);
+    background:              var(--glass-bg-dark) !important;
+    backdrop-filter:         blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(0, 0, 0,0.3) !important;
-    border-radius: 15px;
-    overflow: hidden; 
-    transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+    border:                  1px solid var(--glass-border-dark) !important;
+    border-radius:           15px;
+    overflow:                hidden;
+    transition:              background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
 }

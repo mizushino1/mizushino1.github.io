@@ -8,14 +8,15 @@
     <link rel="icon" type="image/png" href="./assets/image/Menu Icon.svg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link href="./assets/css/glass.css" rel="stylesheet">
+
     <link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Gentium+Book+Basic:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
-        
+    <link href="./assets/css/glass.css" rel="stylesheet">
     <link href="./assets/css/font.css" rel="stylesheet">
     <link href="./assets/css/style.css" rel="stylesheet">
+
 </head>
 
 <body class="">
@@ -41,6 +42,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="hero_list.html">Heroes</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="themeToggle"> Toggle Theme</a>
+                    </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Player Friend Code"
@@ -50,8 +54,12 @@
             </div>
         </div>
     </nav>
+    <div class="page-wrapper">
+        <img src="./assets/image/overviewbg.jpg" class="photo-bg" alt="">
+        <div class="video-overlay"></div>
+    </div>
 
-    <div class="container-fluid mt-">
+    <div class="container-fluid main-content ">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-4 mt-5 d-flex justify-content-center">
                 <div class="ms-lg-5">
@@ -60,7 +68,7 @@
 
                         <div class="card-body glass-card-red" style=" background-color: rgba(167, 39, 20, 0.80)">
                             <h5 class="card-title text-center text-light bg-dark py-2 rounded border border-secondary"
-                                id="playerName"></h5>
+                                id="playerName" style="color: white !important;"></h5>
                         </div>
 
                         <ul class="list-group list-group-flush">
@@ -146,7 +154,7 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 
-
+    <script src="./assets/javascript/theme.js"></script>
     <script src="./assets/javascript/findPlayer.js"></script>
     <script src="./assets/javascript/index.js"></script>
 

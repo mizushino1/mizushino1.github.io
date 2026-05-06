@@ -8,14 +8,15 @@
     <link rel="icon" type="image/png" href="./assets/image/Menu Icon.svg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link href="./assets/css/glass.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Gentium+Book+Basic:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
-
+    <link href="./assets/css/glass.css" rel="stylesheet">
     <link href="./assets/css/font.css" rel="stylesheet">
     <link href="./assets/css/style.css" rel="stylesheet">
+
+
 </head>
 
 <body class="">
@@ -41,6 +42,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Heroes</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="themeToggle"> Toggle Theme</a>
+                    </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Player Friend Code"
@@ -61,16 +65,16 @@
             <div class="col-12 col-lg-3 justify-content-center d-flex">
                 <div class="card glass-card-red mt-5 glass-card ms-4 w-75 align-self-start">
                     <div class="card-header cinzel text-center text-light">
-                        <p class="p-2 bg-dark rounded-4 border border-black shadow">DOTA 2 HERO LIST </p>
+                        <p class="p-2 bg-dark rounded-4 border border-black shadow" style="color: white !important;">DOTA 2 HERO LIST </p>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item ">
-                            <div class="text-light text-center gentium fs-5">SEARCH HERO</div>
+                            <div class="text-light text-center fs-5" style="letter-spacing: 0.1em;">SEARCH HERO</div>
                             <div class="input-group mb-3 mt-4">
                                 <div class="form-floating">
                                     <input type="text" id="heroSearchInput"
                                         class="form-control bg-dark radiance fw-bold text-light"
-                                        placeholder="Type hero name" list="heroList"
+                                        placeholder="" list="heroList"
                                         style="font-size: 12px; text-align: left; display: flex; align-items: center; padding-top: 0 !important;padding-bottom: 0 !important;line-height: 40px; height: 40px;">
                                     <label for="heroSearchInput" class="radiance" style="font-size: 13px;">Type hero
                                         name</label>
@@ -82,16 +86,33 @@
                             </div>
                         </li>
                         <li class="list-group-item">
-                            <div class="text-light text-center gentium fs-5 mb-4">FILTER BY ATTRIBUTE</div>
-                            <div class="text-center">
-                                <select class="form-select bg-dark text-light text-center radiance" id="attrFilter">
-                                    <option value="">ALL</option>
-                                    <option value="str" style="color: rgb(185, 80, 11)">STRENGTH</option>
-                                    <option value="agi" style="color: rgb(22, 124, 19)">AGILITY</option>
-                                    <option value="int" style="color: rgb(37, 125, 174)">INTELLIGENCE</option>
-                                    <option value="all" style="color: rgb(140, 0, 255)">UNIVERSAL</option>
-                                </select>
+                            <div class="text-light text-center fs-5 mb-3" style="letter-spacing: 0.1em;">ATTRIBUTE</div>
+                            <div class="d-flex justify-content-center pb-2">
+                        
+                                <div class="attr-icon-btn" data-attr="str" title="Strength">
+                                    <img src="https://cdn.steamstatic.com/apps/dota2/images/dota_react/herogrid/filter-str-active.png">
+                                </div>
+                            
+                                <div class="attr-icon-btn" data-attr="agi" title="Agility">
+                                    <img src="https://cdn.steamstatic.com/apps/dota2/images/dota_react/herogrid/filter-agi-active.png">
+                                </div>
+            
+                                <div class="attr-icon-btn" data-attr="int" title="Intelligence">
+                                    <img src="https://cdn.steamstatic.com/apps/dota2/images/dota_react/herogrid/filter-int-active.png">
+                                </div>
+
+                                <div class="attr-icon-btn" data-attr="all" title="Universal">
+                                    <img src="https://cdn.steamstatic.com/apps/dota2/images/dota_react/herogrid/filter-uni-active.png">
+                                </div>
+                        
                             </div>
+                            <select id="attrFilter" class="d-none">
+                                <option value="">ALL</option>
+                                <option value="str">STRENGTH</option>
+                                <option value="agi">AGILITY</option>
+                                <option value="int">INTELLIGENCE</option>
+                                <option value="all">UNIVERSAL</option>
+                            </select>
                         </li>
                         <li class="list-group-item text-center"> <button
                                 class="btn btn-dark gentium fs-5 searchBtnHero fw-bold" type="button"
@@ -116,6 +137,7 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 
+    <script src="./assets/javascript/theme.js"></script>
     <script src="./assets/javascript/findPlayer.js"></script>
     <script src="./assets/javascript/generateHeroList.js"></script>
     <script src="./assets/javascript/index.js"></script>

@@ -69,7 +69,7 @@ const generateHero = async () => {
                             <div class="border-bottom border-secondary pb-2 d-flex" >
                                 <span class="">
                                     <img src="${attributeIcons[currentAttr].attributeIcon}" class="d-inline-block mb-2" style="width: 2rem">
-                                    <h2 class="fw-bold shadow fs-5 text-light radiance d-inline-block pb-2" 
+                                    <h2 class="fw-bold fs-5 text-light radiance d-inline-block pb-2" 
                                         style="letter-spacing: 2px;">
                                         ${attrNames[currentAttr]}
                                     </h2>
@@ -88,8 +88,8 @@ const generateHero = async () => {
                 <div class="col-4 col-md-3 col-xl-2 mb-2">
                 <div class="scale-hero-list h-100 position-relative hero-card" data-attr="${hero.primary_attr}" style="cursor: pointer;" onclick="selectHero(${hero.id})">
     <img src="${fullImgUrl}" class="img-fluid w-100" alt="${hero.localized_name}" style="box-shadow: 0 15px 30px 5px rgba(0, 0, 0, 0.7); display: block;">
-    <p class="card-text fw-bold hero-name-font fs-fluid-xs text-light m-0 hero-label text-center text-lg-start" 
-   style="position: absolute; bottom: 0; left: 0; right: 0; padding: 4px 8px;">
+    <p class="card-text fw-bold hero-name-font fs-fluid-xs m-0 hero-label text-center text-lg-start" 
+   style="position: absolute; bottom: 0; left: 0; right: 0; padding: 4px 8px; color:white !important">
     ${hero.localized_name}
 </p>
 </div>
@@ -147,7 +147,7 @@ const generateHero = async () => {
 
 
                 const heroName = el.querySelector('.hero-name-font')?.textContent?.toLowerCase() || '';
-                const card = el.querySelector('.card');
+                const card = el.querySelector('.card, .hero-card');
                 const heroAttr = card?.getAttribute('data-attr') || '';
 
                 const matchesSearch = !searchTerm || heroName.includes(searchTerm);
@@ -171,20 +171,20 @@ const generateHero = async () => {
             btn.addEventListener('click', () => {
                 const input = document.getElementById('heroSearchInput');
                 const searchTerm = input.value.trim().toLowerCase();
-        
+
                 if (!searchTerm) {
                     showHeroNotFoundModal("Please enter a hero name to search.");
                     return;
                 }
-        
+
                 const exactMatch = heroStats.find(h => h.localized_name.toLowerCase() === searchTerm);
                 if (exactMatch) {
                     window.selectHero(exactMatch.id);
                     return;
                 }
-        
+
                 applyFilters();
-        
+
                 const visibleHeroes = document.querySelectorAll('#heroListContainer > *:not(.col-12):not([style*="none"])').length;
                 if (visibleHeroes === 0) {
                     showHeroNotFoundModal("Please check the spelling and try again.");
@@ -233,6 +233,27 @@ window.selectHero = function (heroID) {
     localStorage.setItem('lastViewedHeroID', heroID);
     window.location.href = 'hero_showcase.html';
 };
+
+document.querySelectorAll('.attr-icon-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const attr = btn.dataset.attr;
+        const attrFilter = document.getElementById('attrFilter');
+        const isAlreadyActive = btn.classList.contains('active-attr');
+
+        if (isAlreadyActive) {
+            // Deselect — show all
+            btn.classList.remove('active-attr');
+            attrFilter.value = '';
+        } else {
+            // Deselect all others, select this one
+            document.querySelectorAll('.attr-icon-btn').forEach(b => b.classList.remove('active-attr'));
+            btn.classList.add('active-attr');
+            attrFilter.value = attr;
+        }
+
+        attrFilter.dispatchEvent(new Event('change'));
+    });
+});
 
 
 generateHero();
