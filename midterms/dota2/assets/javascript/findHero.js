@@ -35,6 +35,42 @@ const roleIcons = {
     Initiator: `./assets/image/roles/initiatorIcon.webp`
 };
 
+async function initHeroFloatBg() {
+    const container = document.getElementById('heroFloatBg');
+    if (!container) return;
+
+    const res = await fetch('https://api.opendota.com/api/heroStats');
+    const heroes = await res.json();
+    const baseUrl = 'https://cdn.cloudflare.steamstatic.com';
+
+    
+    const pool = [...heroes].sort(() => Math.random() - 0.5).slice(0, 30);
+
+    pool.forEach((hero, i) => {
+        const img = document.createElement('img');
+        img.className = 'float-icon';
+        img.src = `${baseUrl}${hero.icon}`;
+        img.alt = '';
+
+        const size = Math.random() * 60 + 90;      
+        const left = Math.random() * 100;            
+        const duration = Math.random() * 18 + 12;   
+        const delay = Math.random() * -30;          
+
+        img.style.cssText = `
+            width: ${size}px;
+            height: ${size}px;
+            left: ${left}%;
+            animation-duration: ${duration}s;
+            animation-delay: ${delay}s;
+        `;
+
+        container.appendChild(img);
+    });
+}
+
+initHeroFloatBg();
+
 const getDota2Data = async () => {
     let currentHeroID = 1;
 

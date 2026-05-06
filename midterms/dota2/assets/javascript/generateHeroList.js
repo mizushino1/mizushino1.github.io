@@ -86,12 +86,13 @@ const generateHero = async () => {
                 return `
                 ${header}
                 <div class="col-4 col-md-3 col-xl-2 mb-2">
-                <div class="card scale glass-card h-100" data-attr="${hero.primary_attr}" style="cursor: pointer;" onclick="selectHero(${hero.id})">
-                    <div class="card-body">
-                        <p class="card-text hero-name-font text-center text-light">${hero.localized_name}</p>
-                    </div>
-                    <img src="${fullImgUrl}" class="card-img-bottom rounded-4 mb-2" alt="${hero.localized_name}">
-                </div>
+                <div class="scale-hero-list h-100 position-relative hero-card" data-attr="${hero.primary_attr}" style="cursor: pointer;" onclick="selectHero(${hero.id})">
+    <img src="${fullImgUrl}" class="img-fluid w-100" alt="${hero.localized_name}" style="box-shadow: 0 15px 30px 5px rgba(0, 0, 0, 0.7); display: block;">
+    <p class="card-text fw-bold hero-name-font fs-fluid-xs text-light m-0 hero-label text-center text-lg-start" 
+   style="position: absolute; bottom: 0; left: 0; right: 0; padding: 4px 8px;">
+    ${hero.localized_name}
+</p>
+</div>
                 </div>
                 `;
             }).join('');

@@ -13,7 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Gentium+Book+Basic:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
-        
+
     <link href="./assets/css/font.css" rel="stylesheet">
     <link href="./assets/css/style.css" rel="stylesheet">
 </head>
@@ -41,7 +41,7 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="hero_list.html">Heroes</a>
                     </li>
-                    
+
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Player Friend Code"
@@ -52,16 +52,24 @@
         </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="hero-float-bg" id="heroFloatBg">
+
+    </div>
+
+    <div class="container-fluid hero-content">
+        <div class="overlay glass-bg">
+        </div>
         <div class="row">
             <div class="col-12 col-lg-5 col-xl-4 mt-5">
-                <div id="heroDataSpinner" class="card glass-card align-items-center w-75 w-lg-100 w-xl-75 mx-auto py-5" style="min-height: 400px;">
+                <div id="heroDataSpinner" class="card glass-card align-items-center w-75 w-lg-100 w-xl-75 mx-auto py-5"
+                    style="min-height: 400px;">
                     <div class="spinner-border text-danger mb-3" role="status" style="width: 3rem; height: 3rem;">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                     <p class="text-secondary radiance" style="letter-spacing: 2px;">LOADING HERO DATA...</p>
                 </div>
-                <div class="card glass-card mx-auto w-75 w-lg-100 w-xl-75" style="width: 75%; display: none;" id="heroProfile">
+                <div class="card glass-card mx-auto w-75 w-lg-100 w-xl-75" style="width: 75%; display: none;"
+                    id="heroProfile">
                     <img src="" class="card-img-top" alt="Hero Image" id="currentHeroImage">
 
                     <div class="card-body">

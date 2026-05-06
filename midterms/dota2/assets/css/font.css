@@ -10,6 +10,24 @@ body {
     color:rgb(165, 165, 165)
 }
 
+@font-face {
+    font-family: 'Reaver';
+    src: url('https://cdn.steamstatic.com/apps/dota2/fonts/Reaver-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  .hero-name-font {
+    font-family: 'Reaver', serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: clamp(0.8rem, 2vw, 1.2rem); 
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
 .radiance {
  
     font-family: 'radiance', sans-serif; 
@@ -22,15 +40,6 @@ body {
     font-size: smaller;
 }
 
-.hero-name-font {
-    font-family: 'Marcellus', serif;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-size: clamp(0.8rem, 2vw, 1.2rem); 
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
 #playerName {
     font-family: 'Cinzel', serif;
@@ -39,6 +48,15 @@ body {
     color: #ffffff;
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.8);
     font-size: 1.5rem;
+}
+
+.hero-label {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.hero-card:hover .hero-label {
+    opacity: 1;
 }
 
 .cinzel {

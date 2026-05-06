@@ -13,7 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Gentium+Book+Basic:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
-        
+
     <link href="./assets/css/font.css" rel="stylesheet">
     <link href="./assets/css/style.css" rel="stylesheet">
 </head>
@@ -51,7 +51,12 @@
         </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="page-wrapper">
+        <img src="./assets/image/heroes.jpg" class="photo-bg" alt="">
+        <div class="video-overlay"></div>
+    </div>
+
+    <div class="container-fluid main-content">
         <div class="row">
             <div class="col-12 col-lg-3 justify-content-center d-flex">
                 <div class="card glass-card-red mt-5 glass-card ms-4 w-75 align-self-start">
@@ -72,8 +77,8 @@
                                 </div>
                                 <datalist id="heroList">
                                 </datalist>
-                                <button class="btn btn-outline-danger radiance searchBtnHero fw-bold d-none" type="button"
-                                    id="">Search</button>
+                                <button class="btn btn-outline-danger radiance searchBtnHero fw-bold d-none"
+                                    type="button" id="">Search</button>
                             </div>
                         </li>
                         <li class="list-group-item">
@@ -88,15 +93,16 @@
                                 </select>
                             </div>
                         </li>
-                        <li class="list-group-item text-center"> <button class="btn btn-dark gentium fs-5 searchBtnHero fw-bold"
-                                type="button" id="">SEARCH</button></li>
+                        <li class="list-group-item text-center"> <button
+                                class="btn btn-dark gentium fs-5 searchBtnHero fw-bold" type="button"
+                                id="">SEARCH</button></li>
                     </ul>
                 </div>
 
 
             </div>
-            <div class="col-12 col-lg-8 mt-5 me-2 glass-card">
-                <div class="row justify-content-center" id="heroListContainer">
+            <div class="col-12 col-lg-8 mt-5 me-2 glass-card overflow-visible">
+                <div class="row justify-content-center overflow-visible" id="heroListContainer">
 
                 </div>
 
