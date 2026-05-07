@@ -622,3 +622,9 @@ body.theme-light .footer-link:hover {
 body.theme-light .modal-backdrop.show {
     opacity: 0.45;
 }
+
+@media (min-width: 768px) {
+    .border-md-end {
+        border-right: 1px solid rgba(108, 117, 125, 0.5) !important;
+    }
+}

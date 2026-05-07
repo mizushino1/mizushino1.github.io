@@ -97,13 +97,23 @@
                 </div>
                 <div class="row">
                     <div class="">
-                        <div class="" id="topPlayersContainer">
+                        <div class="d-none d-md-block" id="topPlayersContainer">
 
 
                         </div>
                         <div class="text-center">
-                            <a class="btn btn-dark shadow mb-2 gentium" href="#topPlayers.html" role="button">View
-                                More</a>
+                            <button class="btn btn-dark shadow mb-2 gentium" id="btnViewMoreTop">View More</button>
+                        </div>
+                    </div>
+                    <hr class="border-secondary opacity-50">
+                    <div class="col text-light cinzel mb-2" style="font-size: 0.85rem;">
+                        PRO PLAYERS
+                    </div>
+
+                    <div class="">
+                        <div class="d-none d-md-block" id="proPlayersContainer"></div>
+                        <div class="text-center">
+                            <button class="btn btn-dark shadow mb-2 gentium" id="btnViewMorePro">View More</button>
                         </div>
                     </div>
                 </div>
@@ -116,7 +126,7 @@
                                 About
                             </P>
                             <p class="text-light fs-fluid-sm">
-                                A small project for the course <b class="text-danger">Web Development.</b>
+                                <b class="text-danger">DOTA 2 Tracker</b> is a small project for the course <b class="text-danger">Web Development.</b>
                                 This project uses the <a class="fw-bold text-light fst-italic link-underline-light "
                                     href="https://www.opendota.com/">open dota API</a> to showcase Dota 2's hero
                                 pool
@@ -134,8 +144,8 @@
                                     <div class="form-floating">
                                         <input
                                             class="form-control me-2 searchPlayerCode bg-dark text-light fs-fluid-sm gentium"
-                                            type="search" placeholder="" aria-label="friendCode"
-                                            id="homeSearch"> <label for="homeSearch" class="radiance fs-fluid-xs">Player
+                                            type="search" placeholder="" aria-label="friendCode" id="homeSearch"> <label
+                                            for="homeSearch" class="radiance fs-fluid-xs">Player
                                             friend code</label>
                                     </div>
                                     <button class="ms-2 btn btn-outline-danger raidance fw-bold"
@@ -206,36 +216,30 @@
                                 <img src="assets/image/heroes.jpg" class="img-fluid shadow"
                                     style="border-bottom-left-radius: 4px ; border-bottom-right-radius: 4px ;">
                             </div>
-                            <div class="col-12">
+                            <div class="col-6 mx-auto">
                                 <span class="mb-0">
                                     <p class="gentium d-inline-block text-light glass-card text-center fs-fluid-sm d-block mb-3"
-                                        style="background-color: black  !important;;">DOTA
-                                        ACCOUNT OF THE DEVELOPER</p>
+                                        style="background-color: black  !important;;">TOP HERO PICK RATES</p>
                                 </span>
-                                <div class="glass-card mt-0 glass-card-red overflow-visible">
-                                    <div class="card scale mb-2 player-card col-12 mt-1 col-xl-6 ms-0 ms-xl-2"
-                                        data-account-id="373418954" style="cursor: pointer;" id="developerContainer">
-                                        <div class="row g-0 align-items-center">
-                                            <div class="col-3">
-                                                <img src="https://avatars.steamstatic.com/6672552e5316e1e538b41c26c9bcb5d5138cc409_full.jpg"
-                                                    class="img-fluid rounded-start player-avatar" alt="Mizushino.">
-                                            </div>
-                                            <div class="col-9">
-                                                <div class="card-body py-1 px-2">
-                                                    <p class="card-title fw-bold mb-0 text-truncate small">
-                                                        Mizushino.
-                                                    </p>
-                                                    <p class="mb-0 text-secondary" style="font-size: 0.7rem;">MMR:
-                                                        4081.62</p>
-                                                    <div class="d-flex align-items-center gap-1">
-                                                        <img src="./assets/image/crusader.webp"
-                                                            style="width: 24px; height: 24px; object-fit: contain;">
-                                                        <span style="font-size: 0.7rem;">Crusader</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="glass-card mt-0 glass-card-dark overflow-visible" id="topHeroesContainer">
+
+                                </div>
+                                <div class="text-center mt-2">
+                                    <button class="btn btn-dark border border-danger btn-sm gentium mx-1"
+                                        onclick="openHeroModal('picks')">View All Picks</button>
+                                </div>
+                            </div>
+                            <div class="col-6 mx-auto">
+                                <span class="mb-0">
+                                    <p class="gentium d-inline-block text-light glass-card text-center fs-fluid-sm d-block mb-3"
+                                        style="background-color: black  !important;;">TOP HERO WIN RATES</p>
+                                </span>
+                                <div class="glass-card mt-0 glass-card-dark overflow-visible" id="topWinRateContainer">
+
+                                </div>
+                                <div class="text-center mt-2">
+                                    <button class="btn btn-dark border border-danger btn-sm gentium mx-1"
+                                        onclick="openHeroModal('winrate')">View All Win Rates</button>
                                 </div>
                             </div>
                         </div>
@@ -248,11 +252,57 @@
         </div>
     </div>
 
+    <div class="modal fade" id="playerModal" tabindex="-1" aria-labelledby="playerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+            <div class="modal-content glass-card-dark border-0">
+
+                <div class="modal-header glass-card-red border-0">
+                    <h5 class="modal-title cinzel text-light" id="playerModalLabel">Players</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <div class="modal-header glass-card-dark border-0 pt-0 pb-2">
+                    <input type="search" id="playerModalSearch"
+                        class="form-control bg-dark text-light border-secondary gentium"
+                        placeholder="Search by name, alias or team...">
+                </div>
+
+                <div class="modal-body glass-card-dark" id="playerModalBody">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="heroModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content bg-dark text-light border-secondary">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title cinzel" id="heroModalTitle">Hero Rankings</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body custom-scrollbar">
+
+                    <div class="mb-3">
+                        <input type="text" id="heroSearchInput"
+                            class="form-control bg-black text-light border-secondary gentium"
+                            placeholder="Search hero name...">
+                    </div>
+                    <div id="heroModalContent" class="row g-3">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="mt-5 glass-card-red border-top border-danger">
         <div class="container-fluid px-5 py-4">
             <div class="row align-items-center g-3">
-    
-                
+
+
                 <div class="col-12 col-md-3 d-flex align-items-center gap-3">
                     <img src="./assets/image/Menu Icon.svg" width="40" height="40" alt="Dota 2 Tracker">
                     <div>
@@ -262,18 +312,18 @@
                         </p>
                     </div>
                 </div>
-    
-                
+
+
                 <div class="col-12 col-md-3">
                     <p class="radiance text-light mb-2" style="font-size: 0.65rem; opacity: 0.5;">NAVIGATE</p>
                     <div class="d-flex flex-column gap-1">
-                        <a href="index.html"     class="text-light gentium footer-link">Home</a>
-                        <a href="overview.html"  class="text-light gentium footer-link">Overview</a>
+                        <a href="index.html" class="text-light gentium footer-link">Home</a>
+                        <a href="overview.html" class="text-light gentium footer-link">Overview</a>
                         <a href="hero_list.html" class="text-light gentium footer-link">Heroes</a>
                     </div>
                 </div>
-    
-                
+
+
                 <div class="col-12 col-md-3">
                     <p class="radiance text-light mb-2" style="font-size: 0.65rem; opacity: 0.5;">POWERED BY</p>
                     <div class="d-flex flex-column gap-1">
@@ -283,36 +333,35 @@
                         <a href="https://www.dota2.com/home" target="_blank" class="text-light gentium footer-link">
                             Dota 2
                         </a>
-                        <a href="https://www.valvesoftware.com/en/" target="_blank" class="text-light gentium footer-link">
+                        <a href="https://www.valvesoftware.com/en/" target="_blank"
+                            class="text-light gentium footer-link">
                             Valve
                         </a>
                     </div>
                 </div>
-    
-                
+
+
                 <div class="col-12 col-md-3">
                     <p class="radiance text-light mb-2" style="font-size: 0.65rem; opacity: 0.5;">DEVELOPER</p>
-                
-                    <!-- Developer card -->
+
                     <div class="d-flex align-items-center gap-2 glass-card-dark p-2 rounded-3 mb-3"
-                         style="cursor: pointer;"
-                         onclick="localStorage.setItem('savedFriendCode', '373418954'); window.location.href='overview.html'">
+                        style="cursor: pointer;"
+                        onclick="localStorage.setItem('savedFriendCode', '373418954'); window.location.href='overview.html'">
                         <img src="https://avatars.steamstatic.com/6672552e5316e1e538b41c26c9bcb5d5138cc409_full.jpg"
-                             style="width: 36px; height: 36px; border-radius: 4px; object-fit: cover;"
-                             alt="Mizushino.">
+                            style="width: 36px; height: 36px; border-radius: 4px; object-fit: cover;" alt="Mizushino.">
                         <div>
                             <p class="text-light fw-bold mb-0" style="font-size: 0.8rem;">Mizushino.</p>
                             <p class="text-secondary mb-0" style="font-size: 0.65rem;">Crusader · MMR 4081</p>
                         </div>
                     </div>
-                
+
                     <!-- Social links -->
                     <div class="d-flex flex-column gap-2">
-                
-                        <a href="https://github.com/mizushino1"
-                           target="_blank"
-                           class="footer-link d-flex align-items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+
+                        <a href="https://github.com/mizushino1" target="_blank"
+                            class="footer-link d-flex align-items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor"
+                                viewBox="0 0 16 16">
                                 <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
                                          0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
                                          -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
@@ -321,38 +370,38 @@
                                          .68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12
                                          .51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48
                                          0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8
-                                         c0-4.42-3.58-8-8-8z"/>
+                                         c0-4.42-3.58-8-8-8z" />
                             </svg>
                             mizushino1
                         </a>
-                
-                        <a href="mailto:jolosantos098@gmail.com"
-                           class="footer-link d-flex align-items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+
+                        <a href="mailto:jolosantos098@gmail.com" class="footer-link d-flex align-items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor"
+                                viewBox="0 0 16 16">
                                 <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1
                                          1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15
                                          11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0
-                                         2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                                         2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
                             </svg>
                             jolosantos098@gmail.com
                         </a>
-                
-                        <a href="https://www.facebook.com/jolo.santos.0728"
-                           target="_blank"
-                           class="footer-link d-flex align-items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+
+                        <a href="https://www.facebook.com/jolo.santos.0728" target="_blank"
+                            class="footer-link d-flex align-items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor"
+                                viewBox="0 0 16 16">
                                 <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017
                                          2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131
                                          3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303
-                                         1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                                         1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
                             </svg>
                             jolo.santos.0728
                         </a>
-                
-                        <a href="https://www.linkedin.com/in/john-lorex-santos-811245278/"
-                           target="_blank"
-                           class="footer-link d-flex align-items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+
+                        <a href="https://www.linkedin.com/in/john-lorex-santos-811245278/" target="_blank"
+                            class="footer-link d-flex align-items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor"
+                                viewBox="0 0 16 16">
                                 <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0
                                          .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943
                                          12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248
@@ -360,17 +409,17 @@
                                          1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431
                                          .568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22
                                          -1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54
-                                         0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                                         0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
                             </svg>
                             John Lorex Santos
                         </a>
-                
+
                     </div>
                 </div>
-    
+
             </div>
-    
-            
+
+
             <hr class="border-danger border-1 opacity-50 mt-4">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
                 <p class="gentium text-light mb-0" style="font-size: 0.7rem; opacity: 0.5;">
@@ -380,7 +429,7 @@
                     Not affiliated with Valve or Dota 2.
                 </p>
             </div>
-    
+
         </div>
     </footer>
 
@@ -391,6 +440,7 @@
     <script src="./assets/javascript/theme.js"></script>
     <script src="./assets/javascript/findPlayer.js"></script>
     <script src="./assets/javascript/topPlayer.js"></script>
+    <script src="./assets/javascript/heroRankings.js"></script> 
     <script src="./assets/javascript/index.js"></script>
 
 </body>
