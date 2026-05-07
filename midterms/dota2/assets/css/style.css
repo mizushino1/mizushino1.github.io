@@ -485,17 +485,25 @@ body.theme-light .navbar .btn-outline-danger:hover {
 }
 
 .sticky-col {
-    position: sticky;
-    top: 100px;
-    align-self: flex-start;
-    max-height: calc(100vh - 70px);
-    overflow-y: auto;
-    scrollbar-width: none;
+    /* mobile/tablet — behaves normally, no sticky */
 }
 
-.sticky-col::-webkit-scrollbar {
-    display: none; 
+@media (min-width: 992px) {
+    .sticky-col {
+        position: sticky;
+        top: 100px;
+        align-self: flex-start;
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+        scrollbar-width: none;
+    }
+
+    .sticky-col::-webkit-scrollbar {
+        display: none;
+    }
 }
+
+
 
 .attr-icon-btn {
   display: flex;
