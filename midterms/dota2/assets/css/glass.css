@@ -86,3 +86,7 @@ body.theme-light {
     overflow:                hidden;
     transition:              background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
 }
+
+.modal-content.glass-card-dark {
+    overflow: visible !important;
+}

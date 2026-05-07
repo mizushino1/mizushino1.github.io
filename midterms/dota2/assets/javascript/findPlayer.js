@@ -81,22 +81,25 @@ window.loadPlayerData = async (event) => {
     const heroesUrl = `${baseUrl}/heroes`;
     const baseHeroImgUrl = `https://cdn.cloudflare.steamstatic.com`;
     const playerWinLoseUrl = `${profileUrl}/wl`;
+    const playerRecentMatchesUrl = `${profileUrl}/recentMatches`
     const playerPeersUrl = `${profileUrl}/peers`
 
-    const [profileRes, playerWinLoseRes, heroesData, playerPeersRes] = await Promise.all([
+    const [profileRes, playerWinLoseRes, heroesData, playerPeersRes,playerRecentMatchesRes] = await Promise.all([
         fetch(profileUrl),
         fetch(playerWinLoseUrl),
         fetchHeroesData(heroesUrl),
-        fetch(playerPeersUrl)
+        fetch(playerPeersUrl),
+        fetch(playerRecentMatchesUrl)
     ]);
 
     const heroesRes = await fetch(playerHeroesUrl);
     const playerHeroData = await heroesRes.json();
 
-    const [playerData, playerWinLoseData, playerPeersData] = await Promise.all([
+    const [playerData, playerWinLoseData, playerPeersData, playerRecentMatchesData] = await Promise.all([
         profileRes.json(),
         playerWinLoseRes.json(),
-        playerPeersRes.json()
+        playerPeersRes.json(),
+        playerRecentMatchesRes.json()
     ]);
 
     if (!playerData || !playerData.profile) {
@@ -233,127 +236,336 @@ window.loadPlayerData = async (event) => {
     function fillPlayerHeroStats(heroID, index, containerId = "heroContainer") {
         const playerHeroData = new getPlayerHeroData(parseInt(index - 1)).heroData;
         const playerHeroID = playerHeroData.hero_id;
-        const heroInfo = getHeroData(heroID); // already fetched from heroesData
+        const heroInfo = getHeroData(heroID);
         const heroImg = getHeroImg(heroInfo.name);
         const attrColor = attributeColors[heroInfo.primary_attr].attributeColor;
         const matches = playerHeroData.games;
         const withMatches = playerHeroData.with_games;
         const againstMatches = playerHeroData.against_games;
         let mainWinRate, withWinRate, againstWinRate;
-
-        // Winrate calculations
-        if (matches === 0) {
-            mainWinRate = 0;
-        } else {
-            mainWinRate = winrate(matches, playerHeroData.win);
-        }
-
-        if (withMatches === 0) {
-            withWinRate = 0;
-        } else {
-            withWinRate = winrate(withMatches, playerHeroData.with_win);
-        }
-
-        if (againstMatches === 0) {
-            againstWinRate = 0;
-        } else {
-            againstWinRate = winrate(againstMatches, playerHeroData.against_win);
-        }
-
-        // 1. Try to find your original <div> by ID
+    
+        if (matches === 0) { mainWinRate = 0; }
+        else { mainWinRate = winrate(matches, playerHeroData.win); }
+    
+        if (withMatches === 0) { withWinRate = 0; }
+        else { withWinRate = winrate(withMatches, playerHeroData.with_win); }
+    
+        if (againstMatches === 0) { againstWinRate = 0; }
+        else { againstWinRate = winrate(againstMatches, playerHeroData.against_win); }
+    
         let elPlayerHeroStats = document.getElementById(`playerHeroStats${index}`);
-
-        // 2. If it doesn't exist (e.g., for the 4th, 5th hero), create it dynamically
+    
         if (!elPlayerHeroStats) {
             const parent = document.getElementById(containerId);
             elPlayerHeroStats = document.createElement('div');
             elPlayerHeroStats.id = `playerHeroStats${index}`;
-            // Use the EXACT classes from your original HTML
-            elPlayerHeroStats.className = "col-xs-12 col-md-6 col-xxl-4 my-2";
+            elPlayerHeroStats.className = "col-4 my-2";
             parent.appendChild(elPlayerHeroStats);
         }
-
-        // 3. Inject the Card Content
+    
+        const modalId = `heroStatsModal${index}`;
+        const heroName = getHeroData(playerHeroID).localized_name.toUpperCase();
+    
+   
         elPlayerHeroStats.innerHTML = `
-            <div class="card glass-card mx-auto overflow-visible h-100" >
-                <img src="${heroImg}" onclick="selectHero(${playerHeroID})" style="cursor: pointer" class="card-img-top scale border-bottom border-danger border-5" alt="..." >
-                <div class="card-body card-body-glass">
-                    <div class="mb-3 text-center">
-                        <span class="hero-name-font text-light mt-3 fs-6 p-1 px-4 text-center mb-3 rounded-3 border border-secondary"
-                            style="backdrop-filter: blur(10px); 
-                            background: ${attrColor}; 
-                            border: 1px solid rgba(255, 255, 255, 0.1); 
-                            -webkit-backdrop-filter: blur(10px); 
-                            border-radius: 8px; 
-                            padding: 4px 16px;
-                            display: inline-block;">
-                            <b>${getHeroData(playerHeroID).localized_name.toUpperCase()}</b>
+            <div class="card mx-auto overflow-hidden h-100 scale hero-card"
+                 style="cursor: pointer; border-radius: 0px"
+                 data-bs-toggle="modal"
+                 data-bs-target="#${modalId}" >
+                <img src="${heroImg}"
+                     class="img-fluid"
+                     alt="${heroName}" >
+               <p class="card-text fw-bold hero-name-font fs-fluid-xs m-0 hero-label text-center text-lg-start" 
+   style="position: absolute; bottom: 0; left: 0; right: 0; padding: 4px 8px; color:white !important">
+    ${heroName}
+</p>
+            </div>
+        `;
+    
+
+        const existingModal = document.getElementById(modalId);
+        if (existingModal) existingModal.remove();
+    
+        const modalEl = document.createElement('div');
+        modalEl.className = 'modal fade';
+        modalEl.id = modalId;
+        modalEl.setAttribute('tabindex', '-1');
+        modalEl.setAttribute('aria-hidden', 'true');
+        modalEl.innerHTML = `
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0"
+                     style="background: rgba(15, 15, 20, 0.92);
+                            backdrop-filter: blur(20px);
+                            border-radius: 15px;
+                            overflow: hidden;">
+    
+                    <div class="modal-header glass-card-red border-0">
+                        <span class="hero-name-font text-light fs-6 p-1 px-3 rounded-3"
+                              style="background: ${attrColor};">
+                            <b>${heroName}</b>
                         </span>
+                        <button type="button"
+                                class="btn-close btn-close-white ms-auto"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                     </div>
-                    <hr class="border-secondary border-1 opacity-75">
-                    
-                    <div class="text-light stat-text">
-                        <p><b>Matches Played As:</b> ${matches}</p>
-                    </div>
-                    
-                    <div class="text-light stat-text d-flex flex-row">
-                        <p><b>Win Rate:</b></p>
-                        <div class="progress ms-3 align-self-center rounded-0 mb-3 bg-danger border border-secondary" 
-                             style="width: 65%; height:13px" role="progressbar" 
-                             aria-valuenow="${mainWinRate}" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar bg-success stat-text" style="width: ${mainWinRate}%">
-                                ${mainWinRate}%
+    
+                    <div class="modal-body p-0" style="max-height: 70vh; overflow-y: auto;">
+    
+                        <img src="${heroImg}"
+                             class="img-fluid w-100 border-bottom border-danger border-3"
+                             style="max-height: 220px; object-fit: cover; object-position: center top;"
+                             alt="${heroName}">
+    
+                        <div class="p-3">
+    
+                            <div class="text-light stat-text mb-2">
+                                <b>Matches Played As:</b> ${matches}
                             </div>
+                            <div class="text-light stat-text d-flex align-items-center gap-2 mb-3">
+                                <span><b>Win Rate:</b></span>
+                                <div class="progress flex-grow-1 rounded-0 bg-danger border border-secondary"
+                                     style="height: 13px;"
+                                     role="progressbar"
+                                     aria-valuenow="${mainWinRate}" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar bg-success stat-text"
+                                         style="width: ${mainWinRate}%">
+                                        ${mainWinRate}%
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <hr class="border-secondary border-1 opacity-75">
+    
+                            <div class="text-light stat-text mb-2">
+                                <b>Matches Played With:</b> ${withMatches}
+                            </div>
+                            <div class="text-light stat-text d-flex align-items-center gap-2 mb-3">
+                                <span><b>Win Rate:</b></span>
+                                <div class="progress flex-grow-1 rounded-0 bg-danger border border-secondary"
+                                     style="height: 13px;"
+                                     role="progressbar"
+                                     aria-valuenow="${withWinRate}" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar bg-success stat-text"
+                                         style="width: ${withWinRate}%">
+                                        ${withWinRate}%
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <hr class="border-secondary border-1 opacity-75">
+    
+                            <div class="text-light stat-text mb-2">
+                                <b>Matches Played Against:</b> ${againstMatches}
+                            </div>
+                            <div class="text-light stat-text d-flex align-items-center gap-2 mb-3">
+                                <span><b>Win Rate:</b></span>
+                                <div class="progress flex-grow-1 rounded-0 bg-danger border border-secondary"
+                                     style="height: 13px;"
+                                     role="progressbar"
+                                     aria-valuenow="${againstWinRate}" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar bg-success stat-text"
+                                         style="width: ${againstWinRate}%">
+                                        ${againstWinRate}%
+                                    </div>
+                                </div>
+                            </div>
+    
                         </div>
                     </div>
     
-                    <hr class="border-secondary border-1 opacity-75">
-                    
-                    <div class="mt-2 text-center">
-                        <button class="btn glass-card text-light fw-bold shadow glass-card-hover"
-                            type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseAdditionalStats${index}">
-                            DISPLAY MORE
+                    <div class="modal-footer border-0 justify-content-center"
+                         style="background: rgba(15, 15, 20, 0.92);">
+                        <button type="button"
+                                class="btn btn-outline-danger radiance fw-bold"
+                                data-bs-dismiss="modal"
+                                onclick="selectHero(${playerHeroID})">
+                            VIEW HERO PAGE
+                        </button>
+                        <button type="button"
+                                class="btn btn-secondary radiance fw-bold"
+                                data-bs-dismiss="modal">
+                            CLOSE
                         </button>
                     </div>
     
-                    <div class="collapse mt-3" id="collapseAdditionalStats${index}">
-                        <hr class="border-secondary border-1 opacity-75">
+                </div>
+            </div>
+        `;
+    
+        document.body.appendChild(modalEl);
+    }
 
-                        
-                    <div class="text-light stat-text">
-                        <p><b>Matches Played With:</b> ${withMatches}</p>
-                    </div>
-                        <div class="text-light stat-text d-flex flex-row">
-                        
-                        <p><b>Win Rate:</b></p>
-                        <div class="progress ms-3 align-self-center rounded-0 mb-3 bg-danger border border-secondary" 
-                             style="width: 65%; height:13px" role="progressbar" 
-                             aria-valuenow="${withMatches}" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar bg-success stat-text" style="width: ${withWinRate}%">
-                                ${withWinRate}%
-                            </div>
+    function fillRecentMatchesContainer() {
+        const container = document.getElementById("recentMatchesContainer");
+        if (!container) return;
+    
+        container.innerHTML = "";
+    
+        // ── helper: build one match card element ─────────────────
+        function buildMatchCard(match) {
+            const matchHeroID   = match.hero_id;
+            const matchHeroInfo = getHeroData(matchHeroID);
+            const matchHeroImg  = getHeroImg(matchHeroInfo.name);
+    
+            const playerSide  = match.player_slot >= 128 ? "Dire" : "Radiant";
+            const sideColor   = playerSide === "Radiant" ? "#4CAF50" : "#f44336";
+            const isRadiant   = match.player_slot < 128;
+            const didWin      = (isRadiant && match.radiant_win) || (!isRadiant && !match.radiant_win);
+            const resultLabel = didWin ? "WIN" : "LOSS";
+            const resultColor = didWin ? "#4CAF50" : "#f44336";
+    
+            const playerKills   = match.kills         ?? 0;
+            const playerDeaths  = match.deaths        ?? 0;
+            const playerAssists = match.assists       ?? 0;
+            const partySize     = match.party_size    ?? 1;
+            const duration      = match.duration
+                ? `${Math.floor(match.duration / 60)}m ${match.duration % 60}s`
+                : "N/A";
+            const matchDate = match.start_time
+                ? new Date(match.start_time * 1000).toLocaleDateString()
+                : "N/A";
+            const lastHits = match.last_hits     ?? "N/A";
+            const gpm      = match.gold_per_min  ?? "N/A";
+            const xpm      = match.xp_per_min    ?? "N/A";
+    
+            const card = document.createElement("div");
+            card.className = "recent-match-card glass-card mb-3 overflow-hidden";
+            card.innerHTML = `
+                <div class="row g-0">
+                    <div class="col-3 col-md-2 position-relative"
+                         style="cursor: pointer;"
+                         onclick="selectHero(${matchHeroID})">
+                        <img src="${matchHeroImg}"
+                             class="img-fluid h-100 scale"
+                             style="object-fit: cover; object-position: center top; min-height: 90px;"
+                             alt="${matchHeroInfo.localized_name}">
+                        <div class="position-absolute bottom-0 start-0 end-0 text-center radiance text-light"
+                             style="background: rgba(0,0,0,0.6); font-size: 0.55rem; padding: 2px;">
+                            ${matchHeroInfo.localized_name.toUpperCase()}
                         </div>
                     </div>
-
-                        <hr class="border-secondary border-1 opacity-75">
-                        
-                    <div class="text-light stat-text">
-                        <p><b>Matches Played Against:</b> ${againstMatches}</p>
-                    </div>
-                        <div class="text-light stat-text d-flex flex-row">
-                        <p><b>Win Rate:</b></p>
-                        <div class="progress ms-3 align-self-center mb-3 rounded-0 bg-danger border border-secondary" 
-                             style="width: 65%; height:13px" role="progressbar" 
-                             aria-valuenow="${againstMatches}" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar bg-success stat-text" style="width: ${againstWinRate}%">
-                                ${againstWinRate}%
-                            </div>
+    
+                    <div class="col-9 col-md-10 p-2">
+                        <div class="d-flex justify-content-between align-items-center mb-1 flex-wrap gap-1">
+                            <span class="radiance fw-bold px-2 py-1 rounded-2"
+                                  style="font-size: 0.7rem;
+                                         background: ${resultColor}22;
+                                         color: ${resultColor};
+                                         border: 1px solid ${resultColor}88;">
+                                ${resultLabel}
+                            </span>
+                            <span class="radiance px-2 py-1 rounded-2"
+                                  style="font-size: 0.65rem;
+                                         background: ${sideColor}22;
+                                         color: ${sideColor};
+                                         border: 1px solid ${sideColor}55;">
+                                ${playerSide}
+                            </span>
+                            <span class="text-secondary" style="font-size: 0.65rem;">${matchDate}</span>
+                            <span class="text-secondary" style="font-size: 0.65rem;">⏱ ${duration}</span>
                         </div>
-                    </div>
+    
+                        <div class="d-flex align-items-center gap-1 mb-1">
+                            <span class="fw-bold text-light" style="font-size: 0.85rem;">
+                                <span style="color: #4CAF50;">${playerKills}</span>
+                                <span class="text-secondary mx-1">/</span>
+                                <span style="color: #f44336;">${playerDeaths}</span>
+                                <span class="text-secondary mx-1">/</span>
+                                <span style="color: #90CAF9;">${playerAssists}</span>
+                            </span>
+                            <span class="text-secondary ms-1" style="font-size: 0.65rem;">K / D / A</span>
+                        </div>
+    
+                        <div class="d-flex flex-wrap gap-2" style="font-size: 0.65rem;">
+                            <span class="text-secondary">
+                                Last Hits: <span class="text-light fw-bold">${lastHits}</span>
+                            </span>
+                            <span class="text-secondary">
+                                GPM: <span class="text-warning fw-bold">${gpm}</span>
+                            </span>
+                            <span class="text-secondary">
+                                XPM: <span class="text-info fw-bold">${xpm}</span>
+                            </span>
+                            <span class="text-secondary">
+                                Party: <span class="text-light fw-bold">${partySize}</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>`;
+            `;
+            return card;
+        }
+    
+        // ── render first 3 in the container ──────────────────────
+        playerRecentMatchesData.slice(0, 3).forEach(match => {
+            container.appendChild(buildMatchCard(match));
+        });
+    
+        // ── "View All" button ─────────────────────────────────────
+        if (playerRecentMatchesData.length > 3) {
+            const viewAllBtn = document.createElement("div");
+            viewAllBtn.className = "text-center mb-3";
+            viewAllBtn.innerHTML = `
+                <button class="btn btn-outline-danger radiance fw-bold"
+                        data-bs-toggle="modal"
+                        data-bs-target="#allMatchesModal">
+                    VIEW ALL MATCHES
+                </button>
+            `;
+            container.appendChild(viewAllBtn);
+        }
+    
+        // ── build modal with all matches ──────────────────────────
+        const existingModal = document.getElementById("allMatchesModal");
+        if (existingModal) existingModal.remove();
+    
+        const modal = document.createElement("div");
+        modal.className = "modal fade";
+        modal.id = "allMatchesModal";
+        modal.setAttribute("tabindex", "-1");
+        modal.setAttribute("aria-hidden", "true");
+        modal.innerHTML = `
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                <div class="modal-content border-0"
+                     style="background: rgba(15, 15, 20, 0.95);
+                            backdrop-filter: blur(20px);
+                            border-radius: 15px;
+                            overflow: hidden;">
+    
+                    <div class="modal-header glass-card-red border-0">
+                        <p class="radiance fw-bold text-light fs-5 mb-0">ALL RECENT MATCHES</p>
+                        <button type="button"
+                                class="btn-close btn-close-white ms-auto"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+    
+                    <div class="modal-body p-3" id="allMatchesModalBody">
+                    </div>
+    
+                    <div class="modal-footer border-0"
+                         style="background: rgba(15, 15, 20, 0.95);">
+                        <button type="button"
+                                class="btn btn-secondary radiance fw-bold"
+                                data-bs-dismiss="modal">
+                            CLOSE
+                        </button>
+                    </div>
+    
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    
+        // Populate modal body lazily when it opens
+        modal.addEventListener("show.bs.modal", () => {
+            const modalBody = document.getElementById("allMatchesModalBody");
+            if (modalBody.children.length > 0) return; // already populated
+            playerRecentMatchesData.forEach(match => {
+                modalBody.appendChild(buildMatchCard(match));
+            });
+        }, { once: false });
     }
 
     profileContainer.innerHTML = originalProfileHTML;
@@ -408,6 +620,7 @@ window.loadPlayerData = async (event) => {
             `;
         }
     }
+    fillRecentMatchesContainer();
 
 
 

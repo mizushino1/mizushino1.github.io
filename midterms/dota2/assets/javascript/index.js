@@ -96,110 +96,111 @@ window.getPlayerData = async function(event) {
     }
 };
 
-function showFriendCodeInputModal(message = "Invalid input.") {
-    const existing = document.getElementById("friendCodeInputModal");
+function createCustomModal(id, title, message, extraButtons = '') {
+    const existing = document.getElementById(id);
     if (existing) existing.remove();
 
+
+    const backdrop = document.createElement("div");
+    backdrop.id = `${id}Backdrop`;
+    backdrop.style.cssText = `
+        position: fixed; inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        z-index: 9998;
+        transition: opacity 0.15s ease;
+    `;
+
+
     const modal = document.createElement("div");
-    modal.id = "friendCodeInputModal";
+    modal.id = id;
     modal.style.cssText = `
         position: fixed; inset: 0;
-        display: flex; align-items: center; justify-content: center; z-index: 9999;
-        color: white;
+        display: flex; align-items: center; justify-content: center;
+        z-index: 9999;
+        pointer-events: none;
     `;
     modal.innerHTML = `
-        <div class="glass-card" style="border-radius: 12px; padding: 2rem; max-width: 360px; width: 90%; text-align: center;">
-            <h2 style="margin: 0 0 0.75rem; font-size: 18px;">Invalid Friend Code</h2>
-            <p style="margin: 0 0 1.5rem; color: gray; font-size: 14px;">${message}</p>
-            <button id="closeFriendCodeInputModal" style="padding: 8px 24px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; font-size: 14px;">
-                Got it
+        <div class="glass-card" style="
+            pointer-events: all;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 360px;
+            width: 90%;
+            text-align: center;
+            
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        ">
+            <h2 style="margin: 0 0 0.75rem; font-size: 18px; font-family: 'Cinzel', serif; letter-spacing: 2px;">
+                ${title}
+            </h2>
+            <p style="margin: 0 0 1.5rem; color: rgba(200,200,200,0.8); font-size: 14px;">
+                ${message}
+            </p>
+            ${extraButtons}
+            <button id="${id}CloseBtn" style="
+                padding: 8px 24px;
+                border-radius: 8px;
+                border: 1px solid rgba(255,68,68,0.6);
+                background: transparent;
+                color: #ff4444;
+                cursor: pointer;
+                font-size: 14px;
+                font-family: 'radiance', sans-serif;
+                letter-spacing: 1px;
+                transition: background 0.2s ease, color 0.2s ease;
+            "
+            onmouseover="this.style.background='#ff4444'; this.style.color='#fff';"
+            onmouseout="this.style.background='transparent'; this.style.color='#ff4444';">
+                GOT IT
             </button>
         </div>
     `;
 
+    function closeModal() {
+        backdrop.remove();
+        modal.remove();
+    }
+
+    document.body.appendChild(backdrop);
     document.body.appendChild(modal);
-    document.getElementById("closeFriendCodeInputModal").addEventListener("click", () => modal.remove());
-    modal.addEventListener("click", (e) => { if (e.target === modal) modal.remove(); });
+
+    document.getElementById(`${id}CloseBtn`).addEventListener("click", closeModal);
+    backdrop.addEventListener("click", closeModal);
+}
+
+function showFriendCodeInputModal(message = "Invalid input.") {
+    createCustomModal(
+        "friendCodeInputModal",
+        "Invalid Friend Code",
+        message
+    );
 }
 
 function showApiErrorModal(message = "Something went wrong.") {
-    const existing = document.getElementById("apiErrorModal");
-    if (existing) existing.remove();
-
-    const modal = document.createElement("div");
-    modal.id = "apiErrorModal";
-    modal.style.cssText = `
-        position: fixed; inset: 0;
-        display: flex; align-items: center; justify-content: center; z-index: 9999;
-        color: white;
-    `;
-    modal.innerHTML = `
-        <div class="glass-card" style="border-radius: 12px; padding: 2rem; max-width: 360px; width: 90%; text-align: center;">
-            <h2 style="margin: 0 0 0.75rem; font-size: 18px;">Player Not Found</h2>
-            <p style="margin: 0 0 1.5rem; color: gray; font-size: 14px;">${message}</p>
-            <button id="closeApiErrorModal" style="padding: 8px 24px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; font-size: 14px;">
-                Got it
-            </button>
-        </div>
-    `;
-
-    document.body.appendChild(modal);
-    document.getElementById("closeApiErrorModal").addEventListener("click", () => modal.remove());
-    modal.addEventListener("click", (e) => { if (e.target === modal) modal.remove(); });
+    createCustomModal(
+        "apiErrorModal",
+        "Player Not Found",
+        message
+    );
 }
 
 function showHeroNotFoundModal(message = "Please check the spelling and try again.") {
-    const existing = document.getElementById("heroNotFoundModal");
-    if (existing) existing.remove();
-
-    const modal = document.createElement("div");
-    modal.id = "heroNotFoundModal";
-    modal.style.cssText = `
-        position: fixed; inset: 0;
-        display: flex; align-items: center; justify-content: center; z-index: 9999;
-        color: white;
-    `;
-    modal.innerHTML = `
-        <div class="glass-card" style="border-radius: 12px; padding: 2rem; max-width: 360px; width: 90%; text-align: center;">
-            <h2 style="margin: 0 0 0.75rem; font-size: 18px;">Hero Not Found</h2>
-            <p style="margin: 0 0 1.5rem; color: gray; font-size: 14px;">${message}</p>
-            <button id="closeHeroNotFoundModal" style="padding: 8px 24px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; font-size: 14px;">
-                Got it
-            </button>
-        </div>
-    `;
-
-    document.body.appendChild(modal);
-    document.getElementById("closeHeroNotFoundModal").addEventListener("click", () => modal.remove());
-    modal.addEventListener("click", (e) => { if (e.target === modal) modal.remove(); });
+    createCustomModal(
+        "heroNotFoundModal",
+        "Hero Not Found",
+        message
+    );
 }
 
 function showNoFriendCodeModal() {
-    const existing = document.getElementById("noFriendCodeModal");
-    if (existing) existing.remove();
-
-    const modal = document.createElement("div");
-    modal.id = "noFriendCodeModal";
-    modal.style.cssText = `
-        position: fixed; inset: 0;
-        display: flex; align-items: center; justify-content: center; z-index: 9999;
-        color: white;
-    `;
-    modal.innerHTML = `
-        <div class="glass-card" style="border-radius: 12px; padding: 2rem; max-width: 360px; width: 90%; text-align: center;">
-            <h2 style="margin: 0 0 0.75rem; font-size: 18px;">No Friend Code Found</h2>
-            <p style="margin: 0 0 1.5rem; color: gray; font-size: 14px;">
-                Enter a friend code or click a profile on the homepage to continue.
-            </p>
-            <button id="closeNoFriendCodeModal" style="padding: 8px 24px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; font-size: 14px;">
-                Got it
-            </button>
-        </div>
-    `;
-
-    document.body.appendChild(modal);
-    document.getElementById("closeNoFriendCodeModal").addEventListener("click", () => modal.remove());
-    modal.addEventListener("click", (e) => { if (e.target === modal) modal.remove(); });
+    createCustomModal(
+        "noFriendCodeModal",
+        "No Friend Code Found",
+        "Enter a friend code or click a profile on the homepage to continue."
+    );
 }
 
 const videoA = document.getElementById('videoA');
