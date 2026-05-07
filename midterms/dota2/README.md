@@ -39,5 +39,6 @@ This project serves as a midterm submission to demonstrate proficiency in:
 ```
 
 ### PS.
-Light mode is not bonkers
+* Light mode is not bonkers
+
 ```
