@@ -7,8 +7,8 @@ A comprehensive web application designed to track player performance and explore
 ### 🚀 Features
 
 *   **Player Search:** Look up specific players using their unique **Dota 2 Account ID**.
-*   **Match History:** Displays a detailed list of recent matches, including win/loss status and performance metrics.
-*   **Hero Statistics:** View comprehensive player stats for individual heroes to see mastery levels and playstyles.
+*   **Match History:** Displays a list of recent matches.
+*   **Hero Statistics:** View player stats for heroes.
 *   **Hero Encyclopedia:** A complete list of all Dota 2 heroes with a built-in search/filter function.
 *   **Hero Details:** Deep dive into specific heroes to view their core attributes, base stats, and unique abilities.
 
