@@ -212,6 +212,7 @@ window.loadPlayerData = async (event) => {
         const attrColor  = attributeColors[heroInfo.primary_attr]?.attributeColor ?? "rgba(100,100,100,0.4)";
         const heroName   = heroInfo.localized_name.toUpperCase();
         const modalId    = `${modalIdPrefix}_${heroData.hero_id}`;
+        
         const heroID     = heroData.hero_id;
 
         const matches        = heroData.games        ?? 0;
@@ -262,55 +263,59 @@ window.loadPlayerData = async (event) => {
         }
 
         modalEl.innerHTML = `
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content border-0"
-             style="background:rgba(15,15,20,0.92);backdrop-filter:blur(20px);border-radius:15px;overflow:hidden">
+<div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0" style="background:rgba(15,15,20,0.92);backdrop-filter:blur(20px);border-radius:15px;overflow:hidden">
+        
+        <div class="border-0 position-relative">
+            <button type="button" class="btn-close btn-close-white"
+                    style="position:absolute;top:10px;right:10px;z-index:10"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
 
-            <div class="border-0 p-3 position-relative">
-                <button type="button" class="btn-close btn-close-white"
-                        style="position:absolute;top:10px;right:10px;z-index:10"
-                        data-bs-dismiss="modal" aria-label="Close"></button>
-
-                <div class="d-flex gap-3 align-items-stretch">
-
-                    <div class="position-relative flex-shrink-0"
-                         style="width:335px;height:180px;overflow:hidden;">
-                        <img src="${heroImg}"
-                             class="w-100 h-100 scale" onclick="selectHero(${heroID})"
-                             style="object-fit:cover;object-position:center top; cursor: pointer"
-                             alt="${heroName}">
-                        <div class="position-absolute bottom-0 start-0 end-0"
-                             style="padding:5px 8px;">
-                            <p class="hero-name-font fw-bold m-0"
-                               style="color:white !important;font-size:0.8rem;letter-spacing:1px;">
-                                ${heroName}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex flex-column justify-content-center flex-grow-1 gap-1"
-                         style="padding-right:28px;">
-                        <p class="text-light stat-text mb-0 small"><b>As:</b> ${matches} games</p>
-                        ${statRow("Win Rate", mainWR)}
-                        <p class="text-light stat-text mb-0 small"><b>With:</b> ${withMatches} games</p>
-                        ${statRow("Win Rate", withWR)}
-                        <p class="text-light stat-text mb-0 small"><b>Against:</b> ${againstMatches} games</p>
-                        ${statRow("Win Rate", againstWR)}
-                    </div>
-
+            <!-- DESKTOP LAYOUT (Visible on Large screens and up) -->
+            <div class="d-none d-lg-flex gap-3 align-items-stretch p-3">
+                <div class="position-relative flex-shrink-0 hero-card" style="width:335px;height:180px;">
+                    <img src="${heroImg}" class="img-fluid w-100 h-100 scale" onclick="selectHero(${heroID})" 
+                         style="object-fit:cover;object-position:center top;cursor:pointer;box-shadow:0 15px 30px 5px rgba(0,0,0,0.7);display:block;" alt="${heroName}">
+                    <p class="card-text fw-bold hero-name-font fs-fluid-xs m-0 hero-label text-start" style="position:absolute;bottom:0;left:0;right:0;padding:4px 8px;color:white !important">
+                        ${heroName}
+                    </p>
+                </div>
+                <div class="d-flex flex-column justify-content-center flex-grow-1 gap-1" style="padding-right:28px;">
+                     <p class="text-light stat-text mb-0 small"><b>As:</b> ${matches} games</p>
+                     ${statRow("Win Rate", mainWR)}
+                     <p class="text-light stat-text mb-0 small"><b>With:</b> ${withMatches} games</p>
+                     ${statRow("Win Rate", withWR)}
+                     <p class="text-light stat-text mb-0 small"><b>Against:</b> ${againstMatches} games</p>
+                     ${statRow("Win Rate", againstWR)}
                 </div>
             </div>
 
-            <div class="modal-footer border-0 justify-content-center p-2"
-                 style="background:rgba(15,15,20,0.92)">
-                <button type="button" class="btn btn-outline-danger radiance fw-bold"
-                        data-bs-toggle="modal" data-bs-target="#allHeroesModal"">GO TO ALL HERO LIST</button>
-                <button type="button" class="btn btn-secondary radiance fw-bold"
-                        data-bs-dismiss="modal">CLOSE</button>
+            <!-- MOBILE LAYOUT (Visible on screens smaller than Large) -->
+            <div class="d-lg-none">
+                <div class="position-relative hero-card" style="height:200px;">
+                    <img src="${heroImg}" class="w-100 h-100 scale" onclick="selectHero(${heroID})"
+                         style="object-fit:cover;object-position:center top;cursor:pointer;box-shadow:0 15px 30px 5px rgba(0,0,0,0.7);display:block;" alt="${heroName}">
+                    <p class="card-text fw-bold hero-name-font fs-fluid-xs m-0 hero-label text-center" style="position:absolute;bottom:0;left:0;right:0;padding:4px 8px;color:white !important">
+                         ${heroName}
+                    </p>
+                </div>
+                <div class="d-flex flex-column gap-1 p-3">
+                    <p class="text-light stat-text mb-0 small"><b>As:</b> ${matches} games</p>
+                    ${statRow("Win Rate", mainWR)}
+                    <p class="text-light stat-text mb-0 small"><b>With:</b> ${withMatches} games</p>
+                    ${statRow("Win Rate", withWR)}
+                    <p class="text-light stat-text mb-0 small"><b>Against:</b> ${againstMatches} games</p>
+                    ${statRow("Win Rate", againstWR)}
+                </div>
             </div>
-
         </div>
-    </div>`;
+
+        <div class="modal-footer border-0 justify-content-center p-2" style="background:rgba(15,15,20,0.92)">
+            <button type="button" class="btn btn-outline-danger radiance fw-bold" data-bs-toggle="modal" data-bs-target="#allHeroesModal">GO TO ALL HERO LIST</button>
+            <button type="button" class="btn btn-secondary radiance fw-bold" data-bs-dismiss="modal">CLOSE</button>
+        </div>
+    </div>
+</div>`;
         document.body.appendChild(modalEl);
     }
 
