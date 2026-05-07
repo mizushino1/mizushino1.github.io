@@ -1,5 +1,4 @@
 
-const path = window.location.pathname;
 document.addEventListener("DOMContentLoaded", () => {
 
     // Restrict all searchPlayerCode inputs to numbers only

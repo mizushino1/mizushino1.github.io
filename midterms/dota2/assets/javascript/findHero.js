@@ -469,7 +469,6 @@ const getDota2Data = async () => {
         console.error("Error fetching hero data:", error);
     }
 };
-const path = window.location.pathname;
 
 if (path.endsWith("hero_showcase.html") || path === "/" || path.endsWith("/")) {
     getDota2Data();
