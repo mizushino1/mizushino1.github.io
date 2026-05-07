@@ -1,3 +1,21 @@
+const rankTierMapping = {
+    1: "Herald", 2: "Guardian", 3: "Crusader", 4: "Archon",
+    5: "Legend",  6: "Ancient",  7: "Divine",   8: "Immortal"
+};
+
+const rankIconMapping = {
+    0: "./assets/image/uncalibrated.webp",
+    1: "./assets/image/herald.webp",
+    2: "./assets/image/guardian.webp",
+    3: "./assets/image/crusader.webp",
+    4: "./assets/image/archon.webp",
+    5: "./assets/image/legend.webp",
+    6: "./assets/image/ancient.webp",
+    7: "./assets/image/divine.webp",
+    8: "./assets/image/immortal.webp"
+};
+
+
 const path = window.location.pathname;
 document.addEventListener("DOMContentLoaded", () => {
 
