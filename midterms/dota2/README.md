@@ -37,3 +37,7 @@ This project serves as a midterm submission to demonstrate proficiency in:
 *   Utilizing public API with javascript
 
 ```
+
+### PS.
+Light mode is not bonkers
+```
