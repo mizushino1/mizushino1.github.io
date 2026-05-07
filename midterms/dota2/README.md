@@ -1,4 +1,4 @@
-git## [Dota 2 Player & Hero Tracker](https://mizushino1.github.io/midterms/dota2/)
+## [Dota 2 Player & Hero Tracker](https://mizushino1.github.io/midterms/dota2/)
 
 A comprehensive web application designed to track player performance and explore hero data using real-time information. This project was developed as a midterm requirement for a **Web Development** course, focusing on API integration, responsive design, and dynamic data rendering.
 
