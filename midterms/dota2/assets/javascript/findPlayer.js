@@ -620,6 +620,14 @@ window.loadPlayerData = async (event) => {
             `;
         }
     }
+    function hidePageLoader() {
+        const loader = document.getElementById("pageLoader");
+        if (!loader) return;
+        loader.style.opacity = "0";
+        setTimeout(() => loader.remove(), 500);
+    }
+    hidePageLoader();
+
     fillRecentMatchesContainer();
 
 
