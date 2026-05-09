@@ -211,10 +211,13 @@ function switchTheme() {
     const newButtonText = currentTheme === "light" ? "Light Mode" : "Dark Mode";
 
     body.setAttribute("data-bs-theme", newTheme);
+    localStorage.setItem('theme', newTheme);
     btnTheme.innerText = newButtonText;
-};
+}
 
-btnTheme.innerText = body.getAttribute("data-bs-theme") == "dark" ? "Light Mode" : "Dark Mode";
+const savedTheme = localStorage.getItem('theme') ?? 'dark';
+body.setAttribute('data-bs-theme', savedTheme);
+btnTheme.innerText = savedTheme == "dark" ? "Light Mode" : "Dark Mode";
 
 btnTheme.onclick = switchTheme;
 
