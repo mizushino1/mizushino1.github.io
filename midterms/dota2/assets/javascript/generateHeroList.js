@@ -67,7 +67,7 @@ const generateHero = async () => {
                     header = `
                         <div class="col-12 mt-5 mb-3">
                             <div class="border-bottom border-secondary pb-2 d-flex" >
-                                <span class="">
+                                <span class="pt-1 bg-dark rounded-3 px-2">
                                     <img src="${attributeIcons[currentAttr].attributeIcon}" class="d-inline-block mb-2" style="width: 2rem">
                                     <h2 class="fw-bold fs-5 text-light radiance d-inline-block pb-2" 
                                         style="letter-spacing: 2px;">
