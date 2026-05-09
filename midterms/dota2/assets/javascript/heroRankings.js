@@ -57,7 +57,7 @@ function renderHeroSmallCard(hero, type) {
             <div class="ms-3 flex-grow-1 overflow-hidden">
                 <p class="text-light fw-bold mb-0 text-truncate small">${hero.localized_name}</p>
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-secondary" style="font-size: 0.7rem;">${subText}</span>
+                    <span class="text-secondary p-1 rounded bg-dark" style="font-size: 0.7rem;">${subText}</span>
                     <span class="badge ${rate >= 50 ? 'bg-success' : 'bg-danger'} opacity-75" style="font-size: 0.6rem;">${rate}% WR</span>
                 </div>
             </div>
