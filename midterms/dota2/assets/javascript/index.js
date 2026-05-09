@@ -1,3 +1,5 @@
+const btnTheme = document.getElementById("themeToggle");
+const body = document.getElementById("body");
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -18,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const overviewLink = document.querySelector('a.nav-link[href="overview.html"]');
     if (overviewLink) {
-        overviewLink.addEventListener("click", function(e) {
+        overviewLink.addEventListener("click", function (e) {
             if (!localStorage.getItem("savedFriendCode")) {
                 e.preventDefault();
                 showNoFriendCodeModal();
@@ -28,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const heroListBtn = document.getElementById("heroList");
     if (heroListBtn) {
-        heroListBtn.addEventListener("click", function() {
+        heroListBtn.addEventListener("click", function () {
             window.location.href = "hero_list.html";
         });
     }
@@ -43,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-window.getPlayerData = async function(event) {
+window.getPlayerData = async function (event) {
     if (event) event.preventDefault();
 
     const inputs = document.querySelectorAll('.searchPlayerCode, #searchPlayerCode');
@@ -203,6 +205,19 @@ function showNoFriendCodeModal() {
     );
 }
 
+function switchTheme() {
+    const currentTheme = body.getAttribute("data-bs-theme");
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    const newButtonText = currentTheme === "light" ? "Light Mode" : "Dark Mode";
+
+    body.setAttribute("data-bs-theme", newTheme);
+    btnTheme.innerText = newButtonText;
+};
+
+btnTheme.innerText = body.getAttribute("data-bs-theme") == "dark" ? "Light Mode" : "Dark Mode";
+
+btnTheme.onclick = switchTheme;
+
 const videoA = document.getElementById('videoA');
 const videoB = document.getElementById('videoB');
 const FADE = 1.5; // match your CSS transition duration
@@ -211,30 +226,30 @@ let current = videoA;
 let next = videoB;
 
 function onTimeUpdate() {
-  const timeLeft = current.duration - current.currentTime;
+    const timeLeft = current.duration - current.currentTime;
 
-  if (timeLeft <= FADE && !next.dataset.started) {
-    next.dataset.started = 'true';
-    next.currentTime = 0;
-    next.play();
+    if (timeLeft <= FADE && !next.dataset.started) {
+        next.dataset.started = 'true';
+        next.currentTime = 0;
+        next.play();
 
-    next.classList.add('active');
-    current.classList.remove('active');
+        next.classList.add('active');
+        current.classList.remove('active');
 
-    setTimeout(() => {
-      current.pause();
-      current.currentTime = 0;
-      delete current.dataset.started;
+        setTimeout(() => {
+            current.pause();
+            current.currentTime = 0;
+            delete current.dataset.started;
 
-      // Swap references
-      [current, next] = [next, current];
+            // Swap references
+            [current, next] = [next, current];
 
-      // Re-attach the listener to the new current
-      current.addEventListener('timeupdate', onTimeUpdate);
-      next.removeEventListener('timeupdate', onTimeUpdate);
+            // Re-attach the listener to the new current
+            current.addEventListener('timeupdate', onTimeUpdate);
+            next.removeEventListener('timeupdate', onTimeUpdate);
 
-    }, FADE * 1000);
-  }
+        }, FADE * 1000);
+    }
 }
 if (path.endsWith("index.html") || path === "/" || path.endsWith("/")) {
     videoA.addEventListener('timeupdate', onTimeUpdate);
