@@ -1,6 +1,4 @@
-
-   :root {
-
+:root {
     --glass-bg:              rgba(255, 255, 255, 0.05);
     --glass-border:          rgba(255, 255, 255, 0.10);
 
@@ -18,24 +16,6 @@
 }
 
 
-body.theme-light {
-    --glass-bg:              rgba(255, 255, 255, 0.05);
-    --glass-border:          rgba(0, 0, 0, 0.12);
-
-    --glass-bg-hover:        rgba(255, 255, 255, 0.15);
-    --glass-border-hover:    rgba(0, 0, 0, 0.25);
-    --glass-shadow-hover:    rgba(0, 0, 0, 0.15);
-
-    --glass-bg-red:          rgba(167, 39, 20, 0.75);
-    --glass-border-red:      rgba(167, 39, 20, 0.30);
-
-    --glass-bg-dark:         rgba(0, 0, 0, 0.30);
-    --glass-border-dark:     rgba(0, 0, 0, 0.30);
-
-    --glass-list-border:     rgba(0, 0, 0, 0.10);
-}
-
-
 .glass-card {
     background:              var(--glass-bg) !important;
     backdrop-filter:         blur(15px);
@@ -47,10 +27,10 @@ body.theme-light {
 }
 
 .glass-bg {
-    background:              var(--glass-bg) !important;
+    background:              rgba(255, 255, 255, 0.05) !important;
     backdrop-filter:         blur(5px);
     -webkit-backdrop-filter: blur(15px);
-    border:                  1px solid var(--glass-border) !important;
+    border:                  1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius:           15px;
     overflow:                hidden;
     transition:              background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
