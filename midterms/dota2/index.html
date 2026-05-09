@@ -19,9 +19,18 @@
 
 </head>
 
-<body class="">
-    <nav class="navbar navbar-expand-lg bg-dark glass-card-red border-bottom border-body sticky-top"
-        data-bs-theme="dark">
+<body class="" data-bs-theme="dark" id="body">
+    <div class="page-wrapper">
+        <video autoplay muted playsinline class="video-bg active" id="videoA">
+            <source src="./assets/video/bg.mp4" type="video/mp4">
+        </video>
+        <video muted playsinline class="video-bg" id="videoB">
+            <source src="./assets/video/bg.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg glass-card border-bottom border-body sticky-top">
         <div class="container-fluid">
             <a class="navbar-brand mx-5" href="#">
                 <img src="./assets/image/Menu Icon.svg" alt="Bootstrap" width="50" height="50">
@@ -32,24 +41,24 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 glass-card-dark">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Home</a>
+                        <a class="nav-link active text-light" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " aria-current="page" href="overview.html">Overview</a>
+                        <a class="nav-link text-light" aria-current="page" href="overview.html">Overview</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="hero_list.html">Heroes</a>
+                        <a class="nav-link text-light" href="hero_list.html">Heroes</a>
                     </li>
 
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2 searchPlayerCode" type="search" placeholder="Player Friend Code"
                         aria-label="friendCode" id="">
-                    <button class="btn btn-outline-danger" onclick="getPlayerData(event)">Search</button>
+                    <button class="btn btn-dark" onclick="getPlayerData(event)">Search</button>
                 </form>
-                <button class="btn btn-outline-danger ms-lg-5 mt-3 mt-lg-0 me-5" id="themeToggle"> </button>
+                <button class="btn btn-dark ms-lg-5 mt-3 mt-lg-0 me-5" id="themeToggle"> </button>
             </div>
         </div>
     </nav>
@@ -74,17 +83,7 @@
         </div>
     </div>
 
-    <div class="page-wrapper">
 
-
-        <video autoplay muted playsinline class="video-bg active" id="videoA">
-            <source src="./assets/video/bg.mp4" type="video/mp4">
-        </video>
-        <video muted playsinline class="video-bg" id="videoB">
-            <source src="./assets/video/bg.mp4" type="video/mp4">
-        </video>
-        <div class="video-overlay"></div>
-    </div>
 
 
     <div class="container-fluid main-content">
@@ -125,7 +124,7 @@
                             <P class="gentium text-danger fs-fluid-lg">
                                 About
                             </P>
-                            <p class="text-light fs-fluid-sm">
+                            <p class=" fs-fluid-sm">
                                 <b class="text-danger">DOTA 2 Tracker</b> is a small project for the course <b class="text-danger">Web Development.</b>
                                 This project uses the <a class="fw-bold text-light fst-italic link-underline-light "
                                     href="https://www.opendota.com/">open dota API</a> to showcase Dota 2's hero
@@ -155,38 +154,38 @@
                         </div>
 
                         <div class="glass-card mb-3 p-3">
-                            <P class="gentium text-light fs-fluid-lg">
+                            <P class="gentium fs-fluid-lg">
                                 What is <b class="text-danger">DOTA 2?</b>
                             </P>
-                            <p class="text-light fs-fluid-sm">
+                            <p class="fs-fluid-sm">
                                 <a href="https://www.dota2.com/home" class="text-danger fw-bold">DOTA 2</a> is a
                                 highly
                                 competitive, free-to-play
                                 Multiplayer Online Battle Arena (MOBA)
                                 game developed and published by <a href="https://www.valvesoftware.com/en/"
-                                    class="link-underline-light text-light fw-bold"> <i>
+                                    class="link-underline-light fw-bold"> <i>
                                         Valve.</i></a>
                                 It is the standalone sequel to the
                                 community-created mod <a href="https://en.wikipedia.org/wiki/Defense_of_the_Ancients"
                                     class="link-underline-danger text-danger fw-bold"> Defense of the Ancients</a> for
                                 <a href="https://en.wikipedia.org/wiki/Warcraft_III:_The_Frozen_Throne"
-                                    class="link-underline-light text-light fw-bold"> <i> Warcraft III.
+                                    class="link-underline-light fw-bold"> <i> Warcraft III.
                                     </i></a>
                             </p>
 
                             <hr class="border-secondary border-1 opacity-75 g-0 me-5">
-                            <P class="gentium text-light fs-fluid-md">
+                            <P class="gentium fs-fluid-md">
                                 <b class="text-secondary">Core Gameplay</b>
                             </P>
 
-                            <p class="text-light fs-fluid-sm">
+                            <p class="fs-fluid-sm">
                                 At its heart, the game is a 5v5 strategic battle. Each player controls a single
                                 "Hero"
                                 with unique abilities and playstyles. The primary goal is to destroy the Ancient, a
                                 massive structure located within the enemy team's base.
-                            <ul class="text-light fs-fluid-sm">
+                            <ul class="fs-fluid-sm">
                                 <li><a href="#" data-bs-toggle="modal" data-bs-target="#imgModal"
-                                        class="text-light fw-bold link-underline-light">The Map</a> : The
+                                        class="fw-bold">The Map</a> : The
                                     battlefield is
                                     divided into two
                                     sides: The Radiant (bottom left) and
@@ -279,7 +278,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content bg-dark text-light border-secondary">
                 <div class="modal-header border-secondary">
-                    <h5 class="modal-title cinzel" id="heroModalTitle">Hero Rankings</h5>
+                    <h5 class="modal-title text-light cinzel" id="heroModalTitle">Hero Rankings</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
@@ -298,7 +297,7 @@
         </div>
     </div>
 
-    <footer class="mt-5 glass-card-red border-top border-danger">
+    <footer class="mt-5 bg-dark border-top border-danger">
         <div class="container-fluid px-5 py-4">
             <div class="row align-items-center g-3">
 
@@ -437,7 +436,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-    <script src="./assets/javascript/theme.js"></script>
+    <script src="assets/javascript/path.js"></script>
     <script src="./assets/javascript/findPlayer.js"></script>
     <script src="./assets/javascript/topPlayer.js"></script>
     <script src="./assets/javascript/heroRankings.js"></script> 

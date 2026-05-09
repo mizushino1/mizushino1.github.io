@@ -345,11 +345,10 @@ window.loadPlayerData = async (event) => {
         modal.setAttribute("tabindex", "-1");
         modal.setAttribute("aria-hidden", "true");
         modal.innerHTML = `
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-                <div class="modal-content border-0"
-                     style="background:rgba(15,15,20,0.95);backdrop-filter:blur(20px);border-radius:15px;overflow:hidden">
-                    <div class="modal-header glass-card-red border-0 flex-column flex-sm-row gap-2">
-                        <p class="radiance fw-bold text-light fs-5 mb-0">ALL HEROES</p>
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content bg-dark text-light border-secondary">
+                <div class="modal-header border-secondary">
+                        <p class="cinzel fw-bold text-light fs-5 mb-0">All Heroes</p>
                         <div class="d-flex align-items-center gap-2 ms-sm-auto">
                             <label for="heroSortSelect" class="text-light radiance small mb-0 text-nowrap">Sort by:</label>
                             <select id="heroSortSelect" class="form-select form-select-sm bg-dark text-light border-secondary" style="min-width:180px">
@@ -373,9 +372,6 @@ window.loadPlayerData = async (event) => {
                             <div class="spinner-border" role="status"></div>
                             <p class="mt-2">Loading all heroes...</p>
                         </div>
-                    </div>
-                    <div class="modal-footer border-0" style="background:rgba(15,15,20,0.95)">
-                        <button type="button" class="btn btn-secondary radiance fw-bold" data-bs-dismiss="modal">CLOSE</button>
                     </div>
                 </div>
             </div>`;
@@ -466,7 +462,7 @@ window.loadPlayerData = async (event) => {
                 ? new Date(match.start_time * 1000).toLocaleDateString() : "N/A";
 
             const card = document.createElement("div");
-            card.className = "recent-match-card glass-card mb-3 overflow-hidden";
+            card.className = "recent-match-card glass-card-dark mb-3 overflow-hidden";
             card.innerHTML = `
                 <div class="row g-0">
                     <div class="col-3 col-md-2 position-relative"
@@ -482,11 +478,11 @@ window.loadPlayerData = async (event) => {
                     <div class="col-9 col-md-10 p-2">
                         <div class="d-flex justify-content-between align-items-center mb-1 flex-wrap gap-1">
                             <span class="radiance fw-bold px-2 py-1 rounded-2"
-                                  style="font-size:0.7rem;background:${resultColor}22;color:${resultColor};border:1px solid ${resultColor}88">
+                                  style="font-size:0.7rem;background:${resultColor};border:1px solid ${resultColor}88">
                                 ${didWin ? "WIN" : "LOSS"}
                             </span>
                             <span class="radiance px-2 py-1 rounded-2"
-                                  style="font-size:0.65rem;background:${sideColor}22;color:${sideColor};border:1px solid ${sideColor}55">
+                                  style="font-size:0.65rem;background:${sideColor};border:1px solid ${sideColor}55">
                                 ${isRadiant ? "Radiant" : "Dire"}
                             </span>
                             <span class="text-secondary" style="font-size:0.65rem">${matchDate}</span>
@@ -503,10 +499,10 @@ window.loadPlayerData = async (event) => {
                             <span class="text-secondary ms-1" style="font-size:0.65rem">K / D / A</span>
                         </div>
                         <div class="d-flex flex-wrap gap-2" style="font-size:0.65rem">
-                            <span class="text-secondary">Last Hits: <span class="text-light fw-bold">${match.last_hits ?? "N/A"}</span></span>
+                            <span class="text-secondary">Last Hits: <span class="fw-bold">${match.last_hits ?? "N/A"}</span></span>
                             <span class="text-secondary">GPM: <span class="text-warning fw-bold">${match.gold_per_min ?? "N/A"}</span></span>
                             <span class="text-secondary">XPM: <span class="text-info fw-bold">${match.xp_per_min ?? "N/A"}</span></span>
-                            <span class="text-secondary">Party: <span class="text-light fw-bold">${match.party_size ?? 1}</span></span>
+                            <span class="text-secondary">Party: <span class="fw-bold">${match.party_size ?? 1}</span></span>
                         </div>
                     </div>
                 </div>`;
@@ -533,19 +529,14 @@ window.loadPlayerData = async (event) => {
         modal.setAttribute("tabindex", "-1");
         modal.setAttribute("aria-hidden", "true");
         modal.innerHTML = `
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-                <div class="modal-content border-0"
-                     style="background:rgba(15,15,20,0.95);backdrop-filter:blur(20px);border-radius:15px;overflow:hidden">
-                    <div class="modal-header glass-card-red border-0">
-                        <p class="radiance fw-bold text-light fs-5 mb-0">ALL RECENT MATCHES</p>
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content bg-dark text-light border-secondary">
+                <div class="modal-header border-secondary">
+                        <p class="cinzel fw-bold text-light fs-5 mb-0">All Recent Matches</p>
                         <button type="button" class="btn-close btn-close-white ms-auto"
                                 data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-3" id="allMatchesModalBody"></div>
-                    <div class="modal-footer border-0" style="background:rgba(15,15,20,0.95)">
-                        <button type="button" class="btn btn-secondary radiance fw-bold"
-                                data-bs-dismiss="modal">CLOSE</button>
-                    </div>
                 </div>
             </div>`;
         document.body.appendChild(modal);
