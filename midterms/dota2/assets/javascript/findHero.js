@@ -76,13 +76,11 @@ const getDota2Data = async () => {
 
     try {
         const baseUrl = `https://api.opendota.com/api`;
-        const heroesUrl = `${baseUrl}/heroes`;
         const heroStatsUrl = `${baseUrl}/heroStats`;
         const heroAbilitiesUrl = `${baseUrl}/constants/hero_abilities`;
         const abilitiesUrl = `${baseUrl}/constants/abilities`;
 
-        const [heroesDataRes, heroStatsRes, heroAbilitiesRes, abilitiesRes] = await Promise.all([
-            fetch(heroesUrl),
+        const [heroStatsRes, heroAbilitiesRes, abilitiesRes] = await Promise.all([
             fetch(heroStatsUrl),
             fetch(heroAbilitiesUrl),
             fetch(abilitiesUrl)
@@ -91,7 +89,6 @@ const getDota2Data = async () => {
 
 
 
-        const heroesData = await heroesDataRes.json();
         const heroStats = await heroStatsRes.json();
         const heroAbilities = await heroAbilitiesRes.json();
         const abilitiesDetails = await abilitiesRes.json();
@@ -103,12 +100,9 @@ const getDota2Data = async () => {
             return heroStats.find(h => h.id === a);
         };
 
-        function getHero(a) {
-            return heroesData.find(h => h.id === a);
-        };
 
         function getFullHeroProfile(targetID) {
-            const hero = getHero(targetID);
+            const hero = getHeroStats(targetID);
             if (!hero) return null;
 
             // Get skills from hero_abilities constant (using internal NPC name)
