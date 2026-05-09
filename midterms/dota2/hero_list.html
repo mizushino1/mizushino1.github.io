@@ -19,9 +19,8 @@
 
 </head>
 
-<body class="">
-    <nav class="navbar navbar-expand-lg bg-dark glass-card-red border-bottom border-body sticky-top"
-        data-bs-theme="dark">
+<body class="" data-bs-theme="dark" id="body">
+    <nav class="navbar navbar-expand-lg glass-card border-bottom border-body sticky-top">
         <div class="container-fluid">
             <a class="navbar-brand mx-5" href="#">
                 <img src="./assets/image/Menu Icon.svg" alt="Bootstrap" width="50" height="50">
@@ -32,23 +31,24 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 glass-card-dark">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
+                        <a class="nav-link active text-light" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="overview.html">Overview</a>
+                        <a class="nav-link text-light" aria-current="page" href="overview.html">Overview</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Heroes</a>
+                        <a class="nav-link text-light" href="hero_list.html">Heroes</a>
                     </li>
+
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Player Friend Code"
                         aria-label="friendCode" id="searchPlayerCode">
-                    <button class="btn btn-outline-danger" onclick="getPlayerData(event)">Search</button>
+                    <button class="btn btn-dark" onclick="getPlayerData(event)">Search</button>
                 </form>
-                <button class="btn btn-outline-danger ms-lg-5 mt-3 mt-lg-0 me-5" id="themeToggle"> </button>
+                <button class="btn btn-dark ms-lg-5 mt-3 mt-lg-0 me-5" id="themeToggle"> </button>
             </div>
         </div>
     </nav>
@@ -75,7 +75,7 @@
                                         class="form-control bg-dark radiance fw-bold text-light" placeholder=""
                                         list="heroList"
                                         style="font-size: 12px; text-align: left; display: flex; align-items: center; padding-top: 0 !important;padding-bottom: 0 !important;line-height: 40px; height: 40px;">
-                                    <label for="heroSearchInput" class="radiance" style="font-size: 13px;">Type hero
+                                    <label for="heroSearchInput" class="text-light radiance" style="font-size: 13px;">Type hero
                                         name</label>
                                 </div>
                                 <datalist id="heroList">
@@ -126,7 +126,7 @@
 
             </div>
             <div class="col-12 col-lg-8 mt-5 me-2 glass-card overflow-visible">
-                <div class="row justify-content-center overflow-visible" id="heroListContainer">
+                <div class="row justify-content-center overflow-visible shadow" id="heroListContainer">
 
                 </div>
 
@@ -134,7 +134,7 @@
 
         </div>
     </div>
-    <footer class="mt-5 glass-card-red border-top border-danger">
+    <footer class="mt-5 bg-dark border-top border-danger">
         <div class="container-fluid px-5 py-4">
             <div class="row align-items-center g-3">
 
@@ -275,7 +275,6 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
     <script src="./assets/javascript/path.js"></script>
-    <script src="./assets/javascript/theme.js"></script>
     <script src="./assets/javascript/findPlayer.js"></script>
     <script src="./assets/javascript/generateHeroList.js"></script>
     <script src="./assets/javascript/index.js"></script>
