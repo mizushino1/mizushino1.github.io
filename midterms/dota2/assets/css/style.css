@@ -1,53 +1,22 @@
-:root {
-    --body-bg:               #1b1e21;
-    --page-fade-color:       27, 30, 33;
-
-    --player-card-bg:        rgba(0, 0, 0, 0.80);
-    --player-card-border:    rgba(255, 255, 255, 0.10);
-    --player-card-color:     #ffffff;
-
-    --form-label-color:      rgb(156, 156, 156);
-    --form-label-float-color:#ffffff;
-
-    --video-overlay-gradient: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.3) 0%,
-        rgba(0, 0, 0, 0.1) 40%,
-        rgba(27, 30, 33, 0.85) 75%,
-        rgba(27, 30, 33, 1) 100%
-    );
-
-    --hero-float-overlay: linear-gradient(
-        to bottom,
-        rgba(27, 30, 33, 0.60) 0%,
-        rgba(27, 30, 33, 0.75) 60%,
-        rgba(27, 30, 33, 1)   100%
-    );
-}
-
-
 body {
-    background-color: var(--body-bg);
+    background-color: var(--bs-body-bg);
+    transition: background-color 0.3s ease;
 }
-
 
 .w-75 {
     width: 75% !important;
 }
 
 @media (min-width: 992px) {
-    .w-lg-100 {
-        width: 100% !important;
-    }
+    .w-lg-100 { width: 100% !important; }
 }
 
 @media (min-width: 1200px) {
-    .w-xl-75 {
-        width: 75% !important;
-    }
+    .w-xl-75 { width: 75% !important; }
 }
 
 
+/* ── Form floating ──────────────────────────────────────────── */
 .form-floating {
     overflow: visible !important;
 }
@@ -67,7 +36,7 @@ body {
     text-overflow: clip !important;
     width: auto !important;
     max-width: none !important;
-    color: var(--form-label-color);
+    color: var(--bs-secondary-color);
 }
 
 .form-floating > .form-control:focus ~ label,
@@ -78,7 +47,7 @@ body {
     background-color: transparent;
     padding: 0 5px !important;
     height: auto !important;
-    color: var(--form-label-float-color);
+    color: var(--bs-body-color);
 }
 
 .form-floating > .form-control {
@@ -87,11 +56,13 @@ body {
 }
 
 
+/* ── Player card ────────────────────────────────────────────── */
 .player-card {
     font-size: 0.8rem;
-    background: var(--player-card-bg);
-    border: 1px solid var(--player-card-border);
-    color: var(--player-card-color);
+    background: var(--bs-card-bg);
+    border: 1px solid var(--bs-border-color);
+    color: var(--bs-body-color);
+    transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
 }
 
 .player-avatar {
@@ -102,6 +73,7 @@ body {
 }
 
 
+/* ── Search ─────────────────────────────────────────────────── */
 #heroSearchInput:focus {
     border-color: #ff4444;
     border-right: none;
@@ -113,6 +85,7 @@ body {
 }
 
 
+/* ── Scale animations ───────────────────────────────────────── */
 .scale {
     transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -147,6 +120,7 @@ body {
 }
 
 
+/* ── Utilities ──────────────────────────────────────────────── */
 .pointer {
     cursor: pointer;
 }
@@ -175,6 +149,7 @@ body {
 }
 
 
+/* ── Video background ───────────────────────────────────────── */
 .video-bg {
     position: absolute;
     top: 50%;
@@ -197,14 +172,19 @@ body {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: var(--video-overlay-gradient);
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.1) 40%,
+        rgba(var(--bs-body-bg-rgb), 0.85) 75%,
+        rgb(var(--bs-body-bg-rgb)) 100%
+    );
+    transition: background 0.3s ease;
 }
-
 
 .navbar {
     z-index: 1030 !important;
 }
-
 
 .video-content {
     position: absolute;
@@ -229,6 +209,7 @@ body {
 }
 
 
+/* ── Photo / hero float bg ──────────────────────────────────── */
 .photo-bg {
     position: absolute;
     top: 50%;
@@ -253,17 +234,22 @@ body {
     content: '';
     position: absolute;
     inset: 0;
-    background: var(--hero-float-overlay);
+    background: linear-gradient(
+        to bottom,
+        rgba(var(--bs-body-bg-rgb), 0.60) 0%,
+        rgba(var(--bs-body-bg-rgb), 0.75) 60%,
+        rgb(var(--bs-body-bg-rgb))        100%
+    );
+    transition: background 0.3s ease;
     z-index: 1;
 }
-
 
 .float-icon {
     position: absolute;
     bottom: -80px;
     opacity: 0;
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(var(--bs-body-color-rgb), 0.08);
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
     animation: floatUp linear infinite;
 }
@@ -276,8 +262,9 @@ body {
 }
 
 
+/* ── Sticky sidebar ─────────────────────────────────────────── */
 .sticky-col {
-    /* mobile/tablet — behaves normally, no sticky */
+    /* mobile/tablet — behaves normally */
 }
 
 @media (min-width: 992px) {
@@ -296,13 +283,13 @@ body {
 }
 
 
+/* ── Attribute icon buttons ─────────────────────────────────── */
 .attr-icon-btn {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    opacity: 1;
     width: 60px;
     height: 60px;
     filter: brightness(0.5) saturate(0);
@@ -324,6 +311,8 @@ body {
     filter: brightness(1) saturate(1);
 }
 
+
+/* ── Navbar brand ───────────────────────────────────────────── */
 .navbar-brand {
     transform: scale(1);
     transition: ease-in-out 100ms;
@@ -334,6 +323,7 @@ body {
 }
 
 
+/* ── Hero stats modal ───────────────────────────────────────── */
 [id^="heroStatsModal"] .modal-content {
     overflow: hidden;
 }
@@ -351,19 +341,12 @@ body {
     width: 100%;
 }
 
-[id^="heroStatsModal"] .modal-body::-webkit-scrollbar {
-    width: 4px;
-}
+[id^="heroStatsModal"] .modal-body::-webkit-scrollbar       { width: 4px; }
+[id^="heroStatsModal"] .modal-body::-webkit-scrollbar-track  { background: transparent; }
+[id^="heroStatsModal"] .modal-body::-webkit-scrollbar-thumb  { background: rgba(255, 68, 68, 0.5); border-radius: 2px; }
 
-[id^="heroStatsModal"] .modal-body::-webkit-scrollbar-track {
-    background: transparent;
-}
 
-[id^="heroStatsModal"] .modal-body::-webkit-scrollbar-thumb {
-    background: rgba(255, 68, 68, 0.5);
-    border-radius: 2px;
-}
-
+/* ── Recent match cards ─────────────────────────────────────── */
 .recent-match-card {
     border-radius: 10px !important;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -374,6 +357,8 @@ body {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
+
+/* ── Footer ─────────────────────────────────────────────────── */
 footer {
     position: relative;
     z-index: 2;
@@ -383,6 +368,7 @@ footer {
     font-size: 0.82rem;
     opacity: 0.75;
     text-decoration: none;
+    color: var(--bs-body-color);
     transition: opacity 0.2s ease, color 0.2s ease;
 }
 
@@ -391,6 +377,8 @@ footer {
     color: #ff4444 !important;
 }
 
+
+/* ── Modal backdrop ─────────────────────────────────────────── */
 .modal-backdrop {
     background-color: #000000;
 }
@@ -399,8 +387,10 @@ footer {
     opacity: 0.65;
 }
 
+
+/* ── Misc ───────────────────────────────────────────────────── */
 @media (min-width: 768px) {
     .border-md-end {
-        border-right: 1px solid rgba(108, 117, 125, 0.5) !important;
+        border-right: 1px solid var(--bs-border-color) !important;
     }
 }
