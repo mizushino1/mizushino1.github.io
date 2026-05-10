@@ -1,0 +1,7 @@
+[data-bs-theme="dark"] .invert-on-dark {
+    filter: invert(1) brightness(2);
+}
+
+[data-bs-theme="light"] .invert-on-light {
+    filter: invert(1) brightness(2);
+}

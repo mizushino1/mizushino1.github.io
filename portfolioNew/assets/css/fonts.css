@@ -1,0 +1,8 @@
+.fs-fluid-xs  { font-size: clamp(0.40rem, 1vw,   0.875rem) !important; }
+.fs-fluid-sm  { font-size: clamp(0.75rem, 1.5vw, 1rem)     !important; }
+.fs-fluid-md  { font-size: clamp(1rem,    2vw,   1.5rem)   !important; }
+.fs-fluid-lg  { font-size: clamp(1.25rem, 3vw,   2rem)     !important; }
+.fs-fluid-xl  { font-size: clamp(1.5rem,  4vw,   3rem)     !important; }
+.fs-fluid-2xl { font-size: clamp(2rem,    5vw,   4rem)     !important; }
+
+.fs-name { font-size: clamp(1.4rem,    2vw,   1.5rem)   !important; }
