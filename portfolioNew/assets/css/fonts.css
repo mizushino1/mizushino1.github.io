@@ -20,7 +20,7 @@ p {
 }
 
 
-.fs-fluid-xs  { font-size: clamp(0.40rem, 1vw,   0.875rem) !important; }
+.fs-fluid-xs  { font-size: clamp(0.50rem, 1vw,   1rem) !important; }
 .fs-fluid-sm  { font-size: clamp(0.75rem, 1.5vw, 1rem)     !important; }
 .fs-fluid-md  { font-size: clamp(1rem,    2vw,   1.5rem)   !important; }
 .fs-fluid-lg  { font-size: clamp(1.25rem, 3vw,   2rem)     !important; }
