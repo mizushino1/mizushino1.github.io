@@ -32,7 +32,7 @@ aboutTab.onclick = () => {
         const section = document.getElementById('abtSection');
         const top = section.getBoundingClientRect().top + window.scrollY - OFFSET;
         window.scrollTo({ top, behavior: 'smooth' });
-    }, 600);
+    }, 1);
 };
 
 
