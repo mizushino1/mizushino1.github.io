@@ -1,3 +1,25 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+
+p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+
 .fs-fluid-xs  { font-size: clamp(0.40rem, 1vw,   0.875rem) !important; }
 .fs-fluid-sm  { font-size: clamp(0.75rem, 1.5vw, 1rem)     !important; }
 .fs-fluid-md  { font-size: clamp(1rem,    2vw,   1.5rem)   !important; }
