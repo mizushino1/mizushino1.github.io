@@ -2,8 +2,17 @@ const body = document.getElementById("body");
 const themeBtn = document.getElementById("themeBtn");
 const aboutTab = document.getElementById("aboutTab");
 const actTab = document.getElementById("activitiesTab");
-
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 const aboutCard = document.getElementById('aboutCard');
+
+const applyTheme = (isDark) => {
+    body.setAttribute("data-bs-theme", isDark ? "dark" : "light");
+    themeBtn.innerText = isDark ? "Light Mode" : "Dark Mode";
+};
+
+applyTheme(prefersDark.matches);
+prefersDark.addEventListener('change', (e) => applyTheme(e.matches));
+
 
 aboutTab.onclick = () => {
     aboutTab.classList.add('active')
@@ -17,6 +26,7 @@ aboutTab.onclick = () => {
         aboutCard.classList.remove('hidden');
     }));
 };
+
 
 actTab.onclick = () => {
     actTab.classList.add('active')
@@ -34,7 +44,6 @@ actTab.onclick = () => {
 };
 
 themeBtn.onclick = () => {
-    let bodyTheme = body.getAttribute("data-bs-theme");
-    let currentbodytheme = bodyTheme == "light" ? body.setAttribute("data-bs-theme", "dark") : body.setAttribute("data-bs-theme", "light");
-    themeBtn.innerText = body.getAttribute("data-bs-theme") == "light" ? themeBtn.innerText = "Dark Mode" : themeBtn.innerText = "Light Mode";
+    const isDark = body.getAttribute("data-bs-theme") === "dark";
+    applyTheme(!isDark);
 };
