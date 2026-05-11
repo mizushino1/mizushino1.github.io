@@ -1,3 +1,8 @@
+body.modal-open {
+    padding-right: 0 !important;
+    overflow: hidden;
+}
+
 [data-bs-theme="dark"] .invert-on-dark {
     filter: invert(1) brightness(2);
 }
@@ -46,4 +51,28 @@ body {
     will-change: transform;
     backface-visibility: hidden;
     -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.icon {
+    width: clamp(22px, 2vw + 10px, 32px);
+    height: auto;
+}
+
+.expandable-img {
+    cursor: pointer;
+}
+
+.modal-backdrop {
+    width: 100vw !important;
+    height: 100vh !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+.modal {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    z-index: 1055;
 }
