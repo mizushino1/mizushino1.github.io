@@ -4,129 +4,168 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>santosjohnlorex</title>
+    <title>jlorexsantos</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.svg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="css\style.css">
-    <link rel="stylesheet" href="css\button.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:ital,wght@0,400;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/glass.css">
+    <link rel="stylesheet" href="assets/css/fonts.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
 </head>
 
-<body>
+<body data-bs-theme="light">
+    <nav class="navbar bg-body-tertiary glass-card-dark navbar-expand-lg sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="./assets/images/logo.svg" alt="Logo" width="60" height="48"
+                    class="d-inline-block align-text-top">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active fw-bold" aria-current="page" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" href="#">Activities</a>
+                    </li>
+                </ul>
+            </div>
+    </nav>
 
-    <body style="background-color: rgb(0, 0, 0);" class="gif-background">
-
-
-
-        <div class="p-3 text-center shadow d-xl-none">
-            <nav class="container whitebg p-3 rounded-4 " data-page="about">
-                <div class="d-flex flex-row justify-content-around">
-                    <button class="btn navbtn fw-bold" data-page="about" data-target="content-display-1"
-                        style="font-size: small;">
-                        About
-                    </button>
-                    <button class="btn navbtn fw-bold" data-page="portfolio" data-target="content-display-1"
-                        style="font-size: small;">
-                        Portfolio
-                    </button>
-                    <button class="btn navbtn fw-bold" data-page="education" data-target="content-display-1"
-                        style="font-size: small;">
-                        Education
-                    </button>
-                    <button class="btn navbtn fw-bold" data-page="activities" data-target="content-display-1"
-                        style="font-size: small;">
-                        Activities
-                    </button>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-12 col-xl-4 p-3 card shadow glass-card align-self-start">
+                <div class="d-flex align-items-center gap-4 p-4 rounded-4">
+                    <img src="./assets/images/githubProfile.jpg" class="rounded-4 object-fit-cover flex-shrink-0"
+                        style="width:160px; height:160px;" alt="John Lorex Santos">
+                    <div>
+                        <h5 class="fs-name fw-bold mb-1">John Lorex Santos</h5>
+                        <hr class="my-2" style="width:100%; opacity:0.3;">
+                        <span class="text-secondary fw-semibold fs-fluid-sm">
+                            DIT 2 - 1
+                        </span>
+                    </div>
                 </div>
-            </nav>
-        </div>
-
-        <div class="container">
-            <div class="row align-items-start">
-                <div
-                    class="whitebg rounded-4 me-5 col-12 col-xl-3 mt-5 shadow d-flex flex-column align-items-center p-4">
-                    <img src="assets/selfphoto.jpg"
-                        style="height: 150px; width: 150px; object-fit: cover; z-index: 200;"
-                        class="rounded-circle border border-black">
-                    <div class="h1 mt-3 text-center"
-                        style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">John Lorex
-                        Santos</div>
-                    <div class="mt-5 align-self-start d-flex align-items-baseline gap-2">
-                        <p class="mb-0 fw-bold" style="font-size: small;">EMAIL:</p>
-                        <p class="mb-0" style="font-size: smaller;">jolosantos098@gmail.com</p>
-                    </div>
-                    <div class="mt-2 align-self-start d-flex align-items-baseline gap-2">
-                        <p class="mb-0 fw-bold" style="font-size: small;">Phone:</p>
-                        <p class="mb-0" style="font-size: smaller;">09672085605</p>
-                    </div>
-                    <div class="mt-2 align-self-start d-flex align-items-baseline gap-2">
-                        <p class="mb-0 fw-bold" style="font-size: small;">Location:</p>
-                        <p class="mb-0" style="font-size: smaller;">Tanauan City, Batangas</p>
-                    </div>
-                    <div class="div contactlinks p-2 rounded-4 mt-3 text-center" style="align-self: stretch;">
-                        <a href="https://www.facebook.com/jolo.santos.0728"> <img
-                                src="/assets/facebook-5217_32.png"></a>
-                        <a href="https://github.com/mizushino1" class="ms-5 "> <img
-                                src="/assets/github-logo-6532_32.png"></a>
-                        <a href="https://www.linkedin.com/in/john-lorex-santos-811245278/" class="ms-5 "> <img
-                                src="/assets/linkedin-2166_32.png"></a>
-                    </div>
-
-
+                <div class="card-body">
+                    <h5 class="card-title">Socials:</h5>
+                    <ul class="list-group-flush d-flex flex-row gap-4 p-0">
+                        <li class="list-group-item">
+                            <a href="https://www.facebook.com/jolo.santos.0728"><img src="./assets/images/fbLogo.png"
+                                    class="invert-on-dark" alt=""></a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="https://www.linkedin.com/in/john-lorex-santos-811245278/"><img
+                                    class="invert-on-light" src="./assets/images/inLogo.png" alt=""></a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="https://www.instagram.com/lrx.ptts/"><img src="./assets/images/igLogo.png"
+                                    class="invert-on-dark" alt=""></a>
+                    </ul>
+                    </li>
                 </div>
-
-
-                <div class=" whitebg p-3 pt-0 rounded-4 mt-5 col container shadow d-none flex-column d-xl-flex"
-                    data-page="about">
-                    <div class="row">
-                        <div class="ps-0 col-12 col-xl-9 d-none  d-xl-flex flex-column">
-                            <div class="row">
-                                <div class="col">
-
-                                    <div
-                                        class=" whitebg p-3 rounded-4 d-inline-flex flex-row gap-3 mb-2 mt-0 shadow px-3">
-                                        <button class="btn navbtn fw-bold" data-page="about"
-                                            data-target="content-display-2">About</button>
-                                        <button class="btn navbtn fw-bold" data-page="portfolio"
-                                            data-target="content-display-2">Portfolio</button>
-                                        <button class="btn navbtn fw-bold" data-page="education"
-                                            data-target="content-display-2">Education</button>
-                                        <button class="btn navbtn fw-bold" data-page="activities"
-                                            data-target="content-display-2">Activities</button>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-2 text-center my-auto"><a href="https://github.com/mizushino1"><img
+                                        class="invert-on-light d-inline-block" src="./assets/images/gitLogo.png"
+                                        alt=""></a></div>
+                            <div class="card col-9 border-0 shadow-sm">
+                                <div class="d-flex align-items-center gap-3 p-2">
+                                    <img src="https://github.com/mizushino1.png" class="rounded-circle"
+                                        style="width:60px; height:60px; object-fit: cover;" alt="John Lorex Santos">
+                                    <div>
+                                        <p class="fw-bold mb-0" style="font-size: 0.9rem;">Santos, John Lorex</p>
+                                        <span class="text-secondary fw-semibold" style="font-size: 0.8rem;">
+                                            mizushino1 · he/him
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="" class="text-decoration-none text-reset d-flex align-items-center gap-4"><img
+                                src="./assets/images/email.png" class="invert-on-dark"
+                                alt="">jolosantos098@gmail.com</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="" class="text-decoration-none text-reset d-flex align-items-center gap-4"><img
+                                src="./assets/images/phone.png" class="invert-on-dark" alt=""
+                                style="height: 32px; width: 32px;">09672085605</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col ms-0 ms-xl-4 p-0">
+                <div class="p-3 glass-card shadow rounded-4">
+                    <h3 class="">About Me</h3>
+                    <p>I am John Lorex Santos, A DIT 2-1 student currently at Polytechnic University of Sto. Tomas.
+                        <br><br> Currently working on my skills in front-end development, databases, system
+                        administration, and configuration and planning of networks. I mainly use bootstrap and
+                        javascript for designing the front-end and I'm still polishing my skills</p>
+                </div>
+                <div class="p-3 my-4 glass-card shadow rounded-4">
+                    <h3 class="">Activities</h3>
+                    <div class="row">
+                        <div class="col-12 col-md-5 card mx-auto p-0">
+                            <img src="./assets/images/a02.png" class="card-img-top" alt="a02">
+                            <div class="card-body">
+                                <h5 class="card-title fs-fluid-md">A02</h5>
+                                <p class="card-text fs-fluid-sm">Activity 02 for web dev that showcases a specific electronic device.</p>
+                                <a href="https://mizushino1.github.io/A02/index.html" class="btn btn-dark ">
+                                    <img src="./assets/images/view.png" class="invert-on-light" style="height:16px; width: 16px;" alt="">
+                                    <span class="fs-fluid-xs">View</span>
+                                </a>
+                                <a href="https://github.com/mizushino1/mizushino1.github.io/tree/main/A02" class="btn btn-dark custom-btn">
+                                    <img src="./assets/images/documentation.png" class="invert-on-light" style="height:16px; width: 16px;" alt="">
+                                    <span class="fs-fluid-xs">Documentation</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-5 card mx-auto p-0">
+                            <img src="./assets/images/midterms.png" class="card-img-top" alt="a02">
+                            <div class="card-body">
+                                <h5 class="card-title fs-fluid-md">Midterms</h5>
+                                <p class="card-text fs-fluid-sm">Midterms for web dev that uses a free public API.</p>
+                                <a href="https://mizushino1.github.io/midterms/dota2" class="btn btn-dark ">
+                                    <img src="./assets/images/view.png" class="invert-on-light" style="height:16px; width: 16px;" alt="">
+                                    <span class="fs-fluid-xs">View</span>
+                                </a>
+                                <a href="https://github.com/mizushino1/mizushino1.github.io/tree/main/midterms/dota2" class="btn btn-dark custom-btn">
+                                    <img src="./assets/images/documentation.png" class="invert-on-light" style="height:16px; width: 16px;" alt="">
+                                    <span class="fs-fluid-xs">Documentation</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div id="content-display-2" class="row p-4 whitebg rounded-4">
-                        <p>Content will load here...</p>
-                    </div>
+
+
                 </div>
+
             </div>
         </div>
 
+    </div>
 
 
 
 
-        <div id="content-display-1" class="main-content-box shadow mt-5 d-xl-none whitebg p-3 rounded-4">
-            <p>Click a button to load content.</p>
-
-        </div>
 
 
 
-
-        </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
-            </script>
-        <script src="/js/fill.js">
-
-        </script>
-
-
-    </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
 
 </html>
