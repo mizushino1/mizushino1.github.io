@@ -130,7 +130,8 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-6 pe-0">
-                        <div class="p-3 glass-card shadow rounded-4 mb-4 glass-card-hover" id="skillsSection">
+                        <div class="p-3 glass-card shadow rounded-4 mb-4 glass-card-hover" id="skillsSection"
+                            data-bs-target="#toggleModalSkill" data-bs-toggle="modal">
                             <h3 class="">Skills</h3>
                             <div class="row justify-content-center">
                                 <div class="col-auto">
@@ -277,6 +278,107 @@
             <div class="modal-content bg-transparent border-0">
                 <div class="modal-body p-0 d-flex justify-content-center">
                     <img src="" alt="View" id="modalImg" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="toggleModalSkill" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-body">
+                    <div class="p-3 glass-card shadow rounded-4 mb-4">
+                        <h3>Skills</h3>
+
+                        <div id="skillsCarousel" class="carousel slide px-4" data-bs-ride="false">
+                            <div class="carousel-inner">
+
+                                <div class="carousel-item active">
+                                    <p class="text-center fw-semibold mb-3 fs-fluid-sm">Languages</p>
+                                    <div class="row justify-content-center g-3">
+                                        <div class="col-6 col-lg-3 d-flex justify-content-center">
+                                            <span class="skill-circle" data-progress="80" data-color="#FF5100">
+                                                <span class="skill-name">HTML</span>
+                                            </span>
+                                        </div>
+                                        <div class="col-6 col-lg-3 d-flex justify-content-center">
+                                            <span class="skill-circle" data-progress="60" data-color="#FFE72E">
+                                                <span class="skill-name">JavaScript</span>
+                                            </span>
+                                        </div>
+                                        <div class="col-6 col-lg-3 d-flex justify-content-center">
+                                            <span class="skill-circle" data-progress="40" data-color="#FA8100">
+                                                <span class="skill-name">Java</span>
+                                            </span>
+                                        </div>
+                                        <div class="col-6 col-lg-3 d-flex justify-content-center">
+                                            <span class="skill-circle" data-progress="40" data-color="#00B7FA">
+                                                <span class="skill-name">Python</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <p class="text-center fw-semibold mb-3 fs-fluid-sm">Frameworks</p>
+                                    <div class="row justify-content-center g-3">
+                                        <div class="col-6 col-md-3 d-flex justify-content-center">
+                                            <div class="skill-circle" data-progress="60" data-color="#7E2EFF">
+                                                <span class="skill-name">Bootstrap</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <p class="text-center fw-semibold mb-3 fs-fluid-sm">Database</p>
+                                    <div class="row justify-content-center g-3">
+                                        <div class="col-6 col-lg-3 d-flex justify-content-center">
+                                            <div class="skill-circle" data-progress="70" data-color="#0075FA">
+                                                <span class="skill-name">SQL</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <p class="text-center fw-semibold mb-3 fs-fluid-sm">Version Control</p>
+                                    <div class="row justify-content-center g-3">
+                                        <div class="col-6 col-md-3 d-flex justify-content-center">
+                                            <div class="skill-circle" data-progress="100" data-color="#181818">
+                                                <span class="skill-name">Git</span>
+                                            </div>
+                                            <div class="skill-circle" data-progress="100" data-color="#181818">
+                                                <span class="skill-name">Github</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <button class="carousel-control-prev" type="button" data-bs-target="#skillsCarousel"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#skillsCarousel"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+
+                            <div class="carousel-indicators" style="position: static; margin-top: 1rem;">
+                                <button type="button" data-bs-target="#skillsCarousel" data-bs-slide-to="0"
+                                    class="active bg-secondary" aria-current="true"></button>
+                                <button type="button" data-bs-target="#skillsCarousel" data-bs-slide-to="1"
+                                    class="bg-secondary"></button>
+                                <button type="button" data-bs-target="#skillsCarousel" data-bs-slide-to="2"
+                                    class="bg-secondary"></button>
+                                    <button type="button" data-bs-target="#skillsCarousel" data-bs-slide-to="3"
+                                    class="bg-secondary"></button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

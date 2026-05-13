@@ -56,4 +56,12 @@ const observer = new MutationObserver(() => {
     renderBadges();
 });
 
+document.getElementById('skillsCarousel')?.addEventListener('slid.bs.carousel', () => {
+  document.querySelectorAll('.skill-circle svg').forEach(svg => svg.remove());
+  document.querySelectorAll('.skill-circle').forEach(el => {
+      el.querySelector('.skill-name').style.display = '';
+  });
+  renderBadges();
+});
+
 observer.observe(document.body, { attributes: true, attributeFilter: ['data-bs-theme'] });
