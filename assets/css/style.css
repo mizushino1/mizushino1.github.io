@@ -72,3 +72,8 @@ body {
     left: 0;
     z-index: 1055;
 }
+
+
+  .skill-circle svg {
+    display: block;
+  }
