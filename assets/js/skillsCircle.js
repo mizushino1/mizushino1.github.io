@@ -37,12 +37,9 @@ function renderBadges() {
                 stroke-dasharray="${dash} ${gap}"
                 stroke-dashoffset="${CIRCUM / 4}"
                 stroke-linecap="round"/>
-            <text x="${CX}" y="${CY - 7}" text-anchor="middle"
+            <text x="${CX}" y="${CY}" text-anchor="middle"
                 font-size="11" font-weight="500" font-family="inherit"
-                fill="${textColor}">${name}</text>
-            <text x="${CX}" y="${CY + 13}" text-anchor="middle"
-                font-size="18" font-weight="700" font-family="inherit"
-                fill="${textColor}">${pct}%</text>
+                fill="${textColor}" class="fw-bold">${name}</text>
         `;
 
         el.insertBefore(svg, el.firstChild);
