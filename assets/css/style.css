@@ -35,10 +35,6 @@ body {
         box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
         background 0.3s ease, 
         border 0.3s ease;
-
-    will-change: transform;
-    backface-visibility: hidden;
-    -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .card {
