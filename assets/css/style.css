@@ -16,7 +16,7 @@ body.modal-open {
 }
 
 .about-card {
-    max-height: 500px; 
+    max-height: 700px; 
     overflow: hidden;
     transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.4s ease;
     opacity: 1;

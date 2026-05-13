@@ -1,4 +1,4 @@
-const SIZE = 140;
+const SIZE = 115;
 const STROKE = 8;
 const CX = SIZE / 2;
 const CY = SIZE / 2;
