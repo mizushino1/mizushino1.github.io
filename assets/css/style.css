@@ -80,6 +80,5 @@ body {
 
   #skillsCarousel .carousel-control-prev,
   #skillsCarousel .carousel-control-next {
-      filter: invert(1);
       width: 28px;
   }
