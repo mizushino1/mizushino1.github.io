@@ -81,7 +81,7 @@ async function createGithubCard(username) {
     modalImg.setAttribute("src", clickedSrc);
 };
    
-}, 1500);
+}, 10);
 
  
 
