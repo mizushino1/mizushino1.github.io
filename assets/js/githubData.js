@@ -50,10 +50,9 @@ async function createGithubCard(username) {
   githubCard.innerHTML = `
     <div class="col-2 my-auto pe-0">
       <a href="${data.html_url}">
+              <!--Replace this of the path on wherever you have your github logo png-->
         <img class="invert-on-light d-inline-block icon"
-        <!--Replace this of the path on wherever you have your github logo png-->
          src="./assets/images/gitLogo.png" 
-        <!--  -->
          alt="GitHub Logo">
       </a>
     </div>
