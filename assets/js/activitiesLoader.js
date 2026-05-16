@@ -9,7 +9,7 @@ function loadActivities() {
         activitiesContainer.innerHTML += `
         <div class="col-12 col-md-5 card mx-auto ${isLessThan2 ? "" : "my-4"} ${isLessThan3 ? "my-md-0" : "collapse activities"} p-0 glass-card-hover">
                                     <img src="${activitiesData[i].preview}" class="card-img-top activity-image expandable-img"
-                                        data-bs-target="#toggleModalImage" data-bs-toggle="modal" alt="a02" ">
+                                        data-bs-target="#toggleModalImage" data-bs-toggle="modal" alt="a02">
                                     <div class="card-body">
                                         <h5 class="card-title fs-fluid-md">${activitiesData[i].title}</h5>
                                         <p class="card-text fs-fluid-sm">${activitiesData[i].description}</p>
