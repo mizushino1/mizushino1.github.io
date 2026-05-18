@@ -11,16 +11,13 @@
 ### 📊 My GitHub Stats
 
 <p align="center">
-
-  <img width="48%" src="https://github-readme-stats.vercel.app/api?username=mizushino1&show_icons=true&theme=radical&hide_border=false" alt="mizushino1's GitHub stats" />
+  <img width="48%" src="https://github-readme-stats.shion.dev/api?username=mizushino1&show_icons=true&theme=radical&hide_border=false" alt="mizushino1's GitHub stats" />
   
-
   <img width="48%" src="https://github-readme-streak-stats.herokuapp.com/?user=mizushino1&theme=radical&hide_border=false" alt="mizushino1's Streak" />
 </p>
 
 <p align="center">
-
-  <img width="55%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=mizushino1&layout=compact&theme=radical&hide_border=false" alt="mizushino1's Top Languages" />
+  <img width="55%" src="https://github-readme-stats.shion.dev/api/top-langs/?username=mizushino1&layout=compact&theme=radical&hide_border=false" alt="mizushino1's Top Languages" />
 </p>
 
 ---
