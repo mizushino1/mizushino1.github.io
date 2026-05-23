@@ -8,12 +8,26 @@ const images = document.querySelectorAll(".expandable-img");
 const modalImg = document.getElementById("modalImg");
 const OFFSET = 100;
 
+
 const applyTheme = (isDark) => {
     body.setAttribute("data-bs-theme", isDark ? "dark" : "light");
-    themeBtn.innerText = isDark ? "Light Mode" : "Dark Mode";
+    const sunIcon = document.getElementById("sunIcon");
+    const moonIcon = document.getElementById("moonIcon");
+    if (sunIcon && moonIcon) {
+        sunIcon.style.display = isDark ? "" : "none";
+        moonIcon.style.display = isDark ? "none" : "";
+    }
 };
 
 applyTheme(prefersDark.matches);
+
+fetch('assets/components/themeIcon.svg')
+    .then(res => res.text())
+    .then(svg => {
+        document.getElementById('themeBtnIconContainer').innerHTML = svg;
+        applyTheme(prefersDark.matches);
+    });
+
 prefersDark.addEventListener('change', (e) => applyTheme(e.matches));
 
 
