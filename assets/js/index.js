@@ -81,3 +81,18 @@ images.forEach(img => {
         modalImg.setAttribute("src", clickedSrc);
     };
 });
+
+const header = document.getElementById('header');
+const mdQuery = window.matchMedia('(max-width: 767.98px)');
+
+function handleScreenChange(e) {
+    header.classList.toggle('sticky-top', !e.matches);
+    header.classList.toggle('fixed-bottom', e.matches);
+
+    // move the padding from top to bottom too
+    header.classList.toggle('pt-3', !e.matches);
+    header.classList.toggle('pb-3', e.matches);
+}
+
+handleScreenChange(mdQuery);
+mdQuery.addEventListener('change', handleScreenChange);
